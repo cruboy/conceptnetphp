@@ -1,0 +1,77 @@
+/* for fbox */
+img{border:none;vertical-align:middle;margin:0;}
+div#f_overlay{position:absolute;top: 0;left: 0;z-index: 90;width: 100%;background-color: #333;}
+div#f_loading{position: absolute;height: 40px;width: 40px;cursor: pointer;	overflow: hidden;background: transparent;z-index: 100;}
+div#f_loading div{position: absolute;top: 0;left: 0;width: 40px;height: 480px;background: #ff0000 url(images/progress.png) no-repeat;}
+div#f_close{position: absolute;top: -12px;right: -12px;height: 30px;width: 30px;background: #ff0000 url(images/closebox.png) ;cursor: pointer;z-index: 100;}
+div#f_content{position: absolute;top: 0;left: 0;width: 100%;height: 100%;padding: 0; margin: 0;z-index: 96;}
+#f_frame{position: relative;width: 100%;height: 100%;}
+img#f_img{position: absolute;top: 0;left: 0;width: 100%;height: 100%;border:none; padding: 0; margin: 0;z-index: 92;cursor:pointer;}
+div#f_title{position: absolute;bottom: -28px;left: 0;width: 100%;z-index: 100;}
+div#f_title table{margin: 0 auto;}
+div#f_title div{color: #FFF;font: bold 12px Arial;padding-bottom: 2px;}
+td#f_title_left{height: 26px;width: 15px;background: url(images/title_left.png) left bottom repeat-x;}
+td#f_title_main{height:20px;background: #000000;text-align:center;padding:6px 3px 0 3px}
+td#f_title_right{height: 26px;width: 15px;background:url(images/title_right.png) right bottom repeat-x;}
+div#f_outer{position: absolute;top: 0;left: 0;z-index: 90;padding: 18px 18px 58px 18px;margin: 0;overflow: hidden; display:none;  }
+div#f_inner{position: relative;width:100%;height:100%;border:1px solid #000000;background:#bbbbbb;}
+
+/* for msgbox & popbox*/
+
+.msg_wrapper{overflow:hidden;position:absolute;z-index:100;}
+.msg_title_wrapper{height:26px;vertical-align:middle;}
+.msg_title_wrapper img{cursor:pointer;margin-right:8px;margin-top:5px;}
+.msg_title{line-height:26px; padding-left:12px; color:#fff; font-size:12px; font-weight:bold;height:26px;display:block; vertical-align:middle; cursor:move;font-family:courier new;}
+.msg_main{text-align:left;padding:12px;border-top:none;overflow:hidden;background:#f5f6f7;overflow-y:auto;overflow-x:hidden;position:relative;}
+.msg_main .pp button{border:none;background:url(images/button.gif);margin:4px 16px 4px 0;width:55px;text-align:center;height:20px;padding:1px;}
+.msg_bg{background-color:#000;position:absolute;top:0;left:0;z-index:99;}
+.popwrap{position:fixed;_position:absolute;_width:250px;right:0;bottom:0;background:url(images/pop.gif) left -20px repeat-x;border:1px solid #7e9bf6;overflow:hidden;z-index:98;}
+.poptopup{height:10px;cursor:pointer;background:url(images/pop.gif) center top no-repeat;overflow:hidden;}
+.poptopdown{height:10px;cursor:pointer;background:url(images/pop.gif) center -10px no-repeat;overflow:hidden;}
+.popmain{background:#ffffff;overflow:hidden;}
+
+
+
+#regfrm td p.c{padding-top:9px;display:block;width:180px;padding-left:24px;position:absolute;color:#333333;background:url(/images/1000316.gif) no-repeat 0 10px;margin-top:-10px;color:#111111;}
+#regfrm td p.h{display:none;}
+#regfrm td p.w{padding-top:9px;display:block;width:180px;padding-left:24px;position:absolute;color:#333333;background:url(/images/1000216.gif) no-repeat 0 10px;margin-top:-10px;color:#111111;}
+#regfrm td p.r{padding-top:9px;display:block;width:180px;padding-left:24px;position:absolute;color:#333333;background:url(/images/1000716.gif) no-repeat 0 10px;margin-top:-10px;color:#111111;}
+#regfrm td p.g{padding-top:9px;display:block;width:180px;padding-left:24px;position:absolute;color:#333333;background:url(/images/1000516.gif) no-repeat 0 10px;margin-top:-10px;color:#111111;}
+#regfrm th,#regfrm td{padding:6px 3px;}
+
+.textadv{margin:4px 12px;padding-left:26px;background:url(images/adv.gif) 4px 5px no-repeat;}
+.textadv a{color:#008000;}
+.tipright{float:right;margin:10px 10px 10px 0;width:120px;height:240px;}
+.banner{margin-bottom:8px;text-align:center;}
+.boardlist{position:absolute;z-index:100;width:140px;max-height:300px;padding:4px 12px;overflow-y:auto;overflow-x:hidden;height:300px;margin-top:22px;background:#ffffff;-webkit-box-shadow:2px 2px 2px #dddddd;-moz-box-shadow:2px 2px 2px #dddddd;filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2,OffY=2,Color=#dddddd, Positive=true) alpha(opacity=80);border:1px solid #cccccc;display:none;-moz-opacity:0.80;opacity:0.80;}
+.boardlist ul ul{margin-left:12px;}
+.boardlist a{display:block;text-decoration:none;}
+
+
+.slide ul{width:640px;height:20px;overflow:hidden;display:block-inline;margin:0;padding:0 4px;position:relative;}
+.slide li{width:600px;height:20px;text-overflow:ellipsis;list-style-type:none;overflow:hidden;position:absolute;top:20px;}
+
+td{position:relative;}
+table#allemot td{padding:3px 3px;}
+#allemot img{cursor:pointer;}
+
+.star{height:16px; width:16px; display:block; float:left; background:url(images/star.gif) no-repeat 0 0;}
+.star_on{ background: url(images/star.gif) no-repeat 0 -16px !important;}
+.star_yes{ background: url(images/star.gif) no-repeat 0 -32px;}
+
+.calender {width:168px;height:auto;font-size:12px;border-top:1px solid #f8f9fa;border:2px solid #dddddd;padding:4px 6px;background:#a7a9aa;position:absolute;}
+.calender ul {list-style-type:none; height:auto;margin:0; padding:0;clear:both;width:168px;}
+.calender .day {background-color:#D0FFD0;height:16px;margin:3px 0;}
+a{text-decoration:none;}
+.calender li{float:left; width:24px; height:18px; line-height:16px; text-align:center;list-style-type:none;}
+.calender li a{text-decoration:none; font-family:Tahoma; font-size:12px; color:#333333;display:block;width:22px;height:16px;border-top:1px #ffffff solid;border-left:1px solid #ffffff;border-bottom:1px solid #666666;border-right:1px solid #666666;text-align:center;background:#f5f7f9;}
+.calender li.Sat a{color:#2080D0;}.calender li.Sun a{color:#cc0000;}
+.calender li.today a{background:#FFF440;font-weight:bold;}
+.calender li a:hover {border-left:1px solid #666666;border-top:1px solid #666666;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;}
+.calenderBody {clear:both;width:168px;margin-top:8px;min-height:110px;}
+table.f{border-top:1px solid #AAAAAA;border-bottom:1px solid #FFFFFF;border-collapse:separate;}
+table.f td,table.f th{border-top:1px solid #ffffff;border-bottom:1px solid #CCCCCC;padding:2px 0 2px 8px;}
+u{margin:0 4px;}
+.f u{color:red;margin:0;}
+
+#pagetarget{cursor:pointer;}
