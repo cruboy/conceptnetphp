@@ -52,7 +52,7 @@ document.getElementById("xycoordinates").innerHTML="";
 <body style="margin:0px;">
 <div id="coordiv" onmousemove="cnvs_getCoordinates(event)" onmouseout="cnvs_clearCoordinates()">
 <div style="position:relative;top:300px;left:30px;">hjjjjjjjh</div>
-<img src="mind.jpg" border="0" usemap="#planetmap" alt="Planets" />
+<img src="../content/cruboys.jpg" border="0" usemap="#planetmap" alt="Planets" />
 
 </div>
 <map name="planetmap" id="planetmap">
