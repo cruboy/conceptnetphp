@@ -34,16 +34,16 @@ elseif(!empty($_SESSION['u_name']))echo $_SESSION['u_name'];
 else echo "?请<a href=\"m/?action=login\">登录</a>?"; ?>，您好！
 <a href="<?php echo BLOG_URL; ?>" <?php if($action=='')echo 'id="active"'; ?>>应用首页</a> 
 
-<a href="<?php echo BLOG_URL; ?>/cruboy.php?id=48" <?php if($cpid==48)echo 'id="active"'; ?>>志愿者</a>
-<a href="<?php echo BLOG_URL; ?>/cruboy.php?id=72" <?php if($cpid==72)echo 'id="active"'; ?>>本应用成员</a>
-<a href="<?php echo BLOG_URL; ?>/cruboy.php?id=468" <?php if($cpid==468)echo 'id="active"'; ?>>爱心</a>
-<a href="<?php echo BLOG_URL; ?>/cruboy.php?id=405" <?php if($cpid==405)echo 'id="active"'; ?>>善良</a>
-<a href="<?php echo BLOG_URL; ?>/cruboy.php?id=136" <?php if($cpid==136)echo 'id="active"'; ?>>知识</a>
-<a href="<?php echo BLOG_URL; ?>/cruboy.php?id=182" <?php if($cpid==182)echo 'id="active"'; ?>>爱</a>
-<a href="<?php echo BLOG_URL; ?>/cruboy.php?id=27310"<?php if($cpid==27310)echo 'id="active"'; ?> >儿童</a> 
-<a href="<?php echo BLOG_URL; ?>/cruboy.php?id=798" <?php if($cpid==798)echo 'id="active"'; ?>>孩子</a> 
-<a href="<?php echo BLOG_URL; ?>/cruboy.php?id=54" <?php if($cpid==54)echo 'id="active"'; ?>>学习</a>
-<a href="<?php echo BLOG_URL; ?>/cruboy.php?id=653" <?php if($cpid==653)echo 'id="active"'; ?>>上学</a> ||
+<a href="<?php echo BLOG_URL; ?>cruboy.php?id=48" <?php if($cpid==48)echo 'id="active"'; ?>>志愿者</a>
+<a href="<?php echo BLOG_URL; ?>cruboy.php?id=72" <?php if($cpid==72)echo 'id="active"'; ?>>本应用成员</a>
+<a href="<?php echo BLOG_URL; ?>cruboy.php?id=468" <?php if($cpid==468)echo 'id="active"'; ?>>爱心</a>
+<a href="<?php echo BLOG_URL; ?>cruboy.php?id=405" <?php if($cpid==405)echo 'id="active"'; ?>>善良</a>
+<a href="<?php echo BLOG_URL; ?>cruboy.php?id=136" <?php if($cpid==136)echo 'id="active"'; ?>>知识</a>
+<a href="<?php echo BLOG_URL; ?>cruboy.php?id=182" <?php if($cpid==182)echo 'id="active"'; ?>>爱</a>
+<a href="<?php echo BLOG_URL; ?>cruboy.php?id=27310"<?php if($cpid==27310)echo 'id="active"'; ?> >儿童</a> 
+<a href="<?php echo BLOG_URL; ?>cruboy.php?id=798" <?php if($cpid==798)echo 'id="active"'; ?>>孩子</a> 
+<a href="<?php echo BLOG_URL; ?>cruboy.php?id=54" <?php if($cpid==54)echo 'id="active"'; ?>>学习</a>
+<a href="<?php echo BLOG_URL; ?>cruboy.php?id=653" <?php if($cpid==653)echo 'id="active"'; ?>>上学</a> ||
 <?php if(empty($_SESSION['u_name'])): ?>
 <a href="<?php echo BLOG_URL; ?>" >返回首页</a>
 <?php endif; ?> 
