@@ -1,3 +1,3 @@
-<div id="footer">cruboy,6 years old;jitong,7 years old</div>
+<div id="footer">by cruboy,qq:915030011</div>
 </body>
 </html>

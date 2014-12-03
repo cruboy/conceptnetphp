@@ -30,12 +30,18 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 </div>
 <div id="navi">
 <a href="<?php echo BLOG_URL; ?>">返回PC版首页</a> 
-<a href="./" <?php if($action=='')echo 'id="active"'; ?>>首页</a> 
-<a href="./?cp=468" <?php if($cpid==468)echo 'id="active"'; ?>>ainet爱心</a>
-<a href="./?action=tw" <?php if($action=='tw')echo 'id="active"'; ?>>碎语</a> 
+<a href="./" <?php if($action==''&&empty($cpid))echo 'id="active"'; ?>>首页</a> 
+<a href="./?cp=1" <?php if(!empty($cpid))echo 'id="active"'; ?>>认知网格</a>
+<a href="./?action=film" <?php if($action=='film')echo 'id="active"'; ?>>影视</a> 
+<a href="./?action=story" <?php if($action=='story')echo 'id="active"'; ?>>童话故事</a> 
+
+<a href="./?action=tw" <?php if($action=='tw')echo 'id="active"'; ?>>动态</a> 
 <a href="./?action=com" <?php if($action=='com')echo 'id="active"'; ?>>评论</a> 
+	<?php if(ROLE == 'admin' || ROLE == 'writer'): ?>
+<a href="<?php echo BLOG_URL; ?>m/enet.php">enet管理</a>
+<a href="<?php echo BLOG_URL; ?>m/dict.php">词典</a>
+<?php endif;?>
 <?php if(ISLOGIN === true): ?>
-<a href="/m/enet.php" <?php if($action=='enet')echo 'id="active"'; ?>>enet</a> 
 <a href="./?action=write" <?php if($action=='write')echo 'id="active"'; ?>>写日志</a> 
 <a href="./?action=logout">退出</a>
 <?php else:?>

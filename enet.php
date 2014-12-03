@@ -84,7 +84,7 @@ $start=($page-1)*200;
 	$sql = "SELECT * FROM cruboy_enet where 1 $asql2 order by id desc LIMIT $start,200";
 	$res = $DB->query($sql);
 	//$ap = $DB->affected_rows();
-	$pageurl="hinets.php?action=hinets&word=".urlencode($word)."&ass=$ass&rule="
+	$pageurl="enet.php?action=hinets&word=".urlencode($word)."&ass=$ass&rule="
 	.urlencode($rule)."&rule2=".urlencode($rule2)."&procs=".urlencode($procs)."&used=$used&nall=$nall&page=";
 	
     include View::getView('enetview');
@@ -128,18 +128,7 @@ elseif($action =="editnetok"){
 	//echo $word;
 	$word=str_replace("，",",",$word);
 	$word2=str_replace("，",",",$word2);
-	$rett = explode(",", $word);
-	$wordw="";
-	for($ii=0;$ii<count($rett);$ii++)   {
-		$ttp=$rett[$ii];
-            preg_match_all("/./us", $ttp, $match);
-            $nul= count($match[0]);
-       		if($nul==1) $wds=$ttp."iii";
-       		elseif($nul==2) $wds=$ttp."ii";
-       		elseif($nul==3) $wds=$ttp."i";
-       		 else $wds=$ttp;
-    $wordw.=$wds.","; 
-      } 		 
+		 
 	$uid=UID;
 	$ltime=time();
 	$gip=getIP();
@@ -153,13 +142,13 @@ elseif($action =="editnetok"){
 					'$tpDa[cv]','$tpDa[note]','$tpDa[num_assertions]', '$tpDa[visible]',
 					 '$tpDa[editime]','$tpDa[creator]','$ltime','$uid')" );
 	
-	$DB->query("UPDATE cruboy_enet  set text='$wordw',rule='$word2',rule2='$word3',procs='$procs',note='$note',visible='$vi',dotype='$att',
+	$DB->query("UPDATE cruboy_enet  set text='$word',rule='$word2',rule2='$word3',procs='$procs',note='$note',visible='$vi',dotype='$att',
 	cv='$cv',editime='$ltime',creator='$uid' WHERE id='$id' ");
 	$msf="修改成功！";
 	}
 	else{
 			$DB->query("INSERT INTO cruboy_enet (text,dotype, rule,rule2,procs,cv,note,num_assertions,editime,creator,visible) VALUES
-					('$wordw','$att','$word2','$word3','$procs','$cv','$note','0','$ltime','$uid','$vi')" );
+					('$word','$att','$word2','$word3','$procs','$cv','$note','0','$ltime','$uid','$vi')" );
 			$id = - $DB->insert_id();
 			$msf="添加成功！";
 		}

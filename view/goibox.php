@@ -5,12 +5,15 @@
 <div>
     <div align="center">
          <form name="keycp" method="get" action="toddler.php">
-     <?php   if($_SESSION['twiki']<6){?>   
+     <?php   if(0){?>   
      <span><img src="/m/boy.jpg" border="0"></span><br>
 <?php } ?>
     <br>
             <input id="searchValue" name="k" type="text" value="<?php echo $akey; ?>" 
                 style="font-size:16; width:300px; height:20px;" />       
+           <?php   if($tvid>0){?>   
+     <input type="hidden" name="devid" value=<?php echo $tvid; ?> />
+<?php } ?>
             <input type="submit" id="logserch_logserch" value="输 入" 
                style="width:60px; height:22px; text-align:center; font-size:12;" />
         </form>

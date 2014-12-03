@@ -11,14 +11,17 @@ require_once '../init.php';
 define ('TEMPLATE_PATH', EMLOG_ROOT . '/m/view/');
 
 $isgzipenable = 'n'; //手机浏览关闭gzip压缩
-$index_lognum = 5;
+$index_lognum = 8;
 
 $logid = isset ($_GET['post']) ? intval ($_GET['post']) : '';
 $action = isset($_GET['action']) ? addslashes($_GET['action']) : '';
 $cpid = isset ($_GET['cp']) ? intval ($_GET['cp']) : '';
+$fnid = isset ($_GET['fn']) ? intval ($_GET['fn']) : '';
+$sid = isset ($_GET['sid']) ? intval ($_GET['sid']) : '';
 $akey = isset($_GET['aikey']) ? addslashes($_GET['aikey']) : '';
 // 首页
-if (empty ($action) && empty ($logid) && empty ($cpid)&& empty ($akey)) {
+if (empty ($action) && empty ($logid) && empty ($cpid)&& empty ($akey)
+&& empty ($fnid)&& empty ($sid)) {
 	$Log_Model = new Log_Model();
 	$page = isset($_GET['page']) ? abs(intval ($_GET['page'])) : 1;
 	$sqlSegment = "ORDER BY top DESC ,date DESC";
@@ -136,6 +139,40 @@ $vfr="unlog";
 		}
 	include View::getView('header');
 	include View::getView('aishow');
+	include View::getView('footer');
+	View::output();
+}
+if (!empty ($fnid)) {
+
+$sql = "SELECT *  FROM cruboy_film where gid='$fnid' ";
+	$res1 = $DB->query($sql);
+	$logData = $DB->fetch_array($res1);
+	if($logData[gid]<1){
+		echo "<script language=\"JavaScript\">alert(\"Not found!\");history.back();</script>";
+		exit();
+	}
+	$DB->query("UPDATE cruboy_film SET views=views+1 WHERE gid='$id'");
+	extract($logData);
+	$action="film";
+	include View::getView('header');
+	include View::getView('filmpage');
+	include View::getView('footer');
+	View::output();
+}
+if (!empty ($sid)) {
+
+$sql = "SELECT *  FROM cruboy_story where gid='$sid' ";
+	$res1 = $DB->query($sql);
+	$logData = $DB->fetch_array($res1);
+	if($logData[gid]<1){
+		echo "<script language=\"JavaScript\">alert(\"Not found!\");history.back();</script>";
+		exit();
+	}
+	$DB->query("UPDATE cruboy_story SET views=views+1 WHERE gid='$sid'");
+	extract($logData);
+	$action="story";
+	include View::getView('header');
+	include View::getView('storypage');
 	include View::getView('footer');
 	View::output();
 }
@@ -451,6 +488,56 @@ if ($action == 'logout') {
 	setcookie(AUTH_COOKIE_NAME, ' ', time () - 31536000, '/');
 	emDirect('?tem=' . time());
 }
+if($action == 'film'){
+		$page = isset($_GET['page']) ? abs(intval ($_GET['page'])) : 1;
+		$DB = MySql::getInstance();
+		$start=($page-1)*$index_lognum;
+		$nall=intval ($_GET['n']);
+		if($nall<1){
+			$sql = "SELECT count(*) as a  FROM cruboy_film where hide='n' ";
+			$res1 = $DB->query($sql);
+			$row1 = $DB->fetch_array($res1);
+			$nall=$row1[a];
+		}
+		$tinf="所有电影列表（".$nall."部）：";
+		$pageurl = "?action=film&n=".$nall."&page=";
+		$sql = "SELECT * FROM cruboy_film where hide='n' limit $start,$index_lognum";
+		$res = $DB->query($sql);
+		while ($row = $DB->fetch_array($res)) {
+			$logs[]=$row;
+		}
+		$page_url = pagination($nall, $index_lognum, $page, $pageurl);
+//print_r($logs);
+		include View::getView('header');
+		include View::getView('filmlist');
+		include View::getView('footer');
+		View::output();
+	}
+	if($action == 'story'){
+		$page = isset($_GET['page']) ? abs(intval ($_GET['page'])) : 1;
+		$DB = MySql::getInstance();
+		$start=($page-1)*$index_lognum;
+		$nall=intval ($_GET['n']);
+		if($nall<1){
+			$sql = "SELECT count(*) as a  FROM cruboy_story where hide='n' ";
+			$res1 = $DB->query($sql);
+			$row1 = $DB->fetch_array($res1);
+			$nall=$row1[a];
+		}
+		$tinf="所有童话故事列表（".$nall."部）：";
+		$pageurl = "?action=story&n=".$nall."&page=";
+		$sql = "SELECT * FROM cruboy_story where hide='n' limit $start,$index_lognum";
+		$res = $DB->query($sql);
+		while ($row = $DB->fetch_array($res)) {
+			$logs[]=$row;
+		}
+		$page_url = pagination($nall, $index_lognum, $page, $pageurl);
+//print_r($logs);
+		include View::getView('header');
+		include View::getView('storylist');
+		include View::getView('footer');
+		View::output();
+	}
 function mMsg($msg, $url) {
 	include View::getView('header');
 	include View::getView('msg');
