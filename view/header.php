@@ -31,7 +31,7 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 <div id="navi">
 <a href="<?php echo BLOG_URL; ?>">返回PC版首页</a> 
 <a href="./" <?php if($action==''&&empty($cpid))echo 'id="active"'; ?>>首页</a> 
-<a href="./?cp=1" <?php if(!empty($cpid))echo 'id="active"'; ?>>认知网格</a>
+<a href="./?cplist" <?php if(!empty($cpid))echo 'id="active"'; ?>>随便看看</a>
 <a href="./?action=film" <?php if($action=='film')echo 'id="active"'; ?>>影视</a> 
 <a href="./?action=story" <?php if($action=='story')echo 'id="active"'; ?>>童话故事</a> 
 

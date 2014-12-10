@@ -15,33 +15,16 @@ $index_lognum = 8;
 
 $logid = isset ($_GET['post']) ? intval ($_GET['post']) : '';
 $action = isset($_GET['action']) ? addslashes($_GET['action']) : '';
-$cpid = isset ($_GET['cp']) ? intval ($_GET['cp']) : '';
+$cpid = isset ($_POST['cp']) ? intval ($_POST['cp']) : '';
 $fnid = isset ($_GET['fn']) ? intval ($_GET['fn']) : '';
 $sid = isset ($_GET['sid']) ? intval ($_GET['sid']) : '';
-$akey = isset($_GET['aikey']) ? addslashes($_GET['aikey']) : '';
-// 首页
-if (empty ($action) && empty ($logid) && empty ($cpid)&& empty ($akey)
-&& empty ($fnid)&& empty ($sid)) {
-	$Log_Model = new Log_Model();
-	$page = isset($_GET['page']) ? abs(intval ($_GET['page'])) : 1;
-	$sqlSegment = "ORDER BY top DESC ,date DESC";
-	$sta_cache = $CACHE->readCache('sta');
-	$lognum = $sta_cache['lognum'];
-	$pageurl = '?page=';
-	$logs = $Log_Model->getLogsForHome ($sqlSegment, $page, $index_lognum);
-	$page_url = pagination($lognum, $index_lognum, $page, $pageurl);
-    $_SESSION['onm']=1;
-	include View::getView('header');
-	include View::getView('log');
-	include View::getView('footer');
-	View::output();
-}
-if (!empty ($akey) &&$_SESSION['views']>2) {
+$akey = isset($_POST['aikey']) ? addslashes($_POST['aikey']) : '';
+if ($_SESSION['views']>2&&(isset($_GET['cplist'])or!empty ($akey))) {
 	$atitle="查询‘".$akey."’的结果：";
 		$ltime = time();
 	$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES (
 				'keyword','$vsid','0','$uid','$usersina_id','$ltime','$akey','$gip')");
-	$sql = "SELECT * FROM conceptnet_concept WHERE text LIKE '%$akey%'order by f3 desc LIMIT 1000";
+	$sql = "SELECT * FROM conceptnet_concept WHERE text LIKE '%$akey%' order by Rand()  LIMIT 10";
 			$res = $DB->query($sql);
 		
 			while ($row = $DB->fetch_array($res)) {
@@ -54,6 +37,7 @@ if (!empty ($akey) &&$_SESSION['views']>2) {
 			$aDa = $DB->once_fetch_array($sql2);
 		
 		$row[tx1]=$aDa[text];
+		$row[id1]=$aDa[concept2_id];
 	 $row[re1]=$aDa[relation_id];
 	 $row[fi1]=$aDa[best_frame_id];
 		 $sql3 = "SELECT a.concept1_id,a.concept2_id,
@@ -63,6 +47,7 @@ if (!empty ($akey) &&$_SESSION['views']>2) {
 			$aDa3 = $DB->once_fetch_array($sql3);
 		
 		$row[tx2]=$aDa3[text];
+		$row[id2]=$aDa3[concept1_id];
 	 $row[re2]=$aDa3[relation_id];
 	 $row[fi2]=$aDa3[best_frame_id];
 	$concepts[]=$row;
@@ -73,6 +58,24 @@ if (!empty ($akey) &&$_SESSION['views']>2) {
 	include View::getView('footer');
 	View::output();
 }
+// 首页
+if (empty ($action) && empty ($logid) && empty ($cpid)&& empty ($akey)
+&& empty ($fnid)&& empty ($sid)) {
+	$Log_Model = new Log_Model();
+	$page = isset($_GET['page']) ? abs(intval ($_GET['page'])) : 1;
+	$sqlSegment = "ORDER BY top DESC ,date DESC";
+	$sta_cache = $CACHE->readCache('sta');
+	$lognum = $sta_cache['lognum'];
+	$pageurl = '?page=';
+	$logs = $Log_Model->getLogsForHome ($sqlSegment, $page, $index_lognum,'blog');
+	$page_url = pagination($lognum, $index_lognum, $page, $pageurl);
+    $_SESSION['onm']=1;
+	include View::getView('header');
+	include View::getView('log');
+	include View::getView('footer');
+	View::output();
+}
+
 if (!empty ($cpid) &&$_SESSION['views']>2) 
 {$usersina_id= intval($_SESSION['oauth2']["user_id"]);
 	$DB = MySql::getInstance();
