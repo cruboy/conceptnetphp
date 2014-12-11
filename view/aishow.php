@@ -26,11 +26,11 @@
 	<?php 
 foreach($concepts as $value):
 ?>
-<div class="comcont">
-&nbsp;&nbsp;<SPAN <?php if($value['visible'] == false ): ?>style="TEXT-DECORATION: line-through"<?php endif;?>  onclick='dotu(<?php echo $value['id']; ?>);' >
+<div class="comcont" >
+&nbsp;&nbsp;<SPAN style="cursor:pointer;<?php if($value['visible'] == false ): ?>TEXT-DECORATION: line-through<?php endif;?>"  onclick='dotu(<?php echo $value['id']; ?>);' >
 <?php echo $value['text']; ?></SPAN>
 &nbsp;&nbsp;
-<SPAN title='<?php echo $value['best_frame_id']; ?>'>
+<SPAN  title='<?php echo $value['best_frame_id']; ?>'>
 <?php echo $value['frame']; ?>
 </SPAN>
 </div>
@@ -42,10 +42,10 @@ foreach($concepts as $value):
 foreach($concepts2 as $value):
 ?>
 <div class="comcont">
-&nbsp;&nbsp;<SPAN <?php if($value['visible'] == false ): ?>style="TEXT-DECORATION: line-through"<?php endif;?>  onclick='dotu(<?php echo $value['id']; ?>);' >
+&nbsp;&nbsp;<SPAN style="cursor:pointer;<?php if($value['visible'] == false ): ?>TEXT-DECORATION: line-through<?php endif;?>"  onclick='dotu(<?php echo $value['id']; ?>);' >
 <?php echo $value['text']; ?></SPAN>
 &nbsp;&nbsp;
-<SPAN title='<?php echo $value['best_frame_id']; ?>'>
+<SPAN  title='<?php echo $value['best_frame_id']; ?>'>
 <?php echo $value['frame']; ?>
 </SPAN>
 </div>

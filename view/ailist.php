@@ -16,18 +16,16 @@
 foreach($concepts as $value):
 ?>
 
-<div class="comcont">
+<div class="comcont" >
 &nbsp;&nbsp;
-
-
-
-<SPAN <?php if($value['visible'] == false ): ?>style="TEXT-DECORATION: line-through" <?php endif;?>onclick='dotu(<?php echo $value['id']; ?>);' title='<?php echo $value['f3']; ?>'>
+<SPAN style="cursor:pointer;<?php if($value['visible'] == false ): ?>TEXT-DECORATION: line-through <?php 
+endif;?>" onclick='dotu(<?php echo $value['id']; ?>);' title='<?php echo $value['f3']; ?>'>
 <?php echo $value['text']; ?></SPAN>&nbsp;&nbsp;&nbsp;&nbsp;
 
-<SPAN title='<?php echo $value['fi1']; ?>' onclick='dotu(<?php echo $value['id1']; ?>);' >
+<SPAN style="cursor:pointer;" title='<?php echo $value['fi1']; ?>' onclick='dotu(<?php echo $value['id1']; ?>);' >
 <?php echo $value['tx1']; ?></SPAN>&nbsp;&nbsp;
 &nbsp;&nbsp;
-<SPAN title='<?php echo $value['fi2']; ?>' onclick='dotu(<?php echo $value['id2']; ?>);' >
+<SPAN style="cursor:pointer;" title='<?php echo $value['fi2']; ?>' onclick='dotu(<?php echo $value['id2']; ?>);' >
 <?php echo $value['tx2']; ?></SPAN>
 
 <?php endforeach; ?>
