@@ -37,7 +37,7 @@ header('status: 401 Unauthorized'); exit;
 	$valid=rand(1000,100000);
 	$_SESSION['valid']=$valid;
 	}
-	
+$cpr = $CACHE->readCache('cpr');	
 	$atitle="查询‘".$akey."’的结果：";
 		$ltime = time();
 	$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES (
@@ -57,7 +57,14 @@ header('status: 401 Unauthorized'); exit;
 		$row[tx1]=$aDa[text];
 		$row[id1]=$aDa[concept2_id];
 	 $row[re1]=$aDa[relation_id];
-	 $row[fi1]=$aDa[best_frame_id];
+	 if($aDa[best_frame_id]>0){		
+			$ss=str_replace("1",$row[text],$cpr[$aDa[best_frame_id]]);
+			$ss=str_replace("2",$aDa[text],$ss);
+			$row[fi1]=$ss;
+			}else{
+			 $row[fi1]=$cpr[$aDa[relation_id]];
+			}
+
 		 $sql3 = "SELECT a.concept1_id,a.concept2_id,
 		a.relation_id,a.best_frame_id,conceptnet_concept.text FROM conceptnet_assertion a LEFT JOIN
 		conceptnet_concept ON a.concept1_id=conceptnet_concept.id
@@ -67,7 +74,14 @@ header('status: 401 Unauthorized'); exit;
 		$row[tx2]=$aDa3[text];
 		$row[id2]=$aDa3[concept1_id];
 	 $row[re2]=$aDa3[relation_id];
-	 $row[fi2]=$aDa3[best_frame_id];
+	 if($aDa3[best_frame_id]>0){		
+			$ss=str_replace("1",$aDa3[text],$cpr[$aDa3[best_frame_id]]);
+			$ss=str_replace("2",$row[text],$ss);
+			$row[fi2]=$ss;
+			}else{
+			 $row[fi2]=$cpr[$aDa3[relation_id]];
+			}
+
 	$concepts[]=$row;
 		}
 		$hhtitle=$akey;
@@ -122,6 +136,7 @@ $vfr="unlog";
 	$vfr="mview";
    $sqadd="order by a.relation_id,a.best_frame_id LIMIT 4000";
 }
+$cpr = $CACHE->readCache('cpr');	
 	$DB->query("UPDATE conceptnet_concept SET words=words+1 WHERE id='$cpid'");
 	$sq1 = "SELECT * FROM conceptnet_concept WHERE id='$cpid'";
 	$pDa = $DB->once_fetch_array($sq1);
@@ -136,15 +151,11 @@ $vfr="unlog";
 	$res2 = $DB->query($sq2);
 	while ($row = $DB->fetch_array($res2)) {
 			if($row[best_frame_id]>0){		
-			$sqqq1="SELECT text FROM conceptnet_frame WHERE id='$row[best_frame_id]'";
-			$qDq = $DB->once_fetch_array($sqqq1);
-			$ss=str_replace("1",$pDa[text],$qDq[text]);
+			$ss=str_replace("1",$pDa[text],$cpr[$row[best_frame_id]]);
 			$ss=str_replace("2",$row[text],$ss);
 			$row[frame]=$ss;
 			}else{
-			$sqqq2="SELECT name FROM conceptnet_relation WHERE id='$row[relation_id]'";
-			 $qDq2 = $DB->once_fetch_array($sqqq2);
-			 $row[frame]=$qDq2[name];
+			 $row[frame]=$cpr[$row[relation_id]];
 			}
 			$concepts[]=$row;
 			}
@@ -155,17 +166,12 @@ $vfr="unlog";
 		WHERE concept2_id='$cpid' $sqadd";
 		$res3 = $DB->query($sq3);
 	while ($row2 = $DB->fetch_array($res3)) {
-		if($row2[best_frame_id]>0){		
-			$sqqqq1="SELECT text FROM conceptnet_frame WHERE id='$row2[best_frame_id]'";
-			$qDqq = $DB->once_fetch_array($sqqqq1);
-			
-			$sss=str_replace("2",$pDa[text],$qDqq[text]);
-			$sss=str_replace("1",$row2[text],$sss);
-			$row2[frame]=$sss;
-			}else{			
-			$sqqqq2="SELECT name FROM conceptnet_relation WHERE id='$row2[relation_id]'";
-			 $qDqq2 = $DB->once_fetch_array($sqqqq2);
-			 $row2[frame]=$qDqq2[name];
+			if($row2[best_frame_id]>0){		
+			$ss=str_replace("1",$pDa[text],$cpr[$row2[best_frame_id]]);
+			$ss=str_replace("2",$row2[text],$ss);
+			$row2[frame]=$ss;
+			}else{
+			 $row2[frame]=$cpr[$row2[relation_id]];
 			}
 		$concepts2[]=$row2;
 		}
