@@ -167,8 +167,8 @@ $cpr = $CACHE->readCache('cpr');
 		$res3 = $DB->query($sq3);
 	while ($row2 = $DB->fetch_array($res3)) {
 			if($row2[best_frame_id]>0){		
-			$ss=str_replace("1",$pDa[text],$cpr[$row2[best_frame_id]]);
-			$ss=str_replace("2",$row2[text],$ss);
+			$ss=str_replace("1",$row2[text],$cpr[$row2[best_frame_id]]);
+			$ss=str_replace("2",$pDa[text],$ss);
 			$row2[frame]=$ss;
 			}else{
 			 $row2[frame]=$cpr[$row2[relation_id]];

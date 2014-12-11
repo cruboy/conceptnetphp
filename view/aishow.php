@@ -77,7 +77,7 @@ foreach($concepts2 as $value):
 	<input type="submit" id="addcpsubmit" value="添加" />
 	</form>
 </div>
-<SCRIPT stype=text/javascript>
+<SCRIPT type=text/javascript>
  function dotu(id){
 	  var temp = document.createElement("form");         
    temp.action = '/m/index.php';         
