@@ -67,9 +67,6 @@ if($hid==$acid) mMsg("重复".$hid, '-1');
 $cpaddid=-$hid;
 }
 else{
-	if($vfrom=="ladd"){
-	$DB->query("INSERT INTO ".$tabf."_concept (text,visible) VALUES ('$addname','1' )");
-	}else if($vfrom=="lcru")
 	    $DB->query("INSERT INTO ".$tabf."_concept (text,visible) VALUES ('$addname','1' )");
 		$hid = $DB->insert_id();
 		$cpaddid=$hid;
