@@ -12,14 +12,32 @@ define ('TEMPLATE_PATH', EMLOG_ROOT . '/m/view/');
 
 $isgzipenable = 'n'; //手机浏览关闭gzip压缩
 $index_lognum = 8;
-
+if(isset($_GET['cp']))
+{
+header('HTTP/1.1 404 Not Found'); 
+header("status: 404 Not Found"); 
+exit;
+}
 $logid = isset ($_GET['post']) ? intval ($_GET['post']) : '';
 $action = isset($_GET['action']) ? addslashes($_GET['action']) : '';
 $cpid = isset ($_POST['cp']) ? intval ($_POST['cp']) : '';
 $fnid = isset ($_GET['fn']) ? intval ($_GET['fn']) : '';
 $sid = isset ($_GET['sid']) ? intval ($_GET['sid']) : '';
 $akey = isset($_POST['aikey']) ? addslashes($_POST['aikey']) : '';
+
 if ($_SESSION['views']>2&&(isset($_GET['cplist'])or!empty ($akey))) {
+	if(isset($_GET['cplist'])){$valid=rand(1000,100000);
+	$_SESSION['valid']=$valid;
+	}
+	elseif($_POST['valid']!=$_SESSION['valid'])
+	{
+header('HTTP/1.1 401 Unauthorized'); 
+header('status: 401 Unauthorized'); exit;
+}else{
+	$valid=rand(1000,100000);
+	$_SESSION['valid']=$valid;
+	}
+	
 	$atitle="查询‘".$akey."’的结果：";
 		$ltime = time();
 	$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES (
@@ -77,7 +95,17 @@ if (empty ($action) && empty ($logid) && empty ($cpid)&& empty ($akey)
 }
 
 if (!empty ($cpid) &&$_SESSION['views']>2) 
-{$usersina_id= intval($_SESSION['oauth2']["user_id"]);
+{
+	if($_POST['valid']!=$_SESSION['valid'])
+	{
+header('HTTP/1.1 401 Unauthorized'); 
+header('status: 401 Unauthorized'); exit;
+}else{
+	$valid=rand(1000,100000);
+	$_SESSION['valid']=$valid;
+	}
+	
+	$usersina_id= intval($_SESSION['oauth2']["user_id"]);
 	$DB = MySql::getInstance();
 $concepts=array();
 $logs1=array();
@@ -113,11 +141,11 @@ $vfr="unlog";
 			$ss=str_replace("1",$pDa[text],$qDq[text]);
 			$ss=str_replace("2",$row[text],$ss);
 			$row[frame]=$ss;
-			}
+			}else{
 			$sqqq2="SELECT name FROM conceptnet_relation WHERE id='$row[relation_id]'";
 			 $qDq2 = $DB->once_fetch_array($sqqq2);
-			 $row[rela]=$qDq2[name];
-			 
+			 $row[frame]=$qDq2[name];
+			}
 			$concepts[]=$row;
 			}
 	$concepts2=array();
@@ -134,10 +162,11 @@ $vfr="unlog";
 			$sss=str_replace("2",$pDa[text],$qDqq[text]);
 			$sss=str_replace("1",$row2[text],$sss);
 			$row2[frame]=$sss;
-			}
+			}else{			
 			$sqqqq2="SELECT name FROM conceptnet_relation WHERE id='$row2[relation_id]'";
 			 $qDqq2 = $DB->once_fetch_array($sqqqq2);
-			 $row2[rela]=$qDqq2[name];
+			 $row2[frame]=$qDqq2[name];
+			}
 		$concepts2[]=$row2;
 		}
 	include View::getView('header');

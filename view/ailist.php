@@ -6,6 +6,7 @@
 	<ul id="logserch">
 	<form name="keycp" method="post" action="<?php echo BLOG_URL; ?>m/index.php">
 	<input name="aikey"  type="text" value="<?php echo $akey; ?>" style="width:120px;"/>
+    <input name="valid"  type="hidden" value="<?=$valid?>" />
 	<input type="submit" id="logserch_logserch" value="搜索" />
 	</form>
 	</ul>
@@ -45,7 +46,7 @@ foreach($concepts as $value):
        temp.appendChild(opt);  
 	   opt = document.createElement("input"); 
 	      opt.name = 'valid';         
-        opt.value = <?php echo rand();?>;         
+        opt.value = <?php echo $valid;?>;         
        temp.appendChild(opt); 
    document.body.appendChild(temp);         
    temp.submit();         
