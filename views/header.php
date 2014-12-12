@@ -2,11 +2,11 @@
 if(!defined('EMLOG_ROOT')) {exit('error!');}
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 require_once View::getView('module');
-//echo View::getView('module');
+//echo View::getView('module');<script src="http://tjs.sjs.sinajs.cn/t35/apps/opent/js/frames/client.js" language="JavaScript">//</ script>
 ?>
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<script src="http://tjs.sjs.sinajs.cn/t35/apps/opent/js/frames/client.js" language="JavaScript"></script>
+
 <head>
 <title><?php echo $hhtitle.'-'.Option::get('blogname'); ?></title>
 <style type="text/css" id="internalStyle">
@@ -33,15 +33,8 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 </div>
 <div id="navi">
 
-<a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=2821" >十字架</a> 
-<a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=16608" >幼童</a> 
-<a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=23206" >脱光衣服</a>
-
-<a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=57676" >鞭打</a> 
-
-||||
 <a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=48" <?php if($cpid==48)echo 'id="active"'; ?>>志愿者</a>
-<a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=72" <?php if($cpid==72)echo 'id="active"'; ?>>本应用成员</a>
+<a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=72" <?php if($cpid==72)echo 'id="active"'; ?>>home</a>
 <a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=468" <?php if($cpid==468)echo 'id="active"'; ?>>爱心</a>
 <a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=405" <?php if($cpid==405)echo 'id="active"'; ?>>善良</a>
 <a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=136" <?php if($cpid==136)echo 'id="active"'; ?>>知识</a>
@@ -49,7 +42,7 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 <a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=27310"<?php if($cpid==27310)echo 'id="active"'; ?> >儿童</a> 
 <a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=798" <?php if($cpid==798)echo 'id="active"'; ?>>孩子</a> 
 <a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=54" <?php if($cpid==54)echo 'id="active"'; ?>>学习</a>
-<a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=653" <?php if($cpid==653)echo 'id="active"'; ?>>上学</a> ||
+<a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=653" <?php if($cpid==653)echo 'id="active"'; ?>>上学</a> 
 <a href="/" ><?php if(UID) echo $userData['username']; else echo "游客"; ?></a>，您好！
 <a href="/">首页</a>
 <a href="<?php echo BLOG_URL; ?>m/ainet.php" <?php if($action=='')echo 'id="active"'; ?>>本首页</a> 
