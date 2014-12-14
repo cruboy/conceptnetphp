@@ -81,7 +81,7 @@ $sq3 = "INSERT INTO ".$tabf."_assertion (concept1_id,concept2_id,relation_id";
 }
 else
 {
-$DB->query("UPDATE ".$tabf."_concept SET f2=f1+2,f3=f3+1 WHERE id='$acid'");
+$DB->query("UPDATE ".$tabf."_concept SET f2=f2+1,f3=f3+1 WHERE id='$acid'");
 $DB->query("UPDATE ".$tabf."_concept SET f1=f1+1,f3=f3+1 WHERE id='$hid'");
 $ar=-$ar;
 $sq2 = "WHERE concept2_id='$acid' AND concept1_id='$hid' ";
