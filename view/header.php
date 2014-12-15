@@ -29,6 +29,7 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 <div id="blogname"><?php echo Option::get('blogname'); ?></div>
 </div>
 <div id="navi">
+<?php if(UID) echo $userData['username']; else echo "游客"; ?></a>，您好！
 <a href="<?php echo BLOG_URL; ?>">返回PC版首页</a> 
 <a href="./" <?php if($action==''&&empty($cpid))echo 'id="active"'; ?>>首页</a> 
 <a href="./?cplist" <?php if(!empty($cpid))echo 'id="active"'; ?>>随便看看</a>
