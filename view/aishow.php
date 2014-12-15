@@ -51,7 +51,7 @@ foreach($concepts2 as $value):
 </div>
 <?php endforeach; ?>
 <br>
-<form name="addcp" method="post" action="<?php echo BLOG_URL; ?>m/doadd.php?action=addcp">
+<form name="addcp<?php echo $valid;?>" >
     添加
     <input id="sch" type="radio" value="0" name="dirs" checked />
     <label for="sch" >前向(1="<?php echo $pDa['text']; ?>")</label> 
@@ -73,8 +73,17 @@ foreach($concepts2 as $value):
 	</select> 
 	名称：<input name="addname"  type="text" value="" style="width:120px;"/>
     <input type="hidden" name="cp0s" value="<?php echo $pDa['text']; ?>" />
-    <input type="hidden" name="cid" value="<?php echo $cpidd; ?>" />
-	<input type="submit" id="addcpsubmit" value="添加" />
+    <input type="hidden" name="cid" value="<?php echo $pDa['id']; ?>" />
+        <input type="hidden" name="valid" value="<?php echo $valid;?>" />
+	<a   onClick="
+    $.ajax({
+				url:'<?php echo BLOG_URL; ?>m/doadd.php?action=addcp',
+				type:'POST',
+				data:$('#addcp<?php echo $valid;?>').serialize(),
+				success: function(data){
+                     alert(data);
+					}
+		});"
 	</form>
 </div>
 <SCRIPT type=text/javascript>

@@ -44,7 +44,7 @@ $cpr = $CACHE->readCache('cpr');
 				'keyword','$vsid','0','$uid','$usersina_id','$ltime','$akey','$gip')");
 	$sql = "SELECT * FROM conceptnet_concept WHERE text LIKE '%$akey%' order by Rand()  LIMIT 10";
 			$res = $DB->query($sql);
-		
+	$concepts=array();	
 			while ($row = $DB->fetch_array($res)) {
 			
 		// $sql2 = "SELECT * FROM conceptnet_assertion WHERE concept1_id='$row[id]' or concept2_id='$row[id]' LIMIT 2";
