@@ -37,7 +37,8 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 
 <a href="./?action=tw" <?php if($action=='tw')echo 'id="active"'; ?>>动态</a> 
 <a href="./?action=com" <?php if($action=='com')echo 'id="active"'; ?>>评论</a> 
-	<?php if(ROLE == 'admin' || ROLE == 'writer'): ?>
+	<?php if(ROLE == 'admin' ): ?>
+    <a href="<?php echo BLOG_URL; ?>m/cash.php">支票</a>
 <a href="<?php echo BLOG_URL; ?>m/enet.php">enet管理</a>
 <a href="<?php echo BLOG_URL; ?>m/dict.php">词典</a>
 <?php endif;?>
