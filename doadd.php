@@ -123,7 +123,7 @@ $DB->query("INSERT INTO vaddlog (viewid,cp0,cp0id,rid,cpadd,cpaddid,relation,
 		'$vsid','$cp0s','$acidd','$arrr','$addname','$cpaddid','$rid',
 		'$uid','$usersina_id','$ltime','$sst','$gip')");
 
-mMsg('添加成功！'.$pp.$hid,'');
+mMsg('添加成功！'.$pp."C".$cpaddid."R".$rid,'');
 
 }
 
