@@ -7,14 +7,24 @@
 <div class="comcont">
 &nbsp;&nbsp;
 <?php if($pDa['visible'] == true ): ?>
-<a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=<?php echo $pDa['id']; ?>">
-<?php echo $pDa['text']; ?></a>&nbsp;
-<a href="do.php?del=<?php echo $pDa['id'];?>"><font size="1">[删]</font></a>
+<SPAN id='tssp'><a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=<?php echo $pDa['id']; ?>">
+<?php echo $pDa['text']; ?></a></SPAN>&nbsp;
+<a  onClick="
+    $.ajax({url:'<?php echo BLOG_URL; ?>m/do.php',
+				type:'POST',
+				data:{'del':'<?php echo $pDa['id'];?>'},
+				success: function(data){
+                     alert(data);
+					}
+		});"><font size="1">[删]</font></a>
 <?php else:?>
 
-<SPAN style="TEXT-DECORATION: line-through"><a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=<?php echo $pDa['id']; ?>">
+<SPAN id='tssp' style="TEXT-DECORATION: line-through"><a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=<?php echo $pDa['id']; ?>">
 <?php echo $pDa['text']; ?></a></SPAN>&nbsp;
-<a href="do.php?res=<?php echo $pDa['id'];?>"><font size="1">[留]</font></a>
+<a  onClick="
+    $.ajax({url:'<?php echo BLOG_URL; ?>m/do.php',type:'POST',
+				data:{'res':'<?php echo $pDa['id'];?>'},
+				success: function(data){ alert(data);}});"><font size="1">[恢复]</font></a>
 <?php endif;?>
 
 关系数<?php echo $pDa['f3']; ?>
@@ -46,8 +56,12 @@ foreach($concepts as $value):
 ：<?php echo $value['f3']; ?>
 ：c:<?php echo $value['num_assertions']; ?>
 <?php echo " +".$value['relation_id'].".".$value['best_frame_id'].' '.$value['rela'].":".$value['frame']; ?>
-<a href="do.php?goodr=<?php echo $value['aid'];?>"><font size="1">[对]<?php echo $value['good'];?></font></a>
-<a href="do.php?badr=<?php echo $value['aid'];?>"><font size="1">[不好]<?php echo $value['bad'];?></font></a>
+<a  onClick="$.ajax({url:'<?php echo BLOG_URL; ?>m/do.php',type:'POST',
+				data:{'goodr':'<?php echo $value['aid'];?>'},
+				success: function(data){ alert(data);}});"><font size="1">[好]<?php echo $value['good'];?></font></a>
+<a  onClick="$.ajax({url:'<?php echo BLOG_URL; ?>m/do.php',type:'POST',
+				data:{'badr':'<?php echo $value['aid'];?>'},
+				success: function(data){ alert(data);}});"><font size="1">[不好]<?php echo $value['bad'];?></font></a>
 </div>
 <?php endforeach; ?>
 
@@ -71,8 +85,12 @@ foreach($concepts2 as $value):
 ：c:<?php echo $value['num_assertions']; ?>
 
 <?php echo " -".$value['relation_id'].".".$value['best_frame_id'].' '.$value['rela'].":".$value['frame']; ?>
-<a href="do.php?goodr=<?php echo $value['aid'];?>"><font size="1">[对<?php echo $value['good'];?>]</font></a>
-<a href="do.php?badr=<?php echo $value['aid'];?>"><font size="1">[不好<?php echo $value['bad'];?>]</font></a>
+<a  onClick="$.ajax({url:'<?php echo BLOG_URL; ?>m/do.php',type:'POST',
+				data:{'goodr':'<?php echo $value['aid'];?>'},
+				success: function(data){ alert(data);}});"><font size="1">[好]<?php echo $value['good'];?></font></a>
+<a  onClick="$.ajax({url:'<?php echo BLOG_URL; ?>m/do.php',type:'POST',
+				data:{'badr':'<?php echo $value['aid'];?>'},
+				success: function(data){ alert(data);}});"><font size="1">[不好]<?php echo $value['bad'];?></font></a>
 </div>
 <?php endforeach; ?>
 <br>

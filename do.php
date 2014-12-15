@@ -88,46 +88,47 @@ if ($action == 'relation') {
 // concept.
 if ($action == '') {
 $ltime = time();
-if(isset($_GET['del']) )
+if(isset($_POST['del']) )
 {
 $hhtitle="删除概念";
-$eid =intval($_GET['del']);
+$eid =intval($_POST['del']);
 $DB->query("INSERT INTO oplog (opid,concept,gid,sina_uid,date,loginip) VALUES (
 				'4','$eid','$uid','$usersina_id','$ltime','$gip')");
-$DB->query("UPDATE conceptnet_concept SET visible=0 WHERE id=".$eid);
+$DB->query("UPDATE conceptnet_concept SET edittime=$ltime,visible=0 WHERE id=".$eid);
 }
 
-else if(isset($_GET['res']) )
+else if(isset($_POST['res']) )
 {
 $hhtitle="恢复概念";
-$eid =intval($_GET['res']);
+$eid =intval($_POST['res']);
 $DB->query("INSERT INTO oplog (opid,concept,gid,sina_uid,date,loginip) VALUES (
 				'5','$eid','$uid','$usersina_id','$ltime','$gip')");
-$DB->query("UPDATE conceptnet_concept SET visible=1 WHERE id=".$eid);
+$DB->query("UPDATE conceptnet_concept SET edittime=$ltime,visible=1 WHERE id=".$eid);
 }
 
-else if(isset($_GET['badr']) )
+else if(isset($_POST['badr']) )
 {
 $hhtitle="bad";
-$rid =intval($_GET['badr']);
+$rid =intval($_POST['badr']);
 $DB->query("INSERT INTO oplog (opid,relation,gid,sina_uid,date,loginip) VALUES (
 				'7','$rid','$uid','$usersina_id','$ltime','$gip')");
-$DB->query("UPDATE conceptnet_assertion SET bad=bad+1 WHERE id=".$rid);
+$DB->query("UPDATE conceptnet_assertion SET edittime='$ltime',bad=bad+1 WHERE id=".$rid);
 }
-else if(isset($_GET['goodr']) )
+else if(isset($_POST['goodr']) )
 {
 $hhtitle="good";
-$rid =intval($_GET['goodr']);
+$rid =intval($_POST['goodr']);
 $DB->query("INSERT INTO oplog (opid,relation,gid,sina_uid,date,loginip) VALUES (
 				'6','$rid','$uid','$usersina_id','$ltime','$gip')");
-$DB->query("UPDATE conceptnet_assertion SET good=good+1 WHERE id=".$rid);
+$DB->query("UPDATE conceptnet_assertion SET edittime='$ltime',good=good+1 WHERE id=".$rid);
 }
 else
 $hhtitle="错误";
+
 mMsg($hhtitle.'操作成功！', $turl."?cp=".$eid);
 }
 
 function mMsg($msg, $url) {
-	echo $msg."<a href='".$url."'>返回</a>";
+	echo $msg;
 	exit;
 }
