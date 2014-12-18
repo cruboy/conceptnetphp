@@ -48,10 +48,11 @@
 			<td width="10%">开始</td>
 			<td width="10%">结束</td>
 			<td width="5%">存期</td>
-			<td width="10%">钱</td>
+            <td width="10%">结束2</td>
 			<td width="10%">金额</td>
             <td width="10%">息</td>
 			<td width="10%">总</td>
+            <td width="10%">钱</td>
 			<td width="2%">cv</td>
 		</tr>
 		<tr>
@@ -67,18 +68,17 @@
 		    }
 		    
 		    ?>
-			<td><a href='cash.php?action=edit&id=<?php echo $row[id]; ?>'><?php echo $row[id]; ?>
-			</a></td>
-			<td><?php echo $row[text]; ?></td>
-			<td><?php echo $row[dotype]; ?></td>
-			<td><?php echo $row[rule]; ?>
-			</td>
-			<td><?php echo $row[rule2]; ?>
-			</td>
-			<td><?php echo strip_tags($row[procs]); ?>
-			</td>
-			<td><?php echo $row[num_assertions]; ?></td>
-			<td><?php echo $row[visible]; ?></td>
+			<td><a href='cash.php?action=edit&id=<?php echo $row[id]; ?>'>
+			<?php echo $row[id]; ?>	</a></td>
+			<td><?php echo $row[bank]; ?><?php echo $row[fenhang]; ?></td>
+			<td><?php echo $row[name]; ?><?php echo $row[zhanghao]; ?>	</td>
+			<td><?php echo $row[start]; ?>	</td>
+		<td><?php echo $row[end0]; ?>	</td>
+			<td><?php echo $row[nian]; if($row[auto])echo "Y"?></td>
+           <td> <?php echo $row[ends]; ?></td>
+			<td><?php echo $row[money]; ?></td>
+            <td><?php echo $row[lilv]; ?>@<?php echo $row[lixi]; ?></td>
+            <td><?php echo $row[account]; ?></td>
 			<td><?php echo $row['cv']; ?></td>
 		     <tr>
 			<?php

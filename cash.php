@@ -9,7 +9,7 @@ require_once '../init.php';
 define('TEMPLATE_PATH', EMLOG_ROOT.'/m/view/');//后台当前模板路径
 
 $action = isset($_GET['action']) ? addslashes($_GET['action']) : "";
-if (ISLOGIN !== true || $action == "") {
+if (ISLOGIN !== true ) {
 	echo "Access Denied!";
 	//exit ();
 }
@@ -95,11 +95,9 @@ elseif($action =="edit"){
     
 	$id=intval($_GET['id']);
     if($id>0){
-	$tpDa = $DB->once_fetch_array("SELECT * FROM cruboy_enet WHERE id='$id' ");
-	$ass=$tpDa[dotype];
-	$dhide=$tpDa[visible];
+	$v = $DB->once_fetch_array("SELECT * FROM cruboy_cash WHERE id='$id' ");
     }
-	include View::getView('enetedit');
+	include View::getView('cashedit');
 }
 
 
