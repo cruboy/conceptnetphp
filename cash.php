@@ -104,16 +104,8 @@ elseif($action =="edit"){
 elseif($action =="editok"){
 
 	$id=intval($_POST['id']);
-	$att=intval($_POST['ass']);
-	$att2=intval($_POST['ass2']);
-	$vi=intval($_POST['dhide']);
-	$cv=intval($_POST['bat']);
-	$word = addslashes(trim($_POST['word1']));
-	$word2 = addslashes(trim($_POST['word2']));
-	$word3 = addslashes(trim($_POST['word3']));
-	$procs = addslashes(trim($_POST['procs']));
-	$note = addslashes(trim($_POST['note']));
 
+$logData=$_POST;
 	$uid=UID;
 	$ltime=time();
 	$gip=getIP();
