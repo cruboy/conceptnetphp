@@ -126,6 +126,7 @@ $yYMD="$yDate_Y-{$md[1]}-{$md[2]}";
 //echo $yYMD;
 		if(strtotime($yYMD)>$ltime) break;
 		};
+		
 		if(empty($yYMD2))
 		{$logData[end0]=$yYMD;
 		$logData['ends']=$yYMD;
