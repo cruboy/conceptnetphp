@@ -103,12 +103,42 @@ elseif($action =="edit"){
 
 elseif($action =="editok"){
 
-	$id=intval($_POST['id']);
+	$id=intval($_GET['id']);
 
 $logData=$_POST;
 	$uid=UID;
 	$ltime=time();
 	$gip=getIP();
+	$logData[addtime]=$ltime;
+		$logData[edittime]=$ltime;
+			$logData[creator]=$uid;
+		//$logData[end0]=	
+	
+	$yDate_Y=date('Y',strtotime($logData[start]));
+	$md=explode('-',$logData[start]);
+	for(;;)
+		{
+			$yYMD2=$yYMD;
+			
+			$yDate_Y+=$logData[nian];
+
+$yYMD="$yDate_Y-{$md[1]}-{$md[2]}";
+//echo $yYMD;
+		if(strtotime($yYMD)>$ltime) break;
+		};
+		if(empty($yYMD2))
+		{$logData[end0]=$yYMD;
+		$logData['ends']=$yYMD;
+			}
+			else{
+				$logData[end0]=$yYMD2;
+		$logData['ends']=$yYMD;
+				}
+		//echo $yYMD2;
+			print_r($logData);
+		//	exit;
+			echo getlv($logData['bank'],$logData['nian'],$logData['end0']);
+			exit;
 	if($id>0){
 
 	  $Item = array();
@@ -116,7 +146,7 @@ $logData=$_POST;
 			$Item[] = "$key='".addslashes($data)."'";
 		}
 		$upStr = implode(',', $Item);
-		$this->db->query("UPDATE " . DB_PREFIX . "cash SET $upStr WHERE id=$id");
+		$DB->query("UPDATE cruboy_cash SET $upStr WHERE id=$id");
 	$msf="修改成功！";
 	}
 	else{
@@ -128,7 +158,7 @@ $logData=$_POST;
 		}
 		$field = implode(',', $kItem);
 		$values = "'" . implode("','", $dItem) . "'";
-		$this->db->query("INSERT INTO " . DB_PREFIX . "cash ($field) VALUES ($values)");
+		$DB->query("INSERT INTO cruboy_cash ($field) VALUES ($values)");
 		$logid = $this->db->insert_id();
 			$msf="添加成功！".$logid;
 		}
@@ -139,4 +169,16 @@ $logData=$_POST;
 }
 include View::getView('footer');
 
+
+function getlv($bank,$year,$date){
+	$DB = MySql :: getInstance();
+	if($year==0.5)
+	$bb="m6";
+	elseif($year==0.25)
+	$bb="m3";
+	else
+	$bb="y".$year;
+	$v = $DB->once_fetch_array("SELECT $bb FROM cruboy_lv WHERE bank='$bank' and st<'$date' order by st desc limit 1");
+	return $v[$bb];
+	}
 ?>

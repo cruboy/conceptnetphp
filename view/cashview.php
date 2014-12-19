@@ -44,15 +44,19 @@
 		<tr style="background-color: #CCFFFF;">
 			<td width="6%">id</td>
 			<td width="10%">银行</td>
-			<td width="14%">号</td>
+			<td width="4%">号</td>
 			<td width="10%">开始</td>
-			<td width="10%">结束</td>
+			
 			<td width="5%">存期</td>
+            <td width="10%">转至</td>
+            <td width="10%">中息</td>
             <td width="10%">结束2</td>
 			<td width="10%">金额</td>
             <td width="10%">息</td>
 			<td width="10%">总</td>
-            <td width="10%">钱</td>
+            <td width="10%">活</td>
+             <td width="10%">至天</td>
+              <td width="10%">损</td>
 			<td width="2%">cv</td>
 		</tr>
 		<tr>
@@ -71,15 +75,20 @@
 			<td><a href='cash.php?action=edit&id=<?php echo $row[id]; ?>'>
 			<?php echo $row[id]; ?>	</a></td>
 			<td><?php echo $row[bank]; ?><?php echo $row[fenhang]; ?></td>
-			<td><?php echo $row[name]; ?><?php echo $row[zhanghao]; ?>	</td>
+			<td title="<?php echo $row[zhanghao]; ?>	"><?php echo $row[name]; ?><?php echo substr($row[zhanghao],-2,2); ?>	</td>
 			<td><?php echo $row[start]; ?>	</td>
-		<td><?php echo $row[end0]; ?>	</td>
-			<td><?php echo $row[nian]; if($row[auto])echo "Y"?></td>
+		
+			<td><?php echo $row[nian]; if($row[auto])echo "z"?></td>
+            <td><?php echo $row[end0]; ?>	</td>
+            <td title="<?php echo $row[zxii]; ?>"><?php echo $row[zxi]; ?>	</td>
            <td> <?php echo $row[ends]; ?></td>
 			<td><?php echo $row[money]; ?></td>
-            <td><?php echo $row[lilv]; ?>@<?php echo $row[lixi]; ?></td>
+            <td title="<?php echo $row[lilv]; ?>"><?php echo $row[lixi]; ?></td>
             <td><?php echo $row[account]; ?></td>
-			<td><?php echo $row['cv']; ?></td>
+               <td><?php echo $row[huo]; ?></td>
+                  <td><?php echo $row[zhit]; ?></td>
+                   <td><?php echo $row[sun]; ?></td>   
+			<td><?php echo $row['visible']; ?></td>
 		     <tr>
 			<?php
 			$i++;

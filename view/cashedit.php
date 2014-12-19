@@ -3,7 +3,7 @@
 }?>
 
 <div id="m">
-		<form action="cash.php?action=editok" method="post" name="hinet">
+		<form action="cash.php?action=editok&id=<?php  echo $v[id]; ?>" method="post" name="hinet">
 			<?php
 			if($id<1){
 				echo "添加cash：";
@@ -13,7 +13,6 @@
 			}
 			?>
 			<br>
-			<input type="hidden" name="id" value="<?php  echo $v[id]; ?>" /> 
 			银行: <?php  echo $v[bank]; ?>
 			<select	 name="bank" >
             <option value="" <?php if($v[bank]=='') echo "selected='selected'"; ?>>---</option>
