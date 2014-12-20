@@ -116,30 +116,37 @@ $logData=$_POST;
 	
 	$yDate_Y=date('Y',strtotime($logData[start]));
 	$md=explode('-',$logData[start]);
+	$xil="";
+	$yYMD=$logData['start'];
+
 	for(;;)
 		{
 			$yYMD2=$yYMD;
+			$xit2=$xit;
 			
+		$lv= getlv($logData['bank'],$logData['nian'],$yYMD);
+	$xitt=$logData['money']*0.01*$logData['nian']*$lv;
+	$xit+=$xitt;
+	$xil.=$yYMD.'*'.$lv.' '.$xit.' ';	
 			$yDate_Y+=$logData[nian];
 
 $yYMD="$yDate_Y-{$md[1]}-{$md[2]}";
 //echo $yYMD;
+$xit3=$xitt;
 		if(strtotime($yYMD)>$ltime) break;
 		};
 		
-		if(empty($yYMD2))
-		{$logData[end0]=$yYMD;
+
+		$logData[end0]=$yYMD2;
 		$logData['ends']=$yYMD;
-			}
-			else{
-				$logData[end0]=$yYMD2;
-		$logData['ends']=$yYMD;
-				}
-		//echo $yYMD2;
+		$logData['lilv']=$lv;
+$logData['lixi0']=$xit2;
+$logData['lixi']=$xit3;
+$logData['notexi']=$xil;
 			print_r($logData);
 		//	exit;
-			echo getlv($logData['bank'],$logData['nian'],$logData['end0']);
-			exit;
+		//	echo getlv($logData['bank'],$logData['nian'],$logData['end0']);
+			//exit;
 	if($id>0){
 
 	  $Item = array();
@@ -160,7 +167,7 @@ $yYMD="$yDate_Y-{$md[1]}-{$md[2]}";
 		$field = implode(',', $kItem);
 		$values = "'" . implode("','", $dItem) . "'";
 		$DB->query("INSERT INTO cruboy_cash ($field) VALUES ($values)");
-		$logid = $this->db->insert_id();
+		$logid = $DB->insert_id();
 			$msf="添加成功！".$logid;
 		}
 	

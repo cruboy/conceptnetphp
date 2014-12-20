@@ -80,7 +80,7 @@
 		
 			<td><?php echo $row[nian]; if($row[auto])echo "z"?></td>
             <td><?php echo $row[end0]; ?>	</td>
-            <td title="<?php echo $row[zxii]; ?>"><?php echo $row[zxi]; ?>	</td>
+            <td title="<?php echo $row[notexi]; ?>"><?php echo $row[lixi0]; ?>	</td>
            <td> <?php echo $row[ends]; ?></td>
 			<td><?php echo $row[money]; ?></td>
             <td title="<?php echo $row[lilv]; ?>"><?php echo $row[lixi]; ?></td>
