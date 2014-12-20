@@ -11,7 +11,7 @@ define('TEMPLATE_PATH', EMLOG_ROOT.'/m/view/');//后台当前模板路径
 $action = isset($_GET['action']) ? addslashes($_GET['action']) : "";
 if (ISLOGIN !== true ) {
 	echo "Access Denied!";
-	//exit ();
+	exit ();
 }
 
 $uid = UID;
@@ -24,50 +24,23 @@ include View::getView('header');
 //3.HiNet Manage
 if ($action == "") {
 	$opt = $_GET['opt'];
-	$ass = intval ($_GET['ass']);
-	$att2=intval($_GET['ass2']);
-	$word = trim($_GET['word']);
-	$rule = trim($_GET['rule']);
-	$rule2 = trim($_GET['rule2']);
-	$procs = trim($_GET['procs']);
-	$used=intval($_GET['used']);
+	if(empty($opt)) $opt='id';
+	
+	$word = trim($_GET['bank']);
+	$rule = trim($_GET['name']);
+    $used=intval($_GET['used']);
 
       $asql2 = "";
 	if ($word != "")
-		$asql2 .= "and text like '%$word%' ";
+		$asql2 .= "and bank like '$word' ";
 		
-	if ($rule == "!")
-		$asql2 .= "and rule != '' ";
-	elseif ($rule == "#")
-		$asql2 .= "and rule = '' ";	
-	elseif ($rule != "")
-		$asql2 .= "and rule like '%$rule%' ";	
+     if ($rule != "")
+		$asql2 .= "and name like '$rule' ";	
 		
-	if ($rule2 == "!")
-		$asql2 .= "and rule2 != '' ";
-	elseif ($rule2 == "#")
-		$asql2 .= "and rule2 = '' ";		
-	elseif ($rule2 != "")
-		$asql2 .= "and rule2 like '%$rule2%' ";
-		
-	if ($procs == "!")
-		$asql2 .= "and procs != '' ";
-	elseif ($procs == "#")
-		$asql2 .= "and procs ='' ";	
-	elseif ($procs != "")
-		$asql2 .= "and procs like '%$procs%' ";
-
-	if($ass==0)
-		$ass=$att2;
-	if ($ass>0)
-		$asql2 .= "and dotype=$ass ";
-	elseif($ass==-1)
-		$asql2 .= "and dotype=0 ";
-	if ($used==1)
+	if ($used==0)
 		$asql2 .= "and visible=1 ";
 	elseif ($used==2)
 		$asql2 .= "and visible=0 ";
-					
 	$page = isset($_GET['page']) ? abs(intval ($_GET['page'])) : 1;
 	$nall=intval ($_GET['nall']);
 	if($nall<1)
@@ -77,13 +50,12 @@ if ($action == "") {
 		$row1 = $DB->fetch_array($res1);
 		$nall=$row1[a];
 	}
-$start=($page-1)*200;
+$start=($page-1)*200;				
 
-	$sql = "SELECT * FROM cruboy_cash where 1 $asql2 order by id desc LIMIT $start,200";
+	$sql = "SELECT * FROM cruboy_cash where 1 $asql2 order by $opt ";
 	$res = $DB->query($sql);
 	//$ap = $DB->affected_rows();
-	$pageurl="cash.php?word=".urlencode($word)."&ass=$ass&rule="
-	.urlencode($rule)."&rule2=".urlencode($rule2)."&procs=".urlencode($procs)."&used=$used&nall=$nall&page=";
+$pageurl="/m/cash.php?bank=$word&name=$rule&used=$used&opt=";
 	
     include View::getView('cashview');
 
