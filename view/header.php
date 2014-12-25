@@ -45,6 +45,7 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 <a href="<?php echo BLOG_URL; ?>m/dict.php">词典</a>
 <?php endif;?>
 <?php if(ISLOGIN === true): ?>
+ <a href="<?php echo BLOG_URL; ?>m/lilv.php">利率</a>
 <a href="./?action=write" <?php if($action=='write')echo 'id="active"'; ?>>写日志</a> 
 <a href="./?action=logout">退出</a>
 <?php else:?>

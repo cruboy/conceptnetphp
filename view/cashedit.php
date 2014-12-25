@@ -13,14 +13,14 @@
 			}
 			?>
 			<br>
-			银行: <?php  echo $v[bank]; ?>
+			银行:
 			<select	 name="bank" >
             <option value="" <?php if($v[bank]=='') echo "selected='selected'"; ?>>---</option>
 				<option value="威商" <?php if($v[bank]=='威商') echo "selected='selected'"; ?>>威商</option>
 				<option value="农合" <?php if($v[bank]=='农合') echo "selected='selected'"; ?>>农合</option>
 				<option value="ICBC" <?php if($v[bank]=='ICBC') echo "selected='selected'"; ?>>ICBC</option>
 				<option value="BC"	<?php if($v[bank]=='BC') echo "selected='selected'"; ?>>BC</option>
-			</select> (<?php  echo $v[fenhang]; ?>
+			</select> 
             <select	 name="fenhang" ><?php  echo $v[fenhang]; ?>
 				<option value="" <?php if($v[fenhang]=='') echo "selected='selected'"; ?>>---</option>
                 <option value="河西" <?php if($v[fenhang]=='河西') echo "selected='selected'"; ?>>河西</option>

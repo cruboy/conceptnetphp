@@ -4,59 +4,49 @@
 
 
 <div align="center">
-	<form action="./enet.php" method="get" name="hinetslist">
-	<input type="hidden" name="action" value="hinets" />
-	查询： <input type="text" name="word" value="<?php  echo $word; ?>" /> 关系: 
-		<select dir="ltr" name="ass" id="datefrom" >
-			<option value="0" <?php if($ass==0) echo "selected='selected'"; ?>>其他</option>
-				
-			<option value="1" <?php if($ass==1) echo "selected='selected'"; ?>>1
-				sortid</option>
-			<option value="2" <?php if($ass==2) echo "selected='selected'"; ?>>2
-				title</option>
-			<option value="3" <?php if($ass==3) echo "selected='selected'"; ?>>3
-				aka</option>
-			<option value="4" <?php if($ass==4) echo "selected='selected'"; ?>>4
-				direct</option>
-			<option value="5" <?php if($ass==5) echo "selected='selected'"; ?>>5
-				cast</option>
-
-		</select> 
-		(<input type="text" name="ass2" style="width: 50px;" value="<?php  echo $ass; ?>" /> ) 
-		对应 <input type="text"	name="rule" style="width: 120px;" value="<?php  echo $rule; ?>" />
-		 
-			 
+	<form action="/m/cash.php" method="get" name="hinetslist">
+	查询：<select	 name="bank" >
+     <option value="" <?php if($v[bank]=='') echo "selected='selected'"; ?>>---</option>
+				<option value="威商" <?php if($v[bank]=='威商') echo "selected='selected'"; ?>>威商</option>
+				<option value="农合" <?php if($v[bank]=='农合') echo "selected='selected'"; ?>>农合</option>
+				<option value="ICBC" <?php if($v[bank]=='ICBC') echo "selected='selected'"; ?>>ICBC</option>
+				<option value="BC"	<?php if($v[bank]=='BC') echo "selected='selected'"; ?>>BC</option>
+			</select> 
+            名 <select	 name="name" ><?php  echo $v[name]; ?>
+            <option value="" <?php if($v[name]=='') echo "selected='selected'"; ?>>--</option>
+				<option value="ma" <?php if($v[name]=='ma') echo "selected='selected'"; ?>>ma</option>
+				<option value="lin" <?php if($v[name]=='lin') echo "selected='selected'"; ?>>lin</option>
+                </select>
 			 <select dir="ltr" name="used" id="darom" >
 			<option value="0" <?php if($used==0) echo "selected='selected'"; ?>>所有</option>
 			<option value="1" <?php if($used==1) echo "selected='selected'"; ?>>可用</option>
 			<option value="2" <?php if($used==2) echo "selected='selected'"; ?>>不可用</option>
 			</select> 
-			 <input type="submit" value="查询" id="buttonGo" />（!不为空#为空）
-			 <a href='?post=20'>规则</a>
+			 <input type="submit" value="查询" id="buttonGo" />
 	</form>
 
 	<table width="98%" cellspacing=2 cellpadding=2
 		style="border-collapse: collapse; border: 1px dotted #cc0000">
 		<tr style="border-collapse: collapse; border: 1px dotted #cc0000">
-			<td colspan="7"><?php echo "支票--查询结果有 $nall 个，第 $page 页: <br>";?>
+			<td colspan="12"><?php echo "支票--查询结果有 $nall 个，第 $page 页: <br>";?>
 			</td>
 		</tr>
 		<tr style="background-color: #CCFFFF;">
-			<td width="6%">id</td>
-			<td width="10%">银行</td>
+			<td width="6%"><a href='<?=$pageurl?>id'>id</a></td>
+			<td width="10%"><a href='<?=$pageurl?>bank'>银行</a></td>
 			<td width="4%">号</td>
-			<td width="10%">开始</td>
+			<td width="10%"><a href='<?=$pageurl?>start'>开始</a></td>
 			
-			<td width="5%">存期</td>
-            <td width="10%">转至</td>
-            <td width="10%">中息</td>
-            <td width="10%">结束2</td>
-			<td width="10%">金额</td>
-            <td width="10%">息</td>
-			<td width="10%">总</td>
-            <td width="10%">活</td>
-             <td width="10%">至天</td>
-              <td width="10%">损</td>
+			<td width="5%"><a href='<?=$pageurl?>nian'>存期</a></td>
+            <td width="10%"><a href='<?=$pageurl?>end0'>转至</a></td>
+            <td width="10%"><a href='<?=$pageurl?>lixi0'>中息</a></td>
+            <td width="10%"><a href='<?=$pageurl?>ends'>结束2</a></td>
+			<td width="10%"><a href='<?=$pageurl?>money'>金额</a></td>
+            <td width="10%"><a href='<?=$pageurl?>lixi'>息</a></td>
+			<td width="10%"><a href='<?=$pageurl?>'>总</a></td>
+            <td width="10%"><a href='<?=$pageurl?>'>活</a></td>
+             <td width="10%"><a href='<?=$pageurl?>'>至天</a></td>
+              <td width="10%"><a href='<?=$pageurl?>'>损</a></td>
 			<td width="2%">cv</td>
 		</tr>
 		<tr>
@@ -65,6 +55,9 @@
 		<?php
 		$i=0;
 		while ($row = $DB->fetch_array($res)) {
+			$zt=intval((time()-strtotime($row[end0]))/3600/24);
+			$rhuo=0.35*$row[money]*$zt/365;
+			$rhuo=intval($rhuo)/100;
 		    if ($i % 2== 0) {
 		        echo "<tr>";
 		    } else {
@@ -80,23 +73,27 @@
 		
 			<td><?php echo $row[nian]; if($row[auto])echo "z"?></td>
             <td><?php echo $row[end0]; ?>	</td>
-            <td title="<?php echo $row[zxii]; ?>"><?php echo $row[zxi]; ?>	</td>
+            <td title="<?php echo $row[notexi]; ?>"><?php echo $row[lixi0]; ?>	</td>
            <td> <?php echo $row[ends]; ?></td>
 			<td><?php echo $row[money]; ?></td>
             <td title="<?php echo $row[lilv]; ?>"><?php echo $row[lixi]; ?></td>
-            <td><?php echo $row[account]; ?></td>
-               <td><?php echo $row[huo]; ?></td>
-                  <td><?php echo $row[zhit]; ?></td>
-                   <td><?php echo $row[sun]; ?></td>   
+            <td><?php echo $row[money]+$row[lixi0]+$row[lixi]; ?></td>
+               <td><?php echo $rhuo; ?></td>
+                  <td><?php echo $zt; ?></td>
+                   <td><?php echo $row[lixi]-$rhuo; ?></td>   
 			<td><?php echo $row['visible']; ?></td>
 		     <tr>
 			<?php
+			$myy+=$row[money];
+			$x+=$row[lixi0];
+			$xx+=$row[lixi];
 			$i++;
 		}
 		?>
 			
 		<tr>
-
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td><?=$x?></td><td></td><td><?=$myy?></td>
+<td><?=$xx?></td></tr>
 	</table>
 </div>
 
