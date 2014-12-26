@@ -1,7 +1,7 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}
 if($pDa['backimg'] =='' )
 $pDa['backimg']="/jt/imgs/bgg.jpg";
-$mtop=120;
+$mtop=60;
 $fts=array("方正兰亭超细黑简体", "方正舒体", "方正姚体", "仿宋", "汉仪家书简", "汉仪楷体简", "汉仪太极体简", "汉仪娃娃篆简", "汉仪丫丫体简","汉仪丫丫体简", "仿宋", "汉仪家书简", "汉仪楷体简", "汉仪太极体简", "汉仪娃娃篆简", "汉仪丫丫体简", "黑体", "华文彩云", "华文仿宋", "华文行楷", "华文细黑", "华文新魏", "华文中宋", "经典综艺体简", "楷体", "隶书", "宋体", "微软雅黑", "新宋体", "幼圆", "华康娃娃体W5", "华康娃娃体W5", "华康娃娃体W5", "华康娃娃体W5(P)", "華康少女文字W6", "華康娃娃體(P)", "華康娃娃體", );
 
 ?>
@@ -20,65 +20,43 @@ $('#left'+theid).val(x);
 
 </script>
 
-<div id="m"  style="<?php if($pDa['backheight']>0)
-echo "height:".$pDa['backheight']."px;";?>background: url('<?=$pDa['backimg']?>') ;" 
+<div id="m" style="height:<?=$maxtop?>px;width:1000px;background: url('<?=$pDa['backimg']?>') ;" 
 onmousemove="cnvs_getCoordinates(event)" >
-<div <?php if($pDa['ctop']>0||$pDa['cleft']>0):?>
+<div class="ui-widget-content" <?php if($pDa['ctop']>0||$pDa['cleft']>0):?>
 style="position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;" <?php endif;?>>
-<?php echo $pDa['id']; ?>
-<?php echo $pDa['text'];//print_r($pDa); ?>&nbsp;
+☆<span ><?php echo $pDa['text']; ?></span>&nbsp;
 关系数<?php echo $pDa['f3']; ?>
 （前向<?php echo $pDa['f1']; ?>
 后向<?php echo $pDa['f2']; ?>）
 <?php echo $pDa['num_assertions']; ?>
  查看<?php echo $pDa['words']; ?>
-  <form id="ftt" >
-    <td>t<input style="width:60px;" value="<?php echo $pDa['text']; ?>"  name="text" /></td>
-    <td>img<input style="width:60px;" value="<?php echo $pDa['img']; ?>"  name="img" /></td>
-    <td>backimg<input style="width:60px;" value="<?php echo $pDa['backimg']; ?>"  name="backimg" /></td>
-    <td>backh<input style="width:30px;" value="<?php echo $pDa['backheight']; ?>"  name="backheight" /></td>
-    <td>ctop<input style="width:30px;" id="top0" value="<?php echo $pDa['ctop']; ?>"  name="ctop" /></td>
-    <td>cleft<input style="width:30px;" id="left0" value="<?php echo $pDa['cleft']; ?>"  name="cleft" /></td>
-    <td>blog<input style="width:30px;" value="<?php echo $pDa['blogid']; ?>"  name="blogid" /></td><br>
-    
-    <td>url<input style="width:80px;" value="<?php echo $pDa['url']; ?>"  name="url" /></td>
-    <td>V<input style="width:20px;" value="<?php echo $pDa['visible']; ?>"  name="visible" />
-     <td>C<input style="width:20px;" value="<?php echo $pDa['cruboy']; ?>"  name="cruboy" /></td>
-    <td> <a   onClick="
-    $.ajax({
-				url:'docp.php?cp=<?=$cpidd?>&ecdid=<?=$pDa['id']?>',
-				type:'POST',
-				data:$('#ftt').serialize(),
-				success: function(data){
-                   alert(data);
-					}
-		});
-   " >修改</a>	</td>
- 
-    </form>
-</div>  
-
+</div> 
 <?php 
 foreach($concepts as $value):
 //print_r($value);
 $value['atop']=$value['atop']==0?$mtop+=20:$value['atop'];
 $value['aleft']=$value['aleft']==0?rand(1,920):$value['aleft'];?>
-<div class="ui-widget-content" style="cursor:pointer;
-position:absolute;top:<?=$value['atop']?>px;left:<?=$value['aleft']?>px;">
-<a onClick="theid=<?=$value['aid']?>;$('#ft<?=$value['aid']?>').show(); ">○</a><a href="<?php echo BLOG_URL; ?>jt/?cp=<?php echo $value['id']; ?>">
+<div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=$value['atop']
+?>px;left:<?=$value['aleft']?>px;"><a onClick="$('#ftt'+theid).hide();theid=<?=$value['aid']
+?>;$('#ftt<?=$value['aid']?>').show();" 
+onDblClick="theid=0;">○</a>
 <?php if($value['img'] !='' ): ?>
-<img style="border:0px;" src="<?=$value['img']?>"><br>
+<img style="border:0px;" src="<?=$value['img']?>">
 <?php endif;?>
-<?php echo $value['text']; ?></a>&nbsp;
-:<?php echo $value['f1'].'+'.$value['f2'].'='.$value['f3']; ?>
-:<?php echo $value['num_assertions']; ?>:
-<?php echo $value['relation_id'].".".$value['best_frame_id'].' '.$value['rela'].":".$value['frame']; ?>:V<?php echo $value['visible']; ?>:C<?php echo $value['cruboy']; ?>
-  <?php if($value['aurl'] !='' ): ?>
+<a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=<?php echo $value['id']; ?>" title="<?=$value['aid']?>">
+<?php echo $value['text']; ?></a><?php if($value['aurl'] !='' ): ?>
 <a href="<?php echo $value['aurl']; ?>">□</a>
-<?php endif;?> <?php if($value['url'] !='' ): ?>
+<?php endif;if($value['url'] !='' ): ?>
 <a href="<?php echo $value['url']; ?>">■</a>
 <?php endif;?>
- <form id="ft<?=$value['aid']?>" style='display:none;float:right;'>
+<div id="ftt<?=$value['aid']?>" style='display:none;float:right;'>
+:<a  onClick="
+    $.ajax({url:'docp.php?cp=<?=$cpidd?>&aid=<?=$value['aid']?>',type:'POST',
+				data:$('#ft<?=$value[aid]?>').serialize(),
+				success: function(data){ alert(data);}}); " >修改</a><?php echo $value['f1'].'+'.$value['f2'].'='.$value['f3']; ?>
+:<?php echo $value['num_assertions']; ?>:
+<?php echo $value['relation_id'].".".$value['best_frame_id'].' '.$value['rela'].":".$value['frame']; ?>:V<?php echo $value['visible']; ?>:C<?php echo $value['cruboy']; ?>
+ <form id="ft<?=$value['aid']?>" >
     <td>r<input style="width:20px;" value="<?php echo $value['relation_id']; ?>"  name="relation_id" /></td>
     <td>b<input style="width:20px;" value="<?php echo $value['best_frame_id']; ?>"  name="best_frame_id" /></td>
     <td>atop<input style="width:30px;" id="top<?=$value['aid']?>" value="<?php echo $value['atop']; ?>"  name="atop<?php echo $value['fx']; ?>" /></td>
@@ -87,15 +65,39 @@ position:absolute;top:<?=$value['atop']?>px;left:<?=$value['aleft']?>px;">
     <td>abid<input style="width:30px;" value="<?php echo $value['abid']; ?>"  name="abid" /></td><br>
     <td>info<input style="width:90px;" value="<?php echo $value['info']; ?>"  name="info" /></td>
     <td>aurl<input style="width:80px;" value="<?php echo $value['aurl']; ?>"  name="aurl" /></td>
-    <td> <a   onClick="
-    $.ajax({url:'docp.php?cp=<?=$cpidd?>&aid=<?=$value['aid']?>',type:'POST',
-				data:$('#ft<?=$value[aid]?>').serialize(),
-				success: function(data){ alert(data);}}); " >修改</a></td>
+    <td><a onClick="$('#ftt<?=$value['aid']?>').hide();theid=0;">X</a></td>
     </form>
+</div>
 </div>
 <?php endforeach; ?>
 </div>
 ==========================================
+<div >
+<?php echo $pDa['id']; ?>
+<?php echo $pDa['text'];//print_r($pDa); ?>&nbsp;
+关系数<?php echo $pDa['f3']; ?>（前向<?php echo $pDa['f1']; ?>后向<?php echo $pDa['f2']; ?>）
+<?php echo $pDa['num_assertions']; ?> 查看<?php echo $pDa['words']; ?>
+  <form id="fttz" >
+    <td>t<input style="width:60px;" value="<?php echo $pDa['text']; ?>"  name="text" /></td>
+    <td>img<input style="width:60px;" value="<?php echo $pDa['img']; ?>"  name="img" /></td>
+    <td>backimg<input style="width:60px;" value="<?php echo $pDa['backimg']; ?>"  name="backimg" /></td>
+    <td>backh<input style="width:30px;" value="<?php echo $pDa['backheight']; ?>"  name="backheight" /></td>
+    <td>ctop<input style="width:30px;" id="top0" value="<?php echo $pDa['ctop']; ?>"  name="ctop" /></td>
+    <td>cleft<input style="width:30px;" id="left0" value="<?php echo $pDa['cleft']; ?>"  name="cleft" /></td>
+    <td>blog<input style="width:30px;" value="<?php echo $pDa['blogid']; ?>"  name="blogid" /></td><br>
+    <td>url<input style="width:80px;" value="<?php echo $pDa['url']; ?>"  name="url" /></td>
+    <td>V<input style="width:20px;" value="<?php echo $pDa['visible']; ?>"  name="visible" />
+     <td>C<input style="width:20px;" value="<?php echo $pDa['cruboy']; ?>"  name="cruboy" /></td>
+    <td> <a   onClick="
+    $.ajax({	url:'docp.php?cp=<?=$cpidd?>&ecdid=<?=$pDa['id']?>',
+				type:'POST',
+				data:$('#fttz').serialize(),
+				success: function(data){
+                   alert(data);					}
+		});
+   " >修改</a>	</td>
+    </form>
+</div>  
 	<form name="keycp" method="post" action="<?php echo BLOG_URL; ?>jt/index.php?action=keyword<? if($cpidd<0)echo"&jt"?>">
 
 	<input name="k"  type="text" value="<?=$akey?>" style="width:120px;"/>

@@ -93,7 +93,7 @@ if (!empty($cpid) )
 			$maxtop=$row2[atop];
 		$concepts[]=$row2;
 		}
-		$mm=count($concepts,0)*20+120;
+		$mm=count($concepts,0)*20+60;
 		//	echo $maxtop.' '.$mm;
 			if($maxtop<$mm)
 			$maxtop=$mm;
