@@ -12,7 +12,10 @@ $gip=getIp();
 $uid=UID;
 $usersina_id=0;
 	$DB = MySql::getInstance();
-
+if (ISLOGIN !== true){
+echo "请登录";
+exit;
+}
 if ($action == 'delok') {
 	 $sql = "SELECT * FROM conceptnet_concept WHERE visible=0 limit 10000";
 	 //limit 0,10000

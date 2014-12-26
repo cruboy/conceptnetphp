@@ -5,20 +5,12 @@
 	<h3><span>ainet search</h3>
 	<ul id="logserch">
 	<form name="keycp" method="get" action="<?php echo BLOG_URL; ?>m/ainet.php">
-	<input name="keyword"  type="text" value="" style="width:120px;"/>
+	<input name="k"  type="text" value="<?php echo $akey; ?>" style="width:120px;"/>
 	<input type="submit" id="logserch_logserch" value="搜索" />
 	</form>
 	</ul>
 	</li>
-<?php echo $atitle;?>    
-	<?php 
-foreach($logs1 as $value1):
-?>
-<div class="title"><a href="<?php echo BLOG_URL; ?>m/?post=<?php echo $value1['gid'];?>"><?php echo $value1['title']; ?></a></div>
-<?php echo gmdate('Y-n-j', $value['date']); ?>&nbsp;查看:<?php echo $value1['views']; ?> <br>
-<?php echo $value1['content']; ?> 
-<?php endforeach; ?>
-
+<?=$atitle?>
 	<?php 
 foreach($concepts as $value):
 ?>

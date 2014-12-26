@@ -1,6 +1,9 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}
-//if($pDa['backimg'] =='' )
-//$pDa['backimg']="imgs/bg.jpg";http://jqueryui.com/demos/draggable/  
+if($pDa['backimg'] =='' )
+$pDa['backimg']="/jt/imgs/bgg.jpg";
+$mtop=120;
+$fts=array("方正兰亭超细黑简体", "方正舒体", "方正姚体", "仿宋", "汉仪家书简", "汉仪楷体简", "汉仪太极体简", "汉仪娃娃篆简", "汉仪丫丫体简","汉仪丫丫体简", "仿宋", "汉仪家书简", "汉仪楷体简", "汉仪太极体简", "汉仪娃娃篆简", "汉仪丫丫体简", "黑体", "华文彩云", "华文仿宋", "华文行楷", "华文细黑", "华文新魏", "华文中宋", "经典综艺体简", "楷体", "隶书", "宋体", "微软雅黑", "新宋体", "幼圆", "华康娃娃体W5", "华康娃娃体W5", "华康娃娃体W5", "华康娃娃体W5(P)", "華康少女文字W6", "華康娃娃體(P)", "華康娃娃體", );
+
 ?>
 <script type="text/javascript"> 
 var theid=0;
@@ -58,9 +61,10 @@ style="position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;" <?p
 <?php 
 foreach($concepts as $value):
 //print_r($value);
-?>
-<div class="ui-widget-content" style="cursor:pointer;<?php if($value['atop']>0||$value['aleft']>0):?>
-position:absolute;top:<?=$value['atop']?>px;left:<?=$value['aleft']?>px; <?php endif;?>">
+$value['atop']=$value['atop']==0?$mtop+=20:$value['atop'];
+$value['aleft']=$value['aleft']==0?rand(1,920):$value['aleft'];?>
+<div class="ui-widget-content" style="cursor:pointer;
+position:absolute;top:<?=$value['atop']?>px;left:<?=$value['aleft']?>px;">
 <a onClick="theid=<?=$value['aid']?>;$('#ft<?=$value['aid']?>').show(); ">○</a><a href="<?php echo BLOG_URL; ?>jt/?cp=<?php echo $value['id']; ?>">
 <?php if($value['img'] !='' ): ?>
 <img style="border:0px;" src="<?=$value['img']?>"><br>
@@ -74,7 +78,7 @@ position:absolute;top:<?=$value['atop']?>px;left:<?=$value['aleft']?>px; <?php e
 <?php endif;?> <?php if($value['url'] !='' ): ?>
 <a href="<?php echo $value['url']; ?>">■</a>
 <?php endif;?>
- <form id="ft<?=$value['aid']?>" style='display:none'>
+ <form id="ft<?=$value['aid']?>" style='display:none;float:right;'>
     <td>r<input style="width:20px;" value="<?php echo $value['relation_id']; ?>"  name="relation_id" /></td>
     <td>b<input style="width:20px;" value="<?php echo $value['best_frame_id']; ?>"  name="best_frame_id" /></td>
     <td>atop<input style="width:30px;" id="top<?=$value['aid']?>" value="<?php echo $value['atop']; ?>"  name="atop<?php echo $value['fx']; ?>" /></td>
