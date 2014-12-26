@@ -2,9 +2,24 @@
 //if($pDa['backimg'] =='' )
 //$pDa['backimg']="imgs/bg.jpg";http://jqueryui.com/demos/draggable/  
 ?>
+<script type="text/javascript"> 
+var theid=0;
+function cnvs_getCoordinates(e)
+{
+	
+x=e.clientX;
+y=e.clientY;
+//document.getElementById("xycoordinates").innerHTML="Coordinates: (" + x + "," + y + ")";
+$('#top'+theid).val(y);
+$('#left'+theid).val(x);
+}
+ 
+
+</script>
 
 <div id="m"  style="<?php if($pDa['backheight']>0)
-echo "height:".$pDa['backheight']."px;";?>background: url('<?=$pDa['backimg']?>') ;">
+echo "height:".$pDa['backheight']."px;";?>background: url('<?=$pDa['backimg']?>') ;" 
+onmousemove="cnvs_getCoordinates(event)" >
 <div <?php if($pDa['ctop']>0||$pDa['cleft']>0):?>
 style="position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;" <?php endif;?>>
 <?php echo $pDa['id']; ?>
@@ -19,8 +34,8 @@ style="position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;" <?p
     <td>img<input style="width:60px;" value="<?php echo $pDa['img']; ?>"  name="img" /></td>
     <td>backimg<input style="width:60px;" value="<?php echo $pDa['backimg']; ?>"  name="backimg" /></td>
     <td>backh<input style="width:30px;" value="<?php echo $pDa['backheight']; ?>"  name="backheight" /></td>
-    <td>ctop<input style="width:30px;" value="<?php echo $pDa['ctop']; ?>"  name="ctop" /></td>
-    <td>cleft<input style="width:30px;" value="<?php echo $pDa['cleft']; ?>"  name="cleft" /></td>
+    <td>ctop<input style="width:30px;" id="top0" value="<?php echo $pDa['ctop']; ?>"  name="ctop" /></td>
+    <td>cleft<input style="width:30px;" id="left0" value="<?php echo $pDa['cleft']; ?>"  name="cleft" /></td>
     <td>blog<input style="width:30px;" value="<?php echo $pDa['blogid']; ?>"  name="blogid" /></td><br>
     
     <td>url<input style="width:80px;" value="<?php echo $pDa['url']; ?>"  name="url" /></td>
@@ -46,7 +61,7 @@ foreach($concepts as $value):
 ?>
 <div class="ui-widget-content" style="cursor:pointer;<?php if($value['atop']>0||$value['aleft']>0):?>
 position:absolute;top:<?=$value['atop']?>px;left:<?=$value['aleft']?>px; <?php endif;?>">
-<a href="<?php echo BLOG_URL; ?>jt/?cp=<?php echo $value['id']; ?>">
+<a onClick="theid=<?=$value['aid']?>;$('#ft<?=$value['aid']?>').show(); ">○</a><a href="<?php echo BLOG_URL; ?>jt/?cp=<?php echo $value['id']; ?>">
 <?php if($value['img'] !='' ): ?>
 <img style="border:0px;" src="<?=$value['img']?>"><br>
 <?php endif;?>
@@ -59,11 +74,11 @@ position:absolute;top:<?=$value['atop']?>px;left:<?=$value['aleft']?>px; <?php e
 <?php endif;?> <?php if($value['url'] !='' ): ?>
 <a href="<?php echo $value['url']; ?>">■</a>
 <?php endif;?>
- <form id="ft<?=$value['aid']?>" >
+ <form id="ft<?=$value['aid']?>" style='display:none'>
     <td>r<input style="width:20px;" value="<?php echo $value['relation_id']; ?>"  name="relation_id" /></td>
     <td>b<input style="width:20px;" value="<?php echo $value['best_frame_id']; ?>"  name="best_frame_id" /></td>
-    <td>atop<input style="width:30px;" value="<?php echo $value['atop']; ?>"  name="atop<?php echo $value['fx']; ?>" /></td>
-    <td>aleft<input style="width:30px;" value="<?php echo $value['aleft']; ?>"  name="aleft<?php echo $value['fx']; ?>" /></td>
+    <td>atop<input style="width:30px;" id="top<?=$value['aid']?>" value="<?php echo $value['atop']; ?>"  name="atop<?php echo $value['fx']; ?>" /></td>
+    <td>aleft<input style="width:30px;" id="left<?=$value['aid']?>" value="<?php echo $value['aleft']; ?>"  name="aleft<?php echo $value['fx']; ?>" /></td>
     <td>seq<input style="width:30px;" value="<?php echo $value['seq']; ?>"  name="seq" /></td>
     <td>abid<input style="width:30px;" value="<?php echo $value['abid']; ?>"  name="abid" /></td><br>
     <td>info<input style="width:90px;" value="<?php echo $value['info']; ?>"  name="info" /></td>
