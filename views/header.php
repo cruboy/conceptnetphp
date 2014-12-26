@@ -24,6 +24,8 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 .texts{width:92%; height:200px;}.excerpt{width:92%; height:100px;}
 </style>
 <script type="text/javascript" src="/content/js/jquery-1.8.2.min.js"></script>
+  <script src="/content/js/jquery-ui.js"></script> 
+  <script type="text/javascript" src="/content/js/jquery_p.js"></script>
 </head>
 <body>
 <div id="top">

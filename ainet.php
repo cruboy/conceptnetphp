@@ -73,7 +73,7 @@ if(isset ($_GET['cp']))
 		$concepts2[]=$row2;
 		}
 	include View::getView('header');
-	include View::getView('cpshow');
+	include View::getView('cpedit');
 	include View::getView('footer');
 	View::output();
 }

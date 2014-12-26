@@ -31,13 +31,14 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 <div id="navi">
 <?php if(UID) echo $userData['username']; else echo "游客"; ?></a>，您好！
 <a href="<?php echo BLOG_URL; ?>">返回导图笔记</a> 
-<a href="./" <?php if($action==''&&empty($cpid))echo 'id="active"'; ?>>首页</a> 
-<a href="./?cplist" <?php if(!empty($cpid))echo 'id="active"'; ?>>认知网格</a>
-<a href="./?action=film" <?php if($action=='film')echo 'id="active"'; ?>>影视</a> 
-<a href="./?action=story" <?php if($action=='story')echo 'id="active"'; ?>>童话故事</a> 
+<a href="/m" <?php if($action==''&&empty($cpid))echo 'id="active"'; ?>>首页</a> 
+<a href="/m/?cplist" <?php if(!empty($cpid))echo 'id="active"'; ?>>认知网格</a>
+<a href="/m/ainet.php" <?php if(!empty($cp))echo 'id="active"'; ?>>爱整理</a>
+<a href="/m/?action=film" <?php if($action=='film')echo 'id="active"'; ?>>影视</a> 
+<a href="/m/?action=story" <?php if($action=='story')echo 'id="active"'; ?>>童话故事</a> 
 
-<a href="./?action=tw" <?php if($action=='tw')echo 'id="active"'; ?>>动态</a> 
-<a href="./?action=com" <?php if($action=='com')echo 'id="active"'; ?>>评论</a> 
+<a href="/m/?action=tw" <?php if($action=='tw')echo 'id="active"'; ?>>动态</a> 
+<a href="/m/?action=com" <?php if($action=='com')echo 'id="active"'; ?>>评论</a> 
 	<?php if(ROLE == 'admin' ): ?>
     <a href="<?php echo BLOG_URL; ?>m/cash.php">支票</a>
 <a href="<?php echo BLOG_URL; ?>m/enet.php">enet管理</a>
@@ -45,8 +46,8 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 <?php endif;?>
 <?php if(ISLOGIN === true): ?>
  <a href="<?php echo BLOG_URL; ?>m/lilv.php">利率</a>
-<a href="./?action=write" <?php if($action=='write')echo 'id="active"'; ?>>写日志</a> 
-<a href="./?action=logout">退出</a>
+<a href="/m/?action=write" <?php if($action=='write')echo 'id="active"'; ?>>写日志</a> 
+<a href="/m/?action=logout">退出</a>
 <?php else:?>
 <a href="<?php echo BLOG_URL; ?>m/?action=login" <?php if($action=='login')echo 'id="active"'; ?>>登录</a>
 <a href="<?php echo BLOG_URL; ?>m/?action=reg" <?php if($action=='reg')echo 'id="active"'; ?>>注册</a>
