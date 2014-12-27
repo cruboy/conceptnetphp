@@ -25,11 +25,9 @@ onmousemove="cnvs_getCoordinates(event)" >
 <div class="ui-widget-content" <?php if($pDa['ctop']>0||$pDa['cleft']>0):?>
 style="position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;" <?php endif;?>>
 ☆<span ><?php echo $pDa['text']; ?></span>&nbsp;
-关系数<?php echo $pDa['f3']; ?>
-（前向<?php echo $pDa['f1']; ?>
-后向<?php echo $pDa['f2']; ?>）
-<?php echo $pDa['num_assertions']; ?>
- 查看<?php echo $pDa['words']; ?>
+<span title="<?php echo "+".$pDa['f1']." -".$pDa['f2']." ".$pDa['num_assertions']; 
+?>">关链数</span>
+ 查看<?php echo $pDa['words']; ?><a href="/?cp=<?=$cpidd?>">预览 </a>
 </div> 
 <?php 
 foreach($concepts as $value):

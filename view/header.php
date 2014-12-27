@@ -33,7 +33,7 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 <a href="<?php echo BLOG_URL; ?>">返回导图笔记</a> 
 <a href="/m" <?php if($action==''&&empty($cpid))echo 'id="active"'; ?>>首页</a> 
 <a href="/m/?cplist" <?php if(!empty($cpid))echo 'id="active"'; ?>>认知网格</a>
-<a href="/m/ainet.php" <?php if(!empty($cp))echo 'id="active"'; ?>>爱整理</a>
+<a href="/m/ainet.php" <?php if(!empty($cp))echo 'id="active"'; ?>>图编辑</a>
 <a href="/m/?action=film" <?php if($action=='film')echo 'id="active"'; ?>>影视</a> 
 <a href="/m/?action=story" <?php if($action=='story')echo 'id="active"'; ?>>童话故事</a> 
 
