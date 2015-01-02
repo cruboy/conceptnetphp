@@ -24,7 +24,7 @@
 	    <input type="password" name="pw" /><br />
 	     重复密码<br />
 	    <input type="password" name="pw2" /><br />
-	     注册码（请加入qq群180406860索要）<br />
+	     注册码（请加入qq群180406860获得）<br />
 	    <input type="password" name="pw3" /><br />
 	    <?php echo $ckcode; ?>
 	    <br /><input type="submit" value=" 注册" />

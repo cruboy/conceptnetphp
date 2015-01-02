@@ -24,13 +24,7 @@ temp：<div class="postcont"><?php echo $temp; ?></div>
 	<a href="<?php $b=$gid+1;echo BLOG_URL."m/?sid=".$b; ?>"  >【下一部】</a>
 </TD>
 
-<TD >
 
-	<div class="t"></div>
-	<div class="c">
-
-	</div>
-</TD>
 </TR>
 </TABLE>	
 </div>

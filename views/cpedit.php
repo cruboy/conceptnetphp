@@ -6,15 +6,22 @@ $fts=array("方正兰亭超细黑简体", "方正舒体", "方正姚体", "仿�
 
 ?>
 <script type="text/javascript"> 
-var theid=0;
+var theid=-1;
 function cnvs_getCoordinates(e)
 {
-	
-x=e.clientX;
-y=e.clientY;
-//document.getElementById("xycoordinates").innerHTML="Coordinates: (" + x + "," + y + ")";
+	y= $('#ftt'+theid).offset().top;
+x= $('#ftt'+theid).offset().left;
+
+//x=e.clientX;
+//y=e.clientY;
+if(theid>0)
+{//document.getElementById("xycoordinates").innerHTML="Coordinates: (" + x + "," + y + ")";
 $('#top'+theid).val(y);
 $('#left'+theid).val(x);
+}else
+{$('#topz').html(y);
+$('#leftz').html(x);
+}
 }
  
 
@@ -24,10 +31,36 @@ $('#left'+theid).val(x);
 onmousemove="cnvs_getCoordinates(event)" >
 <div class="ui-widget-content" <?php if($pDa['ctop']>0||$pDa['cleft']>0):?>
 style="position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;" <?php endif;?>>
-☆<span ><?php echo $pDa['text']; ?></span>&nbsp;
+<a onClick="$('#ftt'+theid).hide();theid=0;$('#ftt0').show();" 
+onDblClick="theid=-1;   $.ajax({	url:'docp.php?cp=<?=$cpidd?>&ecdid=<?=$pDa['id']?>',
+				type:'POST',
+				data:$('#fttz').serialize(),
+				success: function(data){
+                   alert(data);					}
+		}); $('#ftt0').hide();">☆</a><span ><?php echo $pDa['text']; ?></span>&nbsp;
 <span title="<?php echo "+".$pDa['f1']." -".$pDa['f2']." ".$pDa['num_assertions']; 
 ?>">关链数</span>
  查看<?php echo $pDa['words']; ?><a href="/?cp=<?=$cpidd?>">预览 </a>
+
+<div id="ftt0" style='display:none;float:right;'>
+<?php echo $pDa['id']; ?>
+<?php echo $pDa['text'];//print_r($pDa); ?>&nbsp;
+关系数<?php echo $pDa['f3']; ?>（前向<?php echo $pDa['f1']; ?>后向<?php echo $pDa['f2']; ?>）
+<?php echo $pDa['num_assertions']; ?> 查看<?php echo $pDa['words']; ?>
+  <form id="fttz" >
+    <td>t<input style="width:60px;" value="<?php echo $pDa['text']; ?>"  name="text" /></td>
+    <td>img<input style="width:60px;" value="<?php echo $pDa['img']; ?>"  name="img" /></td>
+    <td>backimg<input style="width:60px;" value="<?php echo $pDa['backimg']; ?>"  name="backimg" /></td>
+    <td>backh<input style="width:30px;" value="<?php echo $pDa['backheight']; ?>"  name="backheight" /></td>
+    <td>ctop<input style="width:30px;" id="top0" value="<?php echo $pDa['ctop']; ?>"  name="ctop" /></td>
+    <td>cleft<input style="width:30px;" id="left0" value="<?php echo $pDa['cleft']; ?>"  name="cleft" /></td>
+    <td>blog<input style="width:30px;" value="<?php echo $pDa['blogid']; ?>"  name="blogid" /></td><br>
+    <td>url<input style="width:80px;" value="<?php echo $pDa['url']; ?>"  name="url" /></td>
+    <td>V<input style="width:20px;" value="<?php echo $pDa['visible']; ?>"  name="visible" />
+     <td>C<input style="width:20px;" value="<?php echo $pDa['cruboy']; ?>"  name="cruboy" /></td>
+    <td><a onClick="$('#ftt0').hide();theid=0;">X</a>	</td>
+    </form>
+</div>  
 </div> 
 <?php 
 foreach($concepts as $value):
@@ -39,7 +72,7 @@ $value['aleft']=$value['aleft']==0?rand(1,920):$value['aleft'];?>
 <div style="width:<? echo strlen($value['text'])*9+28;?>px;">
 <a onClick="$('#ftt'+theid).hide();theid=<?=$value['aid']
 ?>;$('#ftt<?=$value['aid']?>').show();" 
-onDblClick="theid=0;$.ajax({url:'docp.php?cp=<?=$cpidd?>&aid=<?=$value['aid']?>',type:'POST',
+onDblClick="theid=-1;$.ajax({url:'docp.php?cp=<?=$cpidd?>&aid=<?=$value['aid']?>',type:'POST',
 				data:$('#ft<?=$value[aid]?>').serialize(),
 				success: function(data){ alert(data);}}); $('#ftt<?=$value['aid']?>').hide();">○</a><a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=<?php echo $value['id']; ?>" title="<?=$value['aid']?>"><?php echo $value['text']; ?></a><?php if($value['aurl'] !='' ): ?>
 <a href="<?php echo $value['aurl']; ?>">□</a>
@@ -61,39 +94,22 @@ onDblClick="theid=0;$.ajax({url:'docp.php?cp=<?=$cpidd?>&aid=<?=$value['aid']?>'
     <td>abid<input style="width:30px;" value="<?php echo $value['abid']; ?>"  name="abid" /></td><br>
     <td>info<input style="width:90px;" value="<?php echo $value['info']; ?>"  name="info" /></td>
     <td>aurl<input style="width:80px;" value="<?php echo $value['aurl']; ?>"  name="aurl" /></td>
-    <td><a onClick="$('#ftt<?=$value['aid']?>').hide();theid=0;">X</a></td>
+    <td><a onClick="$('#ftt<?=$value['aid']?>').hide();theid=-1;">X</a></td>
     </form>
 </div>
 </div>
 <?php endforeach; ?>
 </div>
-==========================================
-<div >
-<?php echo $pDa['id']; ?>
-<?php echo $pDa['text'];//print_r($pDa); ?>&nbsp;
-关系数<?php echo $pDa['f3']; ?>（前向<?php echo $pDa['f1']; ?>后向<?php echo $pDa['f2']; ?>）
-<?php echo $pDa['num_assertions']; ?> 查看<?php echo $pDa['words']; ?>
-  <form id="fttz" >
-    <td>t<input style="width:60px;" value="<?php echo $pDa['text']; ?>"  name="text" /></td>
-    <td>img<input style="width:60px;" value="<?php echo $pDa['img']; ?>"  name="img" /></td>
-    <td>backimg<input style="width:60px;" value="<?php echo $pDa['backimg']; ?>"  name="backimg" /></td>
-    <td>backh<input style="width:30px;" value="<?php echo $pDa['backheight']; ?>"  name="backheight" /></td>
-    <td>ctop<input style="width:30px;" id="top0" value="<?php echo $pDa['ctop']; ?>"  name="ctop" /></td>
-    <td>cleft<input style="width:30px;" id="left0" value="<?php echo $pDa['cleft']; ?>"  name="cleft" /></td>
-    <td>blog<input style="width:30px;" value="<?php echo $pDa['blogid']; ?>"  name="blogid" /></td><br>
-    <td>url<input style="width:80px;" value="<?php echo $pDa['url']; ?>"  name="url" /></td>
-    <td>V<input style="width:20px;" value="<?php echo $pDa['visible']; ?>"  name="visible" />
-     <td>C<input style="width:20px;" value="<?php echo $pDa['cruboy']; ?>"  name="cruboy" /></td>
-    <td> <a   onClick="
-    $.ajax({	url:'docp.php?cp=<?=$cpidd?>&ecdid=<?=$pDa['id']?>',
-				type:'POST',
-				data:$('#fttz').serialize(),
-				success: function(data){
-                   alert(data);					}
-		});
-   " >修改</a>	</td>
-    </form>
-</div>  
+=======坐标==<span id='topz'></span>,<span id='leftz'></span>=======<a onClick="$('.zuobiao').show();">显示</a>=====<a onClick="$('.zuobiao').hide();">隐藏</a>====
+<? for($t=100;$t<$maxtop;$t+=100){?>
+<div class="zuobiao" style="position:absolute;top:<?=$t?>px;left:5px;"><?=$t?></div>
+
+<? if($t%500==0){?>
+<? for($tt=100;$tt<1100;$tt+=100){?>
+<div class="zuobiao" style="position:absolute;top:<?=$t+50?>px;left:<?=$tt?>px;"><?=$tt?></div>
+<?  }}?>
+<?  }?>
+<div style="text-align:left;">
 	<form id="addcp<?php echo $valid;?>" >
     添加
     <input id="sch" type="radio" value="0" name="dirs" checked />
@@ -113,7 +129,7 @@ onDblClick="theid=0;$.ajax({url:'docp.php?cp=<?=$cpidd?>&aid=<?=$value['aid']?>'
 	<option value="79">{1}是{2}的</option><option value="84">{2}可能代表{1}</option><option value="89">{1}代表{2}</option><option value="92">{1}的时候，你会{2}</option><option value="95">在{1}，你会{2}</option>   
 </option>
 	</select> 
-	名称：<input name="addname"  type="text" value="" style="width:120px;"/>
+	<br>名称：<textarea name="addname"  class="texts"/></textarea>
     <input type="hidden" name="cp0s" value="<?php echo $pDa['text']; ?>" />
     <input type="hidden" name="cid" value="<?php echo $cpidd; ?>" />
         <input type="hidden" name="valid" value="<?php echo $valid;?>" />
@@ -126,6 +142,6 @@ onDblClick="theid=0;$.ajax({url:'docp.php?cp=<?=$cpidd?>&aid=<?=$value['aid']?>'
 					}
 		});">添加</a>
 	</form>
-
+</div>
 <script> 
 	 $(function() {    $( ".ui-widget-content" ).draggable();  });  </script>

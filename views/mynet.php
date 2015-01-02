@@ -1,8 +1,8 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}?>
 
 <div id="m">
-	    	<li>
-	<h3><span>ainet search</h3>
+	<li>
+	<h3>图搜索</h3>
 	<ul id="logserch">
 	<form name="keycp" method="get" action="<?php echo BLOG_URL; ?>m/ainet.php">
 	<input name="k"  type="text" value="<?php echo $akey; ?>" style="width:120px;"/>

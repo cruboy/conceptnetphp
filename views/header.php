@@ -6,7 +6,7 @@ if(!defined('EMLOG_ROOT')) {exit('error!');}
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title><?php echo $blogtitle; ?></title>
+<title>图编辑</title>
 <meta name="keywords" content="<?php echo $site_key; ?>" />
 <meta name="description" content="<?php echo $description; ?>" />
 
@@ -14,22 +14,19 @@ if(!defined('EMLOG_ROOT')) {exit('error!');}
 <script type="text/javascript" src="/content/js/jquery-1.8.2.min.js"></script>
   <script src="/content/js/jquery-ui.js"></script> 
   <script type="text/javascript" src="/content/js/jquery_p.js"></script>
+  <style type="text/css" id="internalStyle">
+
+#m{text-align:left;padding:10px;}
+.comcont{color:#333; padding:6px 0px;}.reply{color:#FF3300; font-size:12px;}
+.texts{width:86%; height:150px;}
+</style>
 </head>
 <body>
 <div id="nav">
 <ul>
 <li class="common"><a href="/">首页</a></li>
-<li class="common"><a href="<?php echo BLOG_URL; ?>m/ainet.php" <?php if($action=='')echo 'id="active"'; ?>>爱整理</a> </li>
-<li class="common"><a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=48" <?php if($cpid==48)echo 'id="active"'; ?>>志愿者</a></li>
-<li class="common"><a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=72" <?php if($cpid==72)echo 'id="active"'; ?>>home</a></li>
-<li class="common"><a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=468" <?php if($cpid==468)echo 'id="active"'; ?>>爱心</a></li>
-<li class="common"><a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=405" <?php if($cpid==405)echo 'id="active"'; ?>>善良</a></li>
-<li class="common"><a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=136" <?php if($cpid==136)echo 'id="active"'; ?>>知识</a></li>
-<li class="common"><a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=182" <?php if($cpid==182)echo 'id="active"'; ?>>爱</a></li>
-<li class="common"><a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=27310"<?php if($cpid==27310)echo 'id="active"'; ?> >儿童</a> </li>
-<li class="common"><a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=798" <?php if($cpid==798)echo 'id="active"'; ?>>孩子</a> </li>
-<li class="common"><a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=54" <?php if($cpid==54)echo 'id="active"'; ?>>学习</a></li>
-<li class="common"><a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=653" <?php if($cpid==653)echo 'id="active"'; ?>>上学</a> </li>
+<li class="common"><a href="<?php echo BLOG_URL; ?>m/ainet.php" <?php if($action=='')echo 'id="active"'; ?>>图搜索</a> </li>
+<li class="common"><a href="<?php echo BLOG_URL; ?>m/ainet.php?f=<?=UID?>" <?php if($action=='')echo 'id="active"'; ?>>我的图</a> </li>
 <?php if(UID) echo $userData['username']; ?>，
 <a href="<?php echo BLOG_URL; ?>m/?action=logout" >退出</a> 
 </ul>
