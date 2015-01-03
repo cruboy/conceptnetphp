@@ -24,8 +24,150 @@ $cpid = isset ($_POST['cp']) ? intval ($_POST['cp']) : '';
 $fnid = isset ($_GET['fn']) ? intval ($_GET['fn']) : '';
 $sid = isset ($_GET['sid']) ? intval ($_GET['sid']) : '';
 $akey = isset($_POST['aikey']) ? addslashes($_POST['aikey']) : '';
+if(empty($action)&&empty ($fnid)&& empty ($sid)&& empty ($logid))
+{
+		$CACHE=Cache::getInstance();
+		$options_cache=$CACHE->readCache('options');
+		extract($options_cache);
+		$blogtitle=$blogname;
+		$description=$bloginfo;
+		$gip=getIp();
+		$uid=UID;
+		$DB=MySql::getInstance();
+		$usersina_id=intval($_SESSION['oauth2']["user_id"]);
+		$cpid=0;
+		$pDs=1;
+		$concepts=array();
+		$concepts2=array();
+		$ltime = time();	
+	$vsid=intval($_SESSION['views']);
+    $cpr = $CACHE->readCache('cpr');
+	$cpp = $CACHE->readCache('cppublic');
+	
+	$cpidd=($_REQUEST['cp']);
+	if($cpidd=='jty')
+	$cpidd=-97;
+	$cpidd=intval($cpidd);
+  if(empty($cpidd))
+    {  
+    $valid=rand(1000,100000);
+	$_SESSION['valid']=$valid;
+	}
+  elseif($cpidd>0 and $_POST['valid']!=$_SESSION['valid'] and ISLOGIN !== true)
+	{
+	header('HTTP/1.1 401 Unauthorized'); 
+	header('status: 401 Unauthorized'); exit;
+  }else{
+	$valid=rand(1000,100000);
+	$_SESSION['valid']=$valid;
+	}
 
-if ($_SESSION['views']>2&&(isset($_GET['cplist'])or!empty ($akey))) {
+if(isset($_POST['aikey'])||empty($_REQUEST['cp'])){
+		$akey = addslashes($_POST['aikey']);
+		$atitle="查询'".$akey."'的结果：";
+	if(empty($akey)){
+		foreach($cpp[home] as $p)
+		{$concepts[]=$p;
+		}
+	$sql = "SELECT * FROM conceptnet_concept order by Rand()  LIMIT 30";
+	}else{
+	$sql = "SELECT * FROM conceptnet_concept WHERE text LIKE '%$akey%' order by Rand()  LIMIT 100";
+	}
+
+	
+	$res = $DB->query($sql);
+		$o=$akey.'|';
+	while ($row = $DB->fetch_array($res)) {
+			$o.=$row[id].$row[text].' ';
+			$concepts[]=$row;
+		}
+		$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES ('keyhome','$vsid','0','$uid','$usersina_id','$ltime','$o','$gip')");
+		$hhtitle=$akey;
+
+}else{
+			$maxtop=0;
+			if($cpidd<0){
+				$tabf="cruboy";
+				$vfrom="vcru";
+				$cpid=-$cpidd;
+			}else{
+				$tabf="conceptnet";
+				$vfrom="vind";
+				$cpid=$cpidd;
+				if($cpidd==0)
+				$cpid=72;
+			}
+			$ltime=time();
+			/*
+			 * $DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES ( 'old','$vsid','$cpid','$uid','$usersina_id','$ltime','','$gip')"); header('Location: /index.php'); exit; } if(isset ($_GET['id'])) { $cpid = intval ($_GET['id']) ; $ltime = time(); if (ISLOGIN !== true&&( empty($_SESSION['oauth2']["user_id"])||empty($_SESSION['u_name']))){ $DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES ( 'unlogin','$vsid','$cpid','$uid','$usersina_id','$ltime','','$gip')"); echo "请登录或授权后查看！"; exit; }
+			 */
+			$DB->query("UPDATE  ".$tabf."_concept SET words=words+1 WHERE id='$cpid'");
+			
+			$sq1="SELECT * FROM  ".$tabf."_concept WHERE id='$cpid'";
+			$pDa=$DB->once_fetch_array($sq1);
+           if($vfrom=="vcru")
+					$pDa[id]=-$pDa[id];
+			$hhtitle=$pDa[text];
+			$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES (
+				'$vfrom','$vsid','$cpidd','$uid','$usersina_id','$ltime','$pDa[text]','$gip')");
+			
+			$sq2="SELECT a.concept1_id,a.concept2_id,
+		a.relation_id,a.best_frame_id,a.atop1 as atop,a.aleft1 as aleft,
+		 ".$tabf."_concept.* FROM  ".$tabf."_assertion a LEFT JOIN
+		 ".$tabf."_concept ON a.concept2_id= ".$tabf."_concept.id
+		WHERE concept1_id='$cpid' order by a.relation_id,a.best_frame_id LIMIT 4000";
+			$res2=$DB->query($sq2);
+			while($row=$DB->fetch_array($res2)){
+			if($row[best_frame_id]>0){		
+			$ss=str_replace("1",$pDa[text],$cpr[$row[best_frame_id]]);
+			$ss=str_replace("2",$row[text],$ss);
+			$row[frame]=$ss;
+			}else{
+			 $row[frame]=$cpr[$row[relation_id]];
+			}
+				if($vfrom=="vcru")
+					$row[id]=-$row[id];
+				if($row[atop]>$maxtop)
+					$maxtop=$row[atop];	
+				$concepts[]=$row;
+			}
+			
+			$sq3="SELECT a.concept1_id,a.concept2_id,
+		a.relation_id,a.best_frame_id,a.atop2 as atop,a.aleft2 as aleft,
+		 ".$tabf."_concept.* FROM  ".$tabf."_assertion a LEFT JOIN
+		 ".$tabf."_concept ON a.concept1_id= ".$tabf."_concept.id
+		WHERE concept2_id='$cpid' order by a.seq,a.relation_id,a.best_frame_id LIMIT 4000";
+			$res3=$DB->query($sq3);
+			while($row2=$DB->fetch_array($res3)){
+				if($row2[best_frame_id]>0){		
+			$ss=str_replace("1",$row2[text],$cpr[$row2[best_frame_id]]);
+			$ss=str_replace("2",$pDa[text],$ss);
+			$row2[frame]=$ss;
+			}else{
+			 $row2[frame]=$cpr[$row2[relation_id]];
+			}
+				if($vfrom=="vcru")
+					$row2[id]=-$row2[id];
+				if($row2[atop]>$maxtop)
+					$maxtop=$row2[atop];
+				$concepts[]=$row2;
+			}
+		}	
+		    $nohead=1;
+			$mm=count($concepts,0)*20+60;
+		//	echo $maxtop.' '.$mm;
+			if($maxtop<$mm)
+			$maxtop=$mm;
+			if($maxtop<760)
+			$maxtop=760;
+			include View::getView('header');
+			include View::getView('cpshow');
+			include View::getView('footer');
+			View::output();
+			
+	}
+
+if ($action == 'ailist' && $_SESSION['views']>2) {
 	if(isset($_GET['cplist'])){$valid=rand(1000,100000);
 	$_SESSION['valid']=$valid;
 	}
@@ -94,8 +236,7 @@ $cpr = $CACHE->readCache('cpr');
 	View::output();
 }
 // 首页
-if (empty ($action) && empty ($logid) && empty ($cpid)&& empty ($akey)
-&& empty ($fnid)&& empty ($sid)) {
+if ($action == 'blog') {
 	$Log_Model = new Log_Model();
 	$page = isset($_GET['page']) ? abs(intval ($_GET['page'])) : 1;
 	$sqlSegment = "ORDER BY top DESC ,date DESC";
@@ -111,7 +252,7 @@ if (empty ($action) && empty ($logid) && empty ($cpid)&& empty ($akey)
 	View::output();
 }
 
-if (!empty ($cpid) &&$_SESSION['views']>2) 
+if ($action == 'aishow' &&$_SESSION['views']>2) 
 {
 	if($_POST['valid']!=$_SESSION['valid'])
 	{

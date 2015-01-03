@@ -1,7 +1,7 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}?>
 
 <div id="m">
-<?php if($action=='login'): ?>
+<?php if($action=='login'): ?><br>
 欢迎登录访问！您将看到更多内容。<br>
 <font color="red"><?php echo $errorInfo; ?></font><br><br>
 <form method="post" action="./?action=auth">

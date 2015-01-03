@@ -9,7 +9,9 @@ require_once '../init.php';
 define('TEMPLATE_PATH', EMLOG_ROOT.'/m/views/');
 
 if (ISLOGIN !== true){
-echo "请登录";
+//echo "请登录";
+$msg='登录后，可以编辑导图等。';
+emDirect("/m/?action=login");
 exit;
 }
 $blogtitle = Option::get('twnavi') . ' - ' . Option::get('blogname');
