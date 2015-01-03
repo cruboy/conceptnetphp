@@ -7,7 +7,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <head>
 <title><?php echo Option::get('blogname'); ?></title>
 <style type="text/css" id="internalStyle">
-body{background-color:#FFFFFF; font-size:14px; margin: 0; padding:0;font-family: Helvetica, Arial, sans-serif;-webkit-text-size-adjust: none;}
+body{background-color:#FFFFFF; font-size:14px; margin: 0; padding:0;}
 a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 #top{background-color:#32598B; padding:10px 8px;}#footer{background-color:#EFEFEF; color:#666666; padding:5px;text-align:center;font-weight:bold;}
 #page{text-align:center;font-size:26px; color: #CCCCCC}#page a:link,a:active,a:visited,a:hover{padding:0px 6px;}#m{padding:10px;}

@@ -13,7 +13,7 @@ if(!defined('EMLOG_ROOT')) {exit('error!');}
 <link href="<?php echo TEMPLATE_URL; ?>main.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="/content/js/jquery-1.8.2.min.js"></script>
   <script src="/content/js/jquery-ui.js"></script> 
-  <script type="text/javascript" src="/content/js/jquery_p.js"></script>
+
   <style type="text/css" id="internalStyle">
 
 #m{text-align:left;padding:10px;}
