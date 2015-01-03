@@ -18,7 +18,7 @@ $blogtitle = Option::get('twnavi') . ' - ' . Option::get('blogname');
 $description = Option::get('bloginfo');
 $DB = MySql::getInstance();
 $concepts=array();
-
+$aineth=1;
 $atitle="";
 $gip=getIp();   
 $uid=UID;

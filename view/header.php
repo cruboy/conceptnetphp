@@ -30,13 +30,13 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 </div>
 <div id="navi">
 <?php if(UID) echo $userData['username']; else echo "游客"; ?></a>，您好！
-<a href="<?php echo BLOG_URL; ?>">返回导图笔记</a> 
-<a href="/m" <?php if($action==''&&empty($cpid))echo 'id="active"'; ?>>首页</a> 
-<a href="/m/?cplist" <?php if(!empty($cpid))echo 'id="active"'; ?>>认知网格</a>
-<a href="/m/ainet.php" <?php if(!empty($cp))echo 'id="active"'; ?>>图编辑</a>
+<a href="/m" <?php if($action=='')echo 'id="active"'; ?>>首页</a> 
+<a href="/m/?action=ailist&cplist" <?php if($action=='ailist')echo 'id="active"'; ?>>认知网格</a>
+<a href="/m/?action=blog" <?php if($action=='blog')echo 'id="active"'; ?>>文章资料</a>
+<a href="/m/ainet.php" <?php if($aineth)echo 'id="active"'; ?>>图编辑</a>
 <a href="/m/?action=film" <?php if($action=='film')echo 'id="active"'; ?>>影视</a> 
 <a href="/m/?action=story" <?php if($action=='story')echo 'id="active"'; ?>>童话故事</a> 
-
+<a href="/jt/?m" <?php if($action=='zz')echo 'id="active"'; ?>>节点图</a> 
 <a href="/m/?action=tw" <?php if($action=='tw')echo 'id="active"'; ?>>动态</a> 
 <a href="/m/?action=com" <?php if($action=='com')echo 'id="active"'; ?>>评论</a> 
 	<?php if(ROLE == 'admin' ): ?>

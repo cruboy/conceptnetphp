@@ -12,12 +12,7 @@ define ('TEMPLATE_PATH', EMLOG_ROOT . '/m/view/');
 
 $isgzipenable = 'n'; //手机浏览关闭gzip压缩
 $index_lognum = 8;
-if(isset($_GET['cp']))
-{
-header('HTTP/1.1 404 Not Found'); 
-header("status: 404 Not Found"); 
-exit;
-}
+
 $logid = isset ($_GET['post']) ? intval ($_GET['post']) : '';
 $action = isset($_GET['action']) ? addslashes($_GET['action']) : '';
 $cpid = isset ($_POST['cp']) ? intval ($_POST['cp']) : '';
@@ -81,7 +76,7 @@ if(isset($_POST['aikey'])||empty($_REQUEST['cp'])){
 			$o.=$row[id].$row[text].' ';
 			$concepts[]=$row;
 		}
-		$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES ('keyhome','$vsid','0','$uid','$usersina_id','$ltime','$o','$gip')");
+		$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES ('mhome','$vsid','0','$uid','$usersina_id','$ltime','$o','$gip')");
 		$hhtitle=$akey;
 
 }else{
@@ -187,7 +182,7 @@ $cpr = $CACHE->readCache('cpr');
 	if(empty ($akey))
 	$sql = "SELECT * FROM conceptnet_concept WHERE text LIKE '%$akey%' order by Rand()  LIMIT 10";
 	else
-		$sql = "SELECT * FROM  ".$tabf."_concept WHERE text LIKE '%$akey%' order by f3 desc LIMIT 1000";
+		$sql = "SELECT * FROM  conceptnet_concept WHERE text LIKE '%$akey%' order by f3 desc LIMIT 1000";
 			$res = $DB->query($sql);
 	$concepts=array();	
 			while ($row = $DB->fetch_array($res)) {
@@ -235,7 +230,7 @@ $cpr = $CACHE->readCache('cpr');
 	include View::getView('footer');
 	View::output();
 }
-// 首页
+// 
 if ($action == 'blog') {
 	$Log_Model = new Log_Model();
 	$page = isset($_GET['page']) ? abs(intval ($_GET['page'])) : 1;
@@ -379,7 +374,7 @@ if (!empty ($logid)) {
 	$comments = $Comment_Model->getComments(2, $logid, 'n', $commentPage);
 	extract($comments);
 	$user_cache = $CACHE->readCache('user');
-
+$action="blog";
 	$Log_Model->updateViewCount($logid);
 	include View::getView('header');
 	include View::getView('single');

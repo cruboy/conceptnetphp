@@ -37,7 +37,7 @@ onDblClick="theid=-1;   $.ajax({	url:'docp.php?cp=<?=$cpidd?>&ecdid=<?=$pDa['id'
 		}); $('#ftt0').hide();">☆</a><span ><?php echo $pDa['text']; ?></span>&nbsp;
 <span title="<?php echo "+".$pDa['f1']." -".$pDa['f2']." ".$pDa['num_assertions']; 
 ?>">关链</span><?php echo $pDa['f3']; ?>
- 查看<?php echo $pDa['words']; ?><a href="/?cp=<?=$cpidd?>">预览 </a></div>
+ 查看<?php echo $pDa['words']; ?><a href="index.php?cp=<?=$cpidd?>">预览 </a></div>
 
 <div id="ftt0" style='display:none;float:right;'>
 <?php echo $pDa['id']; ?>

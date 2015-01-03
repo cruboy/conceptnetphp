@@ -4,7 +4,7 @@
     <li>
 	<h3><span>认知网格</span></h3>
 	<ul id="logserch">
-	<form name="keycp" method="post" action="<?php echo BLOG_URL; ?>m/index.php">
+	<form name="keycp" method="post" action="<?php echo BLOG_URL; ?>m/index.php?action=ailist">
 	<input name="aikey"  type="text" value="<?php echo $akey; ?>" style="width:120px;"/>
     <input name="valid"  type="hidden" value="<?=$valid?>" />
 	<input type="submit" id="logserch_logserch" value="搜索" />
@@ -35,7 +35,7 @@ endif;?>" onclick='dotu(<?php echo $value['id']; ?>);' title='<?php echo $value[
 <SCRIPT stype=text/javascript>
  function dotu(id){
 	  var temp = document.createElement("form");         
-   temp.action = '/m/index.php';         
+   temp.action = '/m/index.php?action=ailist';         
    temp.method = "post";         
    temp.style.display = "none"; 
    var opt = document.createElement("input");         

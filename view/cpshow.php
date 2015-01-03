@@ -1,6 +1,6 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}
 if($pDa['backimg'] =='' )
-$pDa['backimg']="jt/imgs/bgg.jpg";
+$pDa['backimg']="/jt/imgs/bgg.jpg";
 $mtop=60;
 $fts=array("方正兰亭超细黑简体", "方正舒体", "方正姚体", "仿宋", "汉仪家书简", "汉仪楷体简", "汉仪太极体简", "汉仪娃娃篆简", "汉仪丫丫体简","汉仪丫丫体简", "仿宋", "汉仪家书简", "汉仪楷体简", "汉仪太极体简", "汉仪娃娃篆简", "汉仪丫丫体简", "黑体", "华文彩云", "华文仿宋", "华文行楷", "华文细黑", "华文新魏", "华文中宋", "经典综艺体简", "楷体", "隶书", "宋体", "微软雅黑", "新宋体", "幼圆", "华康娃娃体W5", "华康娃娃体W5", "华康娃娃体W5", "华康娃娃体W5(P)", "華康少女文字W6", "華康娃娃體(P)", "華康娃娃體", );
 
@@ -37,7 +37,7 @@ echo "top:".$value['atop']."px;"
 <script>
   function dotovv(id){
 	  var temp = document.createElement("form");         
-   temp.action = '/index.php';         
+   temp.action = '/m/index.php';         
    temp.method = "post";         
    temp.style.display = "none"; 
    var opt = document.createElement("input");         
