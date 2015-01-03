@@ -37,7 +37,7 @@ $vsid=intval($_SESSION['views']);
 	if(isset($_GET['jt']))
 $tabf="cruboy";		
 	$cpr = $CACHE->readCache('cpr');	
-if (!empty($cpid) )
+if (!empty($cpid) and  empty($_GET['u']))
 {
 	$ltime = time();
 
@@ -112,9 +112,13 @@ else
 		$ltime = time();
 	$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES (
 				'keyword','$vsid','0','$uid','$usersina_id','$ltime','$akey','$gip')");
-	if(empty ($akey))
-	$sql = "SELECT * FROM ".$tabf."_concept order by Rand()  LIMIT 30";
-	else
+	if(isset($_GET['u']))
+	{$sql = "SELECT * FROM ".$tabf."_concept where uid=".intval($_GET['u'])." limit 1000";
+	$atitle='我添加的图';
+	}elseif(empty ($akey))
+	{$sql = "SELECT * FROM ".$tabf."_concept order by Rand()  LIMIT 30";
+	$atitle='随机查看图：';
+	}else
 	$sql = "SELECT * FROM  ".$tabf."_concept WHERE text LIKE '%$akey%' order by f3 desc LIMIT 1000";
 			$res = $DB->query($sql);
 		

@@ -9,18 +9,15 @@ $fts=array("方正兰亭超细黑简体", "方正舒体", "方正姚体", "仿�
 var theid=-1;
 function cnvs_getCoordinates(e)
 {
-	y= $('#ftt'+theid).offset().top;
-x= $('#ftt'+theid).offset().left;
-
+	
 //x=e.clientX;
 //y=e.clientY;
-if(theid>0)
-{//document.getElementById("xycoordinates").innerHTML="Coordinates: (" + x + "," + y + ")";
+if(theid>=0)
+{
+y= $('#ftt'+theid).offset().top;
+x= $('#ftt'+theid).offset().left;
 $('#top'+theid).val(y);
 $('#left'+theid).val(x);
-}else
-{$('#topz').html(y);
-$('#leftz').html(x);
 }
 }
  
@@ -31,7 +28,7 @@ $('#leftz').html(x);
 onmousemove="cnvs_getCoordinates(event)" >
 <div class="ui-widget-content" <?php if($pDa['ctop']>0||$pDa['cleft']>0):?>
 style="position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;" <?php endif;?>>
-<a onClick="$('#ftt'+theid).hide();theid=0;$('#ftt0').show();" 
+<div style="width:<? echo strlen($pDa['text'])*9+120;?>px;"><a onClick="$('#ftt'+theid).hide();theid=0;$('#ftt0').show();" 
 onDblClick="theid=-1;   $.ajax({	url:'docp.php?cp=<?=$cpidd?>&ecdid=<?=$pDa['id']?>',
 				type:'POST',
 				data:$('#fttz').serialize(),
@@ -39,8 +36,8 @@ onDblClick="theid=-1;   $.ajax({	url:'docp.php?cp=<?=$cpidd?>&ecdid=<?=$pDa['id'
                    alert(data);					}
 		}); $('#ftt0').hide();">☆</a><span ><?php echo $pDa['text']; ?></span>&nbsp;
 <span title="<?php echo "+".$pDa['f1']." -".$pDa['f2']." ".$pDa['num_assertions']; 
-?>">关链数</span>
- 查看<?php echo $pDa['words']; ?><a href="/?cp=<?=$cpidd?>">预览 </a>
+?>">关链</span><?php echo $pDa['f3']; ?>
+ 查看<?php echo $pDa['words']; ?><a href="/?cp=<?=$cpidd?>">预览 </a></div>
 
 <div id="ftt0" style='display:none;float:right;'>
 <?php echo $pDa['id']; ?>
@@ -129,7 +126,9 @@ onDblClick="theid=-1;$.ajax({url:'docp.php?cp=<?=$cpidd?>&aid=<?=$value['aid']?>
 	<option value="79">{1}是{2}的</option><option value="84">{2}可能代表{1}</option><option value="89">{1}代表{2}</option><option value="92">{1}的时候，你会{2}</option><option value="95">在{1}，你会{2}</option>   
 </option>
 	</select> 
-	<br>名称：<textarea name="addname"  class="texts"/></textarea>
+	<? if(ROLE=='admin'):?><br>名称：<textarea name="addname"  class="texts"/></textarea><? else:?>
+    名称：<input name="addname"  type="text" value="" style="width:120px;"/>
+    <? endif;?>
     <input type="hidden" name="cp0s" value="<?php echo $pDa['text']; ?>" />
     <input type="hidden" name="cid" value="<?php echo $cpidd; ?>" />
         <input type="hidden" name="valid" value="<?php echo $valid;?>" />

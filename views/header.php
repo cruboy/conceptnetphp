@@ -26,7 +26,10 @@ if(!defined('EMLOG_ROOT')) {exit('error!');}
 <ul>
 <li class="common"><a href="/">首页</a></li>
 <li class="common"><a href="<?php echo BLOG_URL; ?>m/ainet.php" <?php if($action=='')echo 'id="active"'; ?>>图搜索</a> </li>
-<li class="common"><a href="<?php echo BLOG_URL; ?>m/ainet.php?f=<?=UID?>" <?php if($action=='')echo 'id="active"'; ?>>我的图</a> </li>
+<li class="common"><a href="<?php echo BLOG_URL; ?>m/ainet.php?u=<?=UID?>" <?php if($action=='')echo 'id="active"'; ?>>我的图</a> </li>
+	<?php if(ROLE == 'admin' ): ?>
+    <a href="<?php echo BLOG_URL; ?>m/admin.php">统计管理</a>
+    <? endif;?>
 <?php if(UID) echo $userData['username']; ?>，
 <a href="<?php echo BLOG_URL; ?>m/?action=logout" >退出</a> 
 </ul>
