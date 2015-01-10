@@ -14,7 +14,7 @@ function cnvs_getCoordinates(e)
 //y=e.clientY;
 if(theid>=0)
 {
-y= $('#ftt'+theid).offset().top;
+y= $('#ftt'+theid).offset().top-18;
 x= $('#ftt'+theid).offset().left;
 $('#top'+theid).val(y);
 $('#left'+theid).val(x);
