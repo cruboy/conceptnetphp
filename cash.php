@@ -116,20 +116,27 @@ $logData['lixi0']=$xit2;
 $logData['lixi']=$xit3;
 $logData['notexi']=$xil;
 			print_r($logData);
-		//	exit;
+			//exit;
 		//	echo getlv($logData['bank'],$logData['nian'],$logData['end0']);
 			//exit;
 	if($id>0){
-
+       if(empty($logData['visible'])){
+	   $upStr="visible=0";
+	   }
+	   else{
 	  $Item = array();
 		foreach ($logData as $key => $data) {
 			$Item[] = "$key='".addslashes($data)."'";
 		}
 		$upStr = implode(',', $Item);
+	   }
 		$DB->query("UPDATE cruboy_cash SET $upStr WHERE id=$id");
 	$msf="修改成功！";
 	}
 	else{
+		 if(empty($logData['visible'])){
+	     $logData['visible']=0;
+	   }
 		$kItem = array();
 		$dItem = array();
 		foreach ($logData as $key => $data) {
