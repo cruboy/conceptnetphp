@@ -238,7 +238,7 @@ if ($action == 'blog') {
 	$sta_cache = $CACHE->readCache('sta');
 	$lognum = $sta_cache['lognum'];
 	$pageurl = '?page=';
-	$logs = $Log_Model->getLogsForHome ($sqlSegment, $page, $index_lognum,'blog');
+	$logs = $Log_Model->getLogsForHome ($sqlSegment, $page, $index_lognum);
 	$page_url = pagination($lognum, $index_lognum, $page, $pageurl);
     $_SESSION['onm']=1;
 	include View::getView('header');
