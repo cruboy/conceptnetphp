@@ -106,7 +106,7 @@ if(isset($_POST['aikey'])||empty($_REQUEST['cp'])){
 			$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES (
 				'$vfrom','$vsid','$cpidd','$uid','$usersina_id','$ltime','$pDa[text]','$gip')");
 			
-			$sq2="SELECT a.concept1_id,a.concept2_id,
+			$sq2="SELECT a.concept1_id,a.concept2_id,a.id as aid,a.abid,a.seq,a.info,a.aurl,
 		a.relation_id,a.best_frame_id,a.atop1 as atop,a.aleft1 as aleft,
 		 ".$tabf."_concept.* FROM  ".$tabf."_assertion a LEFT JOIN
 		 ".$tabf."_concept ON a.concept2_id= ".$tabf."_concept.id
@@ -120,6 +120,7 @@ if(isset($_POST['aikey'])||empty($_REQUEST['cp'])){
 			}else{
 			 $row[frame]=$cpr[$row[relation_id]];
 			}
+			 $row['fx']='1';
 				if($vfrom=="vcru")
 					$row[id]=-$row[id];
 				if($row[atop]>$maxtop)
@@ -127,7 +128,7 @@ if(isset($_POST['aikey'])||empty($_REQUEST['cp'])){
 				$concepts[]=$row;
 			}
 			
-			$sq3="SELECT a.concept1_id,a.concept2_id,
+			$sq3="SELECT a.concept1_id,a.concept2_id,a.id as aid,a.abid,a.seq,a.info,a.aurl,
 		a.relation_id,a.best_frame_id,a.atop2 as atop,a.aleft2 as aleft,
 		 ".$tabf."_concept.* FROM  ".$tabf."_assertion a LEFT JOIN
 		 ".$tabf."_concept ON a.concept1_id= ".$tabf."_concept.id
@@ -141,6 +142,7 @@ if(isset($_POST['aikey'])||empty($_REQUEST['cp'])){
 			}else{
 			 $row2[frame]=$cpr[$row2[relation_id]];
 			}
+			$row2['fx']='2';
 				if($vfrom=="vcru")
 					$row2[id]=-$row2[id];
 				if($row2[atop]>$maxtop)
