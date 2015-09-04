@@ -236,7 +236,7 @@ $cpr = $CACHE->readCache('cpr');
 if ($action == 'blog') {
 	$Log_Model = new Log_Model();
 	$page = isset($_GET['page']) ? abs(intval ($_GET['page'])) : 1;
-	$sqlSegment = "ORDER BY top DESC ,date DESC";
+	$sqlSegment = "ORDER BY top DESC ,edittime DESC";
 	$sta_cache = $CACHE->readCache('sta');
 	$lognum = $sta_cache['lognum'];
 	$pageurl = '?page=';
