@@ -19,7 +19,7 @@ $cpid = isset ($_POST['cp']) ? intval ($_POST['cp']) : '';
 $fnid = isset ($_GET['fn']) ? intval ($_GET['fn']) : '';
 $sid = isset ($_GET['sid']) ? intval ($_GET['sid']) : '';
 $akey = isset($_POST['aikey']) ? addslashes($_POST['aikey']) : '';
-if(empty($action)&&empty ($fnid)&& empty ($sid)&& empty ($logid))
+if(($action=='aishow')|| empty ($fnid)&& empty ($sid)&& empty ($logid))
 {
 		$CACHE=Cache::getInstance();
 		$options_cache=$CACHE->readCache('options');
@@ -29,7 +29,7 @@ if(empty($action)&&empty ($fnid)&& empty ($sid)&& empty ($logid))
 		$gip=getIp();
 		$uid=UID;
 		$DB=MySql::getInstance();
-		$usersina_id=intval($_SESSION['oauth2']["user_id"]);
+		$usersina_id=intval($_SESSION['oauth2']['user_id']);
 		$cpid=0;
 		$pDs=1;
 		$concepts=array();
@@ -61,7 +61,7 @@ if(isset($_POST['aikey'])||empty($_REQUEST['cp'])){
 		$akey = addslashes($_POST['aikey']);
 		$atitle="查询'".$akey."'的结果：";
 	if(empty($akey)){
-		foreach($cpp[home] as $p)
+		foreach($cpp['home'] as $p)
 		{$concepts[]=$p;
 		}
 	$sql = "SELECT * FROM conceptnet_concept order by Rand()  LIMIT 30";
@@ -73,7 +73,7 @@ if(isset($_POST['aikey'])||empty($_REQUEST['cp'])){
 	$res = $DB->query($sql);
 		$o=$akey.'|';
 	while ($row = $DB->fetch_array($res)) {
-			$o.=$row[id].$row[text].' ';
+			$o.=$row['id'].$row['text'].' ';
 			$concepts[]=$row;
 		}
 		$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES ('mhome','$vsid','0','$uid','$usersina_id','$ltime','$o','$gip')");
@@ -101,10 +101,10 @@ if(isset($_POST['aikey'])||empty($_REQUEST['cp'])){
 			$sq1="SELECT * FROM  ".$tabf."_concept WHERE id='$cpid'";
 			$pDa=$DB->once_fetch_array($sq1);
            if($vfrom=="vcru")
-					$pDa[id]=-$pDa[id];
-			$hhtitle=$pDa[text];
+					$pDa['id']=-$pDa['id'];
+			$hhtitle=$pDa['text'];
 			$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES (
-				'$vfrom','$vsid','$cpidd','$uid','$usersina_id','$ltime','$pDa[text]','$gip')");
+				'$vfrom','$vsid','$cpidd','$uid','$usersina_id','$ltime','{$pDa['text']}','$gip')");
 			
 			$sq2="SELECT a.concept1_id,a.concept2_id,a.id as aid,a.abid,a.seq,a.info,a.aurl,
 		a.relation_id,a.best_frame_id,a.atop1 as atop,a.aleft1 as aleft,
@@ -113,18 +113,18 @@ if(isset($_POST['aikey'])||empty($_REQUEST['cp'])){
 		WHERE concept1_id='$cpid' order by a.relation_id,a.best_frame_id LIMIT 4000";
 			$res2=$DB->query($sq2);
 			while($row=$DB->fetch_array($res2)){
-			if($row[best_frame_id]>0){		
-			$ss=str_replace("1",$pDa[text],$cpr[$row[best_frame_id]]);
-			$ss=str_replace("2",$row[text],$ss);
-			$row[frame]=$ss;
+			if($row['best_frame_id']>0){		
+			$ss=str_replace("1",$pDa['text'],$cpr[$row['best_frame_id']]);
+			$ss=str_replace("2",$row['text'],$ss);
+			$row['frame']=$ss;
 			}else{
-			 $row[frame]=$cpr[$row[relation_id]];
+			 $row['frame']=$cpr[$row['relation_id']];
 			}
 			 $row['fx']='1';
 				if($vfrom=="vcru")
-					$row[id]=-$row[id];
-				if($row[atop]>$maxtop)
-					$maxtop=$row[atop];	
+					$row['id']=-$row['id'];
+				if($row['atop']>$maxtop)
+					$maxtop=$row['atop'];	
 				$concepts[]=$row;
 			}
 			
@@ -136,17 +136,17 @@ if(isset($_POST['aikey'])||empty($_REQUEST['cp'])){
 			$res3=$DB->query($sq3);
 			while($row2=$DB->fetch_array($res3)){
 				if($row2[best_frame_id]>0){		
-			$ss=str_replace("1",$row2[text],$cpr[$row2[best_frame_id]]);
-			$ss=str_replace("2",$pDa[text],$ss);
-			$row2[frame]=$ss;
+			$ss=str_replace("1",$row2['text'],$cpr[$row2['best_frame_id']]);
+			$ss=str_replace("2",$pDa['text'],$ss);
+			$row2['frame']=$ss;
 			}else{
-			 $row2[frame]=$cpr[$row2[relation_id]];
+			 $row2['frame']=$cpr[$row2['relation_id']];
 			}
 			$row2['fx']='2';
 				if($vfrom=="vcru")
-					$row2[id]=-$row2[id];
-				if($row2[atop]>$maxtop)
-					$maxtop=$row2[atop];
+					$row2['id']=-$row2['id'];
+				if($row2['atop']>$maxtop)
+					$maxtop=$row2['atop'];
 				$concepts[]=$row2;
 			}
 		}	
@@ -158,6 +158,9 @@ if(isset($_POST['aikey'])||empty($_REQUEST['cp'])){
 			if($maxtop<760)
 			$maxtop=760;
 			include View::getView('header');
+			if($action=='aishow')
+			include View::getView('aishow');
+			else
 			include View::getView('cpshow');
 			include View::getView('footer');
 			View::output();
@@ -177,12 +180,12 @@ header('status: 401 Unauthorized'); exit;
 	$_SESSION['valid']=$valid;
 	}
 $cpr = $CACHE->readCache('cpr');	
-	$atitle="查询‘".$akey."’的结果：";
+	$atitle="‘".$akey."’的结果：";
 		$ltime = time();
 	$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES (
 				'keyword','$vsid','0','$uid','$usersina_id','$ltime','$akey','$gip')");
 	if(empty ($akey))
-	$sql = "SELECT * FROM conceptnet_concept WHERE text LIKE '%$akey%' order by Rand()  LIMIT 10";
+	$sql = "SELECT * FROM conceptnet_concept order by Rand()  LIMIT 10";
 	else
 		$sql = "SELECT * FROM  conceptnet_concept WHERE text LIKE '%$akey%' order by f3 desc LIMIT 1000";
 			$res = $DB->query($sql);
@@ -193,35 +196,35 @@ $cpr = $CACHE->readCache('cpr');
 		$sql2 = "SELECT a.concept1_id,a.concept2_id,
 		a.relation_id,a.best_frame_id,conceptnet_concept.text FROM conceptnet_assertion a LEFT JOIN
 		conceptnet_concept ON a.concept2_id=conceptnet_concept.id
-		WHERE concept1_id='$row[id]'";
+		WHERE concept1_id='{$row['id']}' order by Rand() limit 1";
 			$aDa = $DB->once_fetch_array($sql2);
 		
-		$row[tx1]=$aDa[text];
-		$row[id1]=$aDa[concept2_id];
-	 $row[re1]=$aDa[relation_id];
-	 if($aDa[best_frame_id]>0){		
-			$ss=str_replace("1",$row[text],$cpr[$aDa[best_frame_id]]);
-			$ss=str_replace("2",$aDa[text],$ss);
-			$row[fi1]=$ss;
+		$row['tx1']=$aDa['text'];
+		$row['id1']=$aDa['concept2_id'];
+	 $row['re1']=$aDa['relation_id'];
+	 if($aDa['best_frame_id']>0){		
+			$ss=str_replace("1",$row['text'],$cpr[$aDa['best_frame_id']]);
+			$ss=str_replace("2",$aDa['text'],$ss);
+			$row['fi1']=$ss;
 			}else{
-			 $row[fi1]=$cpr[$aDa[relation_id]];
+			 $row['fi1']=$cpr[$aDa['relation_id']];
 			}
 
 		 $sql3 = "SELECT a.concept1_id,a.concept2_id,
 		a.relation_id,a.best_frame_id,conceptnet_concept.text FROM conceptnet_assertion a LEFT JOIN
 		conceptnet_concept ON a.concept1_id=conceptnet_concept.id
-		WHERE concept2_id='$row[id]'";
+		WHERE concept2_id='{$row['id']}' order by Rand() limit 1";
 			$aDa3 = $DB->once_fetch_array($sql3);
 		
-		$row[tx2]=$aDa3[text];
-		$row[id2]=$aDa3[concept1_id];
-	 $row[re2]=$aDa3[relation_id];
-	 if($aDa3[best_frame_id]>0){		
-			$ss=str_replace("1",$aDa3[text],$cpr[$aDa3[best_frame_id]]);
-			$ss=str_replace("2",$row[text],$ss);
-			$row[fi2]=$ss;
+		$row['tx2']=$aDa3['text'];
+		$row['id2']=$aDa3['concept1_id'];
+	 $row['re2']=$aDa3['relation_id'];
+	 if($aDa3['best_frame_id']>0){		
+			$ss=str_replace("1",$aDa3['text'],$cpr[$aDa3['best_frame_id']]);
+			$ss=str_replace("2",$row['text'],$ss);
+			$row['fi2']=$ss;
 			}else{
-			 $row[fi2]=$cpr[$aDa3[relation_id]];
+			 $row['fi2']=$cpr[$aDa3['relation_id']];
 			}
 
 	$concepts[]=$row;
@@ -249,78 +252,7 @@ if ($action == 'blog') {
 	View::output();
 }
 
-if ($action == 'aishow' &&$_SESSION['views']>2) 
-{
-	if($_POST['valid']!=$_SESSION['valid'])
-	{
-header('HTTP/1.1 401 Unauthorized'); 
-header('status: 401 Unauthorized'); exit;
-}else{
-	$valid=rand(1000,100000);
-	$_SESSION['valid']=$valid;
-	}
-	
-	$usersina_id= intval($_SESSION['oauth2']["user_id"]);
-	$DB = MySql::getInstance();
-$concepts=array();
-$logs1=array();
-$atitle="";
-$gip=getIp();   
-$uid=UID;
-		$vsid=intval($_SESSION['views']);
-	$ltime = time();
-if (ISLOGIN !== true&&(
-empty($_SESSION['oauth2']["user_id"])||empty($_SESSION['u_name']))){
-$vfr="unlog";
-	$sqadd="order by Rand() limit 5";
-}else {
-	$vfr="mview";
-   $sqadd="order by a.relation_id,a.best_frame_id LIMIT 4000";
-}
-$cpr = $CACHE->readCache('cpr');	
-	$DB->query("UPDATE conceptnet_concept SET words=words+1 WHERE id='$cpid'");
-	$sq1 = "SELECT * FROM conceptnet_concept WHERE id='$cpid'";
-	$pDa = $DB->once_fetch_array($sq1);
-	
-	$hhtitle=$pDa[text];
-	$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES (
-				'$vfr','$vsid','$cpid','$uid','$usersina_id','$ltime','$pDa[text]','$gip')");
-	$sq2 = "SELECT a.concept1_id,a.concept2_id,
-		a.relation_id,a.best_frame_id,conceptnet_concept.* FROM conceptnet_assertion a LEFT JOIN
-		conceptnet_concept ON a.concept2_id=conceptnet_concept.id
-		WHERE concept1_id='$cpid' $sqadd";
-	$res2 = $DB->query($sq2);
-	while ($row = $DB->fetch_array($res2)) {
-			if($row[best_frame_id]>0){		
-			$ss=str_replace("1",$pDa[text],$cpr[$row[best_frame_id]]);
-			$ss=str_replace("2",$row[text],$ss);
-			$row[frame]=$ss;
-			}else{
-			 $row[frame]=$cpr[$row[relation_id]];
-			}
-			$concepts[]=$row;
-			}
-	$concepts2=array();
-	$sq3 = "SELECT a.concept1_id,a.concept2_id,
-		a.relation_id,a.best_frame_id,conceptnet_concept.* FROM conceptnet_assertion a LEFT JOIN
-		conceptnet_concept ON a.concept1_id=conceptnet_concept.id
-		WHERE concept2_id='$cpid' $sqadd";
-		$res3 = $DB->query($sq3);
-	while ($row2 = $DB->fetch_array($res3)) {
-			if($row2[best_frame_id]>0){		
-			$ss=str_replace("1",$row2[text],$cpr[$row2[best_frame_id]]);
-			$ss=str_replace("2",$pDa[text],$ss);
-			$row2[frame]=$ss;
-			}else{
-			 $row2[frame]=$cpr[$row2[relation_id]];
-			}
-		$concepts2[]=$row2;
-		}
-	include View::getView('header');
-	include View::getView('aishow');
-	include View::getView('footer');
-	View::output();
-}
+
 if (!empty ($fnid)) {
 
 $sql = "SELECT *  FROM cruboy_film where gid='$fnid' ";
