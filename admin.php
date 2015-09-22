@@ -13,12 +13,12 @@ $action = isset($_GET['action']) ? addslashes($_GET['action']) : "";
 
 $uid = UID;
 $DB = MySql :: getInstance();
+include './view/header.php';
 include View::getView('header');
 
 //set_time_limit(0);
 
 
-//3.HiNet Manage
 if ($action == "") {
 	$opt = $_GET['opt'];
 	if(empty($opt)) $opt='id desc';
@@ -47,8 +47,20 @@ if ($action == "") {
 		$row1 = $DB->fetch_array($res1);
 		$nall=$row1[a];
 	}
-$start=($page-1)*200;				
-	$cc = $DB->once_fetch_array("SELECT count(*) as a  FROM cruboy_concept ");
+$start=($page-1)*100;				
+
+	$sql = "SELECT * FROM vaddlog where 1 $asql2 order by $opt  LIMIT $start,100";
+	$res = $DB->query($sql);
+	//$ap = $DB->affected_rows();
+$pageurl="/m/admin.php?nall=$nall&page=";
+	
+    include View::getView('admin');
+
+
+}
+
+elseif($action =='tongji'){
+   	$cc = $DB->once_fetch_array("SELECT count(*) as a  FROM cruboy_concept ");
 	$ca = $DB->once_fetch_array("SELECT count(*) as a  FROM cruboy_assertion ");
 	$nc = $DB->once_fetch_array("SELECT count(*) as a  FROM conceptnet_concept ");
 	$na = $DB->once_fetch_array("SELECT count(*) as a  FROM conceptnet_assertion ");
@@ -57,17 +69,35 @@ $start=($page-1)*200;
 	$ca2 = $DB->once_fetch_array("SELECT max(id) as a  FROM cruboy_assertion ");
 	$nc2 = $DB->once_fetch_array("SELECT max(id) as a  FROM conceptnet_concept ");
 	$na2 = $DB->once_fetch_array("SELECT max(id) as a  FROM conceptnet_assertion ");
-	$sql = "SELECT * FROM vaddlog where 1 $asql2 order by $opt";
-	$res = $DB->query($sql);
-	//$ap = $DB->affected_rows();
-$pageurl="/m/cash.php?bank=$word&name=$rule&used=$used&opt=";
-	
-    include View::getView('admin');
-
-
+?>
+<table width="402" border="1">
+  <tr>
+    <td width="64">&nbsp;</td>
+    <td width="116">conceptnet</td>
+    <td width="98">cruboy</td>
+    <td width="96">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>concept</td>
+    <td><?=$nc['a']?>[<?=$nc2['a']?>]</td>
+    <td><?=$cc['a']?>[<?=$cc2['a']?>]</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>assertion</td>
+    <td><?=$na['a']?>[<?=$na2['a']?>]</td>
+    <td><?=$ca['a']?>[<?=$ca2['a']?>]</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<?
 }
-
-
 elseif($action =="edit"){
     
 	$id=intval($_GET['id']);
@@ -124,7 +154,4 @@ $logData=$_POST;
 	exit;
 }
 include View::getView('footer');
-
-
-
 ?>

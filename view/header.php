@@ -35,6 +35,10 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 <a href="/m/?action=ailist&cplist" <?php if($action=='ailist'||$action=='aishow')echo 'id="active"'; ?>>测字</a>
 
 <a href="/m/ainet.php" <?php if($aineth)echo 'id="active"'; ?>>图编辑</a>
+<a href="<?php echo BLOG_URL; ?>m/ainet.php?list" <?php if($action=='list')echo 'id="active"'; ?>>各家图</a>
+<?php if(ISLOGIN === true): ?>
+    <a href="<?php echo BLOG_URL; ?>m/admin.php">图管理</a>
+<? endif;?>
 <a href="/m/?action=blog" <?php if($action=='blog')echo 'id="active"'; ?>>文章列表</a>
 <a href="/m/?action=film" <?php if($action=='film')echo 'id="active"'; ?>>影视</a> 
 <a href="/m/?action=story" <?php if($action=='story')echo 'id="active"'; ?>>童话故事</a> 

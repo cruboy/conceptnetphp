@@ -1,42 +1,10 @@
 <?php if(!defined('EMLOG_ROOT')) {
     exit('error!');
 }?>
-
-
 <div align="center">
-<table width="402" border="1">
-  <tr>
-    <td width="64">&nbsp;</td>
-    <td width="116">conceptnet</td>
-    <td width="98">cruboy</td>
-    <td width="96">&nbsp;</td>
-  </tr>
-  <tr>
-    <td>concept</td>
-    <td><?=$nc['a']?>[<?=$nc2['a']?>]</td>
-    <td><?=$cc['a']?>[<?=$cc2['a']?>]</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>assertion</td>
-    <td><?=$na['a']?>[<?=$na2['a']?>]</td>
-    <td><?=$ca['a']?>[<?=$ca2['a']?>]</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-</table>
-
 	<form action="" method="get" name="hinetslist">
 	<input type="hidden" name="action" value="hinets" />
-	查询： <input type="text" name="word" value="<?php  echo $word; ?>" /> 关系: 
-		(<input type="text" name="ass2" style="width: 50px;" value="<?php  echo $ass; ?>" /> ) 
-		cp <input type="text"	name="rule" style="width: 120px;" value="<?php  echo $rule; ?>" />
-		cp2 <input type="text"	name="rule2" style="width: 120px;" value="<?php  echo $rule2; ?>" />
+	查询： <input type="text" name="word" value="<?php  echo $word; ?>" /> 
 		uid<input type="text"	name="procs" style="width: 120px;" value="<?php  echo $procs; ?>" />	 
 	 
 			 <select dir="ltr" name="used" id="darom" >
@@ -45,6 +13,7 @@
 			<option value="2" <?php if($used==2) echo "selected='selected'"; ?>>不可用</option>
 			</select> 
 			 <input type="submit" value="查询" id="buttonGo" />（!不为空#为空）
+             <a href='?action=tongji'>统计</a>
 	</form>
 
 	<table width="98%" cellspacing=2 cellpadding=2
@@ -74,8 +43,7 @@
 		    }
 		    
 		    ?>
-			<td><a href=''><?php echo $row[id]; ?>
-			</a></td>
+			<td><a href=''><?php echo $row[id]; ?></a></td>
 			<td><?php echo $row[viewid]; ?></td>
 			<td><?php echo $row[rid]; ?></td>
 			<td><a href="index.php?cp=<?php echo $row[cp0id]; ?>"><?php echo $row[cp0]; ?></a>
@@ -99,5 +67,5 @@
 </div>
 
 <div id='page'>
-	<?php echo pagination($nall, 200, $page, $pageurl); ?>
+	<?php echo pagination($nall, 100, $page, $pageurl); ?>
 </div>

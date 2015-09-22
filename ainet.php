@@ -10,7 +10,7 @@ define('TEMPLATE_PATH', EMLOG_ROOT.'/m/views/');
 
 if (ISLOGIN !== true){
 //echo "请登录";
-$msg='登录后，可以编辑导图等。';
+$msg='登录后，可以添加、编辑导图，位图笔记。';
 emDirect("/m/?action=login");
 exit;
 }
@@ -18,7 +18,6 @@ $blogtitle = Option::get('twnavi') . ' - ' . Option::get('blogname');
 $description = Option::get('bloginfo');
 $DB = MySql::getInstance();
 $concepts=array();
-$aineth=1;
 $atitle="";
 $gip=getIp();   
 $uid=UID;
@@ -39,18 +38,18 @@ $vsid=intval($_SESSION['views']);
 	if(isset($_GET['jt']))
 $tabf="cruboy";		
 	$cpr = $CACHE->readCache('cpr');	
-if (!empty($cpid) and  empty($_GET['u']))
+if (!empty($cpid) )
 {
 	$ltime = time();
-
+$aineth=1;
 	//$DB->query("UPDATE  ".$tabf."_concept SET words=words+1 WHERE id='$cpid'");
 
 	$sq1 = "SELECT * FROM  ".$tabf."_concept WHERE id='$cpid'";
 	$pDa = $DB->once_fetch_array($sq1);
 
 	$hhtitle=$pDa[text];
-		$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES (
-				'$vfrom','$vsid','$cpidd','$uid','$usersina_id','$ltime','$pDa[text]','$gip')");
+		//$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES (
+			//	'$vfrom','$vsid','$cpidd','$uid','$usersina_id','$ltime','$pDa[text]','$gip')");
 	
 	$sq2 = "SELECT a.concept1_id,a.concept2_id,a.id as aid,a.abid,a.seq,a.info,a.aurl,
 		a.relation_id,a.best_frame_id,a.atop1 as atop,a.aleft1 as aleft,
@@ -101,25 +100,57 @@ if (!empty($cpid) and  empty($_GET['u']))
 			$maxtop=$mm;
 			if($maxtop<760)
 			$maxtop=760;
+	include './view/header.php';
 	include View::getView('header');
 	include View::getView('cpedit');
 	include View::getView('footer');
 	View::output();
 }
+elseif(isset ($_GET['fre']))
+{ $a=0;
+	$freid = intval ($_GET['fre']) ;
+	$sql2 = "SELECT conceptnet_assertion.concept1_id,conceptnet_assertion.concept2_id,
+		conceptnet_assertion.score,conceptnet_assertion.best_frame_id,conceptnet_concept.text FROM conceptnet_assertion LEFT JOIN
+		conceptnet_concept ON conceptnet_assertion.concept2_id=conceptnet_concept.id
+		WHERE best_frame_id='$freid' order by conceptnet_assertion.score desc";
+	$res2 = $DB->query($sql2);
+	while ($row = $DB->fetch_array($res2)) {
+		$sqqq2="SELECT text FROM conceptnet_concept WHERE id='$row[concept1_id]'";
+			 $qDq2 = $DB->once_fetch_array($sqqq2);
+			 $row[text1]=$qDq2[text];
+		echo $a.$row[text1]."-->".$row[text].$row[score]."<br>";
+		$a++;
+	}
 
+	
+}
+elseif(isset ($_GET['list']))
+{
+   $action='list';
+	$sql = "SELECT * FROM  ".$tabf."_concept WHERE text LIKE '%$akey%' order by f3 desc LIMIT 10";
+			$res = $DB->query($sql);
+		
+			while ($row = $DB->fetch_array($res)) {
+				$concepts[]=$row;
+			}
+  include './view/header.php';
+	include View::getView('mynet');
+	include View::getView('footer');
+	View::output();
+}
 else
 {
 	$akey = addslashes($_GET['k']);
-	$atitle="查询'".$akey."'的结果：";
+	$atitle="查询'".$akey."'进行编辑：";
 		$ltime = time();
-	$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES (
-				'keyword','$vsid','0','$uid','$usersina_id','$ltime','$akey','$gip')");
+//	$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES (
+//				'keyword','$vsid','0','$uid','$usersina_id','$ltime','$akey','$gip')");
 	if(isset($_GET['u']))
 	{$sql = "SELECT * FROM ".$tabf."_concept where uid=".intval($_GET['u'])." limit 1000";
 	$atitle='我添加的图';
 	}elseif(empty ($akey))
 	{$sql = "SELECT * FROM ".$tabf."_concept order by Rand()  LIMIT 30";
-	$atitle='随机查看图：';
+	$atitle='点击编辑图：';
 	}else
 	$sql = "SELECT * FROM  ".$tabf."_concept WHERE text LIKE '%$akey%' order by f3 desc LIMIT 1000";
 			$res = $DB->query($sql);
@@ -149,29 +180,12 @@ else
 		}
 		$hhtitle=$akey;
 		$atitle.="（共".count($concepts,0)."个）";
-    include View::getView('header');
+  include './view/header.php';
 	include View::getView('mynet');
 	include View::getView('footer');
 	View::output();
 }
 
-if(isset ($_GET['fre']))
-{ $a=0;
-	$freid = intval ($_GET['fre']) ;
-	$sql2 = "SELECT conceptnet_assertion.concept1_id,conceptnet_assertion.concept2_id,
-		conceptnet_assertion.score,conceptnet_assertion.best_frame_id,conceptnet_concept.text FROM conceptnet_assertion LEFT JOIN
-		conceptnet_concept ON conceptnet_assertion.concept2_id=conceptnet_concept.id
-		WHERE best_frame_id='$freid' order by conceptnet_assertion.score desc";
-	$res2 = $DB->query($sql2);
-	while ($row = $DB->fetch_array($res2)) {
-		$sqqq2="SELECT text FROM conceptnet_concept WHERE id='$row[concept1_id]'";
-			 $qDq2 = $DB->once_fetch_array($sqqq2);
-			 $row[text1]=$qDq2[text];
-		echo $a.$row[text1]."-->".$row[text].$row[score]."<br>";
-		$a++;
-	}
-	exit;
-	
-}
+
 
 
