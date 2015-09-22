@@ -7,7 +7,7 @@
 	<form name="keycp" method="post" action="<?php echo BLOG_URL; ?>m/index.php?action=ailist">
 	<input name="aikey"  type="text" value="<?php echo $akey; ?>" style="width:120px;"/>
     <input name="valid"  type="hidden" value="<?=$valid?>" />
-	<input type="submit" id="logserch_logserch" value="测算" />
+	<input type="submit" id="logserch_logserch" value="测字搜索" />
 	</form>
 	</ul>
 <?php echo $atitle;?>    

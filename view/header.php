@@ -32,7 +32,7 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 <?php if(UID) echo $userData['username']; else echo "游客"; ?></a>，您好！
 <a href="/" >首页</a> 
 <a href="/m" <?php if($action=='')echo 'id="active"'; ?>>导图</a> 
-<a href="/m/?action=ailist&cplist" <?php if($action=='ailist')echo 'id="active"'; ?>>搜索</a>
+<a href="/m/?action=ailist&cplist" <?php if($action=='ailist'||$action=='aishow')echo 'id="active"'; ?>>测字</a>
 
 <a href="/m/ainet.php" <?php if($aineth)echo 'id="active"'; ?>>图编辑</a>
 <a href="/m/?action=blog" <?php if($action=='blog')echo 'id="active"'; ?>>文章列表</a>

@@ -2,7 +2,7 @@
 <script type="text/javascript" src="/content/js/jquery-1.8.2.min.js"></script>
 <div id="m">
    	<li>
-	<h3><span>认知网格</span></h3>
+	<h3><span>cruboy测字查看</span></h3>
 	<ul id="logserch">
 	<form name="keycp" method="post" action="<?php echo BLOG_URL; ?>m/index.php?action=ailist">
 	<input name="aikey"  type="text" value="<?php echo $akey; ?>" style="width:120px;"/>
@@ -14,7 +14,7 @@
     
 <div class="comcont">
 &nbsp;&nbsp;
-<SPAN <?php if($pDa['visible'] == false ): ?>style="TEXT-DECORATION: line-through"<?php endif;?>>
+<SPAN title='<?=$pDa['id']?>' <?php if($pDa['visible'] == false ): ?>style="TEXT-DECORATION: line-through"<?php endif;?>>
 <?php echo $pDa['text']; ?></SPAN>&nbsp;
 
 （前向<?php echo $pDa['f1']; ?>
@@ -26,7 +26,7 @@
 	<?php 
 foreach($concepts as $value):
 ?>
-<div class="comcont" >
+<div class="comcont" ><?php if($value['fx']==2)echo '-'; ?>
 &nbsp;&nbsp;<SPAN style="cursor:pointer;<?php if($value['visible'] == false ): ?>TEXT-DECORATION: line-through<?php endif;?>"  onclick='dotu(<?php echo $value['id']; ?>);' >
 <?php echo $value['text']; ?></SPAN>
 &nbsp;&nbsp;
@@ -35,21 +35,8 @@ foreach($concepts as $value):
 </SPAN>
 </div>
 <?php endforeach; ?>
-
 ==========================<br>
 
-	<?php 
-foreach($concepts2 as $value):
-?>
-<div class="comcont">
-&nbsp;&nbsp;<SPAN style="cursor:pointer;<?php if($value['visible'] == false ): ?>TEXT-DECORATION: line-through<?php endif;?>"  onclick='dotu(<?php echo $value['id']; ?>);' >
-<?php echo $value['text']; ?></SPAN>
-&nbsp;&nbsp;
-<SPAN  title='<?php echo $value['best_frame_id']; ?>'>
-<?php echo $value['frame']; ?>
-</SPAN>
-</div>
-<?php endforeach; ?>
 <br>
 <form id="addcp<?php echo $valid;?>" >
     添加
