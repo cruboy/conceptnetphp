@@ -79,6 +79,8 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 			$o.=$row['id'].$row['text'].' ';
 			$concepts[]=$row;
 		}
+		if($action=='aishow')
+		$vfdd.='2';
 		$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,vtime,text,loginip) VALUES 
 		('$vfdd','$vsid','0','$uid','$usersina_id','$ltime','$o','$gip')");
 		$hhtitle=$akey;
@@ -105,6 +107,8 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
            if($tabf=='cruboy')
 				$pDa['id']=-$pDa['id'];
 			$hhtitle=$pDa['text'];
+			if($action=='aishow')
+		     $vfrom.='2';
 			$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,vtime,text,loginip) VALUES (
 				'$vfrom','$vsid','$cpidd','$uid','$usersina_id','$ltime','{$pDa['text']}','$gip')");
 			
@@ -137,7 +141,7 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 		WHERE concept2_id='$cpid' order by a.seq,a.relation_id,a.best_frame_id LIMIT 4000";
 			$res3=$DB->query($sq3);
 			while($row2=$DB->fetch_array($res3)){
-				if($row2[best_frame_id]>0){		
+				if($row2['best_frame_id']>0){		
 			$ss=str_replace("1",$row2['text'],$cpr[$row2['best_frame_id']]);
 			$ss=str_replace("2",$pDa['text'],$ss);
 			$row2['frame']=$ss;
@@ -192,14 +196,13 @@ if ($action == 'ailist' && $_SESSION['views']>2) {
 	 }else{
 	  $mnk='malsearch';
 	  $atitle="测字‘".$akey."’的结果：";
-	  $sql = "SELECT * FROM  conceptnet_concept WHERE text LIKE '%$akey%' order by f3 desc LIMIT 1000";
+	  $sql = "SELECT * FROM  conceptnet_concept WHERE text LIKE '%$akey%' order by Rand() LIMIT 20";
 	 }
-	 $DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,vtime,text,loginip) VALUES (
-				'$mnk','$vsid','0','$uid','$usersina_id','$ltime','$akey','$gip')");
+    $o=$akey.'|';
 	 $res = $DB->query($sql);
 	       $concepts=array();	
 		while ($row = $DB->fetch_array($res)) {
-			
+			$o.=$row['text'].' ';
 		// $sql2 = "SELECT * FROM conceptnet_assertion WHERE concept1_id='$row[id]' or concept2_id='$row[id]' LIMIT 2";
 		$sql2 = "SELECT a.concept1_id,a.concept2_id,
 		a.relation_id,a.best_frame_id,conceptnet_concept.text FROM conceptnet_assertion a LEFT JOIN
@@ -234,10 +237,12 @@ if ($action == 'ailist' && $_SESSION['views']>2) {
 			}else{
 			 $row['fi2']=$cpr[$aDa3['relation_id']];
 			}
-
+    $o.='('.$row['tx1'].' '.$row['tx2'].')';
 	$concepts[]=$row;
 		}
 		$hhtitle=$akey;
+	$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,vtime,text,loginip) VALUES (
+				'$mnk','$vsid','0','$uid','$usersina_id','$ltime','$o','$gip')");
     include View::getView('header');
 	include View::getView('ailist');
 	include View::getView('footer');

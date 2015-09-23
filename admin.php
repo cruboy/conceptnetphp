@@ -14,7 +14,6 @@ $action = isset($_GET['action']) ? addslashes($_GET['action']) : "";
 $uid = UID;
 $DB = MySql :: getInstance();
 include './view/header.php';
-include View::getView('header');
 
 //set_time_limit(0);
 
