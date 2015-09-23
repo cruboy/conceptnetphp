@@ -187,10 +187,10 @@ if ($action == 'ailist' && $_SESSION['views']>2) {
 	$ltime = date('Y-m-d H:i:s');
 	
 	if(empty ($akey)){
-	  $mnk='mailist';
+	  $mnk='mallist';
 	  $sql = "SELECT * FROM conceptnet_concept order by Rand()  LIMIT 10";
 	 }else{
-	  $mnk='maisearch';
+	  $mnk='malsearch';
 	  $atitle="测字‘".$akey."’的结果：";
 	  $sql = "SELECT * FROM  conceptnet_concept WHERE text LIKE '%$akey%' order by f3 desc LIMIT 1000";
 	 }

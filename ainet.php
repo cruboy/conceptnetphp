@@ -26,28 +26,28 @@ $vsid=intval($_SESSION['views']);
 
 	$cpidd=intval($_GET['cp']);
 			if($cpidd<0){
-				$tabf="cruboy";
+				$tabf='cruboy';
 				$vfrom="jcru";
 				$cpid=-$cpidd;
 			}else{
 				$tabf="conceptnet";
 				$vfrom="jind";
 				$cpid=$cpidd;
-				if($cpid==0)$action="keyword";
+				
 			}
 	if(isset($_GET['jt']))
-$tabf="cruboy";		
+       $tabf="cruboy";		
 	$cpr = $CACHE->readCache('cpr');	
 if (!empty($cpid) )
 {
-	$ltime = time();
-$aineth=1;
+	$ltime = date('Y-m-d H:i:s');
+    $aineth=1;
 	//$DB->query("UPDATE  ".$tabf."_concept SET words=words+1 WHERE id='$cpid'");
 
 	$sq1 = "SELECT * FROM  ".$tabf."_concept WHERE id='$cpid'";
 	$pDa = $DB->once_fetch_array($sq1);
 
-	$hhtitle=$pDa[text];
+	$hhtitle=$pDa['text'];
 		//$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES (
 			//	'$vfrom','$vsid','$cpidd','$uid','$usersina_id','$ltime','$pDa[text]','$gip')");
 	
@@ -58,17 +58,17 @@ $aineth=1;
 		WHERE concept1_id='$cpid' order by a.relation_id,a.best_frame_id LIMIT 100";
 	$res2 = $DB->query($sq2);
 	while ($row = $DB->fetch_array($res2)) {
-			if($row[best_frame_id]>0){		
-			$ss=str_replace("1",$pDa[text],$cpr[$row[best_frame_id]]);
-			$ss=str_replace("2",$row[text],$ss);
-			$row[frame]=$ss;
+			if($row['best_frame_id']>0){		
+			$ss=str_replace("1",$pDa['text'],$cpr[$row['best_frame_id']]);
+			$ss=str_replace("2",$row['text'],$ss);
+			$row['frame']=$ss;
 			}{
-			 $row[rela]=$cpr[$row[relation_id]];
+			 $row['rela']=$cpr[$row['relation_id']];
 			}
 		    $row['fx']='1';
-			 if($vfrom=="jcru")
-					$row[id]=-$row[id];
-				if($row[atop]>$maxtop)
+			 if($tabf=='cruboy')
+					$row['id']=-$row['id'];
+				if($row['atop']>$maxtop)
 					$maxtop=$row[atop];	
 			$concepts[]=$row;
 			}
@@ -80,18 +80,18 @@ $aineth=1;
 		WHERE concept2_id='$cpid' order by a.seq,a.relation_id,a.best_frame_id LIMIT 4000";
 		$res3 = $DB->query($sq3);
 	while ($row2 = $DB->fetch_array($res3)) {
-			if($row2[best_frame_id]>0){		
-			$ss=str_replace("1",$row2[text],$cpr[$row2[best_frame_id]]);
-			$ss=str_replace("2",$pDa[text],$ss);
-			$row2[frame]=$ss;
+			if($row2['best_frame_id']>0){		
+			$ss=str_replace("1",$row2['text'],$cpr[$row2['best_frame_id']]);
+			$ss=str_replace("2",$pDa['text'],$ss);
+			$row2['frame']=$ss;
 			}{
-			 $row2[rela]=$cpr[$row2[relation_id]];
+			 $row2['rela']=$cpr[$row2['relation_id']];
 			}
 			$row2['fx']='2';
-			 if($vfrom=="jcru")
-					$row2[id]=-$row2[id];
-			if($row2[atop]>$maxtop)
-			$maxtop=$row2[atop];
+			 if($tabf=='cruboy')
+					$row2['id']=-$row2['id'];
+			if($row2['atop']>$maxtop)
+			$maxtop=$row2['atop'];
 		$concepts[]=$row2;
 		}
 		$mm=count($concepts,0)*20+60;
@@ -101,7 +101,7 @@ $aineth=1;
 			if($maxtop<760)
 			$maxtop=760;
 	include './view/header.php';
-	include View::getView('header');
+
 	include View::getView('cpedit');
 	include View::getView('footer');
 	View::output();
@@ -134,25 +134,32 @@ elseif(isset ($_GET['list']))
 				$concepts[]=$row;
 			}
   include './view/header.php';
-	include View::getView('mynet');
+	include View::getView('list');
 	include View::getView('footer');
 	View::output();
 }
 else
 {
 	$akey = addslashes($_GET['k']);
-	$atitle="查询'".$akey."'进行编辑：";
-		$ltime = time();
-//	$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES (
-//				'keyword','$vsid','0','$uid','$usersina_id','$ltime','$akey','$gip')");
-	if(isset($_GET['u']))
-	{$sql = "SELECT * FROM ".$tabf."_concept where uid=".intval($_GET['u'])." limit 1000";
-	$atitle='我添加的图';
-	}elseif(empty ($akey))
-	{$sql = "SELECT * FROM ".$tabf."_concept order by Rand()  LIMIT 30";
+	
+	$ltime = date('Y-m-d H:i:s');
+	
+	if(isset($_GET['u'])){
+	$sql = "SELECT * FROM ".$tabf."_concept where uid=".intval($_GET['u'])." limit 1000";
+	$atitle='我添加的图';$action='list';
+	$kword='maimy';
+	}elseif(empty ($akey)){
+	$sql = "SELECT * FROM ".$tabf."_concept order by Rand()  LIMIT 30";
 	$atitle='点击编辑图：';
-	}else
+	$aineth=1;
+	$kword='maihome';
+	}else{
 	$sql = "SELECT * FROM  ".$tabf."_concept WHERE text LIKE '%$akey%' order by f3 desc LIMIT 1000";
+	$atitle="查询'".$akey."'进行编辑：";$aineth=1;
+	$kword='maisearch';
+	}
+	$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,vtime,text,loginip) VALUES (
+				'$kword','$vsid','0','$uid','$usersina_id','$ltime','$akey','$gip')");	
 			$res = $DB->query($sql);
 		
 			while ($row = $DB->fetch_array($res)) {

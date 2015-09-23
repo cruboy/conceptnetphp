@@ -2,13 +2,14 @@
 
 <div id="m">
 	<li>
-	<h3>图编辑</h3>
+	<h3>各家图</h3>
 	<ul id="logserch">
 	<form name="keycp" method="get" action="<?php echo BLOG_URL; ?>m/ainet.php">
 	<input name="k"  type="text" value="<?php echo $akey; ?>" style="width:120px;"/>
 	<input type="submit" id="logserch_logserch" value="搜索" />
 	</form>
-	</ul>
+	</ul><a href="<?php echo BLOG_URL; ?>m/ainet.php?u=<?=UID?>" 
+	<?php if($action=='')echo 'id="active"'; ?>>我的图</a> 
 	</li>
 <?=$atitle?>
 	<?php 
