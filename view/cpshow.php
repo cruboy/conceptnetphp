@@ -13,37 +13,56 @@ $fts=array("方正兰亭超细黑简体", "方正舒体", "方正姚体", "仿�
 <script type="text/javascript" src="/content/js/jquery-1.8.2.min.js"></script>
 <script src="/content/js/jquery-ui.js"></script> 
 <div id="m"  style="height:<?=$maxtop?>px;width:1000px;background: url('<?=$backimg?>');overflow-x :auto; ">
-<div class="ui-widget-content" <?php if($pDa['ctop']>0||$pDa['cleft']>0):?>
-style="position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;" <?php endif;?>>
+<?php if($pDa['imgid'] >0 ){
+$sq1ab = "SELECT * FROM  emlog_attachment WHERE aid=".$pDa['imgid'];
+	$paab = $DB->once_fetch_array($sq1ab);
+ ?>
+<div class="ui-widget-content" 
+style="cursor:pointer;position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;">
+<img style="border:0px;" src="<?=$paab['filepath']?>" title="<?=$pDa['text']?>"></div>
+<?php } ?>
+<div class="ui-widget-content" >
 ☆<span ><?php echo $pDa['text']; ?></span>&nbsp;
 <span title="<?php echo "+".$pDa['f1']."-".$pDa['f2']."~".$pDa['num_assertions']; 
 ?>">相关数</span><?php echo $pDa['f3']; ?>
- 查看<?php echo $pDa['words']; ?> <?php if(ISLOGIN === true):?><a href="/m/ainet.php?cp=<?=$pDa['id']?>">编辑</a><? endif;?>
+ 查看<?php echo $pDa['words']; ?> 
+ <?php if($pDa['url'] !='' ){ ?>
+<a href="<?=$pDa['url']?>">□</a>
+<?php }
+if($pDa['blogid'] >0 ){?>
+<a href="/<?php echo $pDa['blogid']; ?>.html">■</a>
+<?php } ?>
+ <?php if(ISLOGIN === true):?><a href="/m/ainet.php?cp=<?=$pDa['id']?>">编辑</a><? endif;?>
 </div> 
 <?php echo $pDaa['content']; ?>
 <?php 
-foreach($concepts as $k=>$value):
+foreach($concepts as $k=>$value){
+?>
+<?php if($value['imgid'] >0 ){
+$sq1a = "SELECT * FROM  emlog_attachment WHERE aid=".$value['imgid'];
+	$paa = $DB->once_fetch_array($sq1a);
+ ?>
+ <div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=
+$value['itop']?>px;left:<?=$value['ileft']?>px;" >
+<img style="border:0px;" src="<?=$paa['filepath']?>" title='<?=$value['text']?>'></div>
+<?php }
+} ?>
+<?php 
+foreach($concepts as $k=>$value){
 $value['atop']=$value['atop']==0?$mtop+=20:$value['atop'];
 $value['aleft']=$value['aleft']==0?rand(1,920):$value['aleft'];
 ?>
-<?php if($value['imgid'] !=0 ):
-$sq1a = "SELECT * FROM  emlog_attachment WHERE aid=".$value['imgid'];
-	$paa = $DB->once_fetch_array($sq1a);
-
- ?>
- <div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=
-$value['atop']?>px;left:<?=$value['aleft']?>px;" >
-<img style="border:0px;" src="<?=$paa['filepath']?>"></div><?php endif;?>
 <div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=
 $value['atop']?>px;left:<?=$value['aleft']?>px;" >○<span onclick="dotovv(<?php 
 echo $value['id']; ?>)" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions']; 
 ?>" style="font-family:<?=$fts[rand(0,36)]?>;"><?=$value['text']?></span>
-<?php if($value['aurl'] !='' ): ?>
-<a href="<?php echo $value['aurl']; ?>">□</a>
-<?php endif;if($value['url'] !='' ): ?>
-<a href="<?php echo $value['url']; ?>">■</a>
-<?php endif;?></div>
-<?php endforeach; ?>
+<?php if($value['url'] !='' ){ ?>
+<a href="<?=$value['url']?>">□</a>
+<?php }
+if($value['blogid'] >0 ){?>
+<a href="/<?php echo $value['blogid']; ?>.html">■</a>
+<?php } ?></div>
+<?php } ?>
 </div>
 <script>
   function dotovv(id){

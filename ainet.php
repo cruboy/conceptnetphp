@@ -51,8 +51,8 @@ if (!empty($cpid) )
 		//$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES (
 			//	'$vfrom','$vsid','$cpidd','$uid','$usersina_id','$ltime','$pDa[text]','$gip')");
 	
-	$sq2 = "SELECT a.concept1_id,a.concept2_id,a.id as aid,a.abid,a.seq,a.info,a.aurl,
-		a.relation_id,a.best_frame_id,a.atop1 as atop,a.aleft1 as aleft,
+	$sq2 = "SELECT a.concept1_id,a.concept2_id,a.id as aid,a.abid,a.seq,
+		a.relation_id,a.best_frame_id,a.atop1 as atop,a.aleft1 as aleft,a.itop1 as itop,a.ileft1 as ileft,
 		 ".$tabf."_concept.* FROM  ".$tabf."_assertion a LEFT JOIN
 		 ".$tabf."_concept ON a.concept2_id= ".$tabf."_concept.id
 		WHERE concept1_id='$cpid' order by a.relation_id,a.best_frame_id LIMIT 100";
@@ -73,8 +73,8 @@ if (!empty($cpid) )
 			$concepts[]=$row;
 			}
 
-	$sq3 = "SELECT a.concept1_id,a.concept2_id,a.id as aid,a.abid,a.seq,a.info,a.aurl,
-		a.relation_id,a.best_frame_id,a.atop2 as atop,a.aleft2 as aleft,
+	$sq3 = "SELECT a.concept1_id,a.concept2_id,a.id as aid,a.abid,a.seq,
+		a.relation_id,a.best_frame_id,a.atop2 as atop,a.aleft2 as aleft,a.itop2 asiatop,a.ileft2 as ileft,
 		 ".$tabf."_concept.* FROM  ".$tabf."_assertion a LEFT JOIN
 		 ".$tabf."_concept ON a.concept1_id= ".$tabf."_concept.id
 		WHERE concept2_id='$cpid' order by a.seq,a.relation_id,a.best_frame_id LIMIT 4000";

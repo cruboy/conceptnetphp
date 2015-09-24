@@ -1,6 +1,11 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}
-if($pDa['backimg'] =='' )
-$pDa['backimg']="/jt/imgs/bgg.jpg";
+if($pDa['backimgid'] ==0)
+$backimg="/jt/imgs/bgg.jpg";
+else{
+	$sq1 = "SELECT * FROM  emlog_attachment WHERE aid=".$pDa['backimgid'];
+	$pa = $DB->once_fetch_array($sq1);
+	$backimg=$pa['filepath'];
+	}
 $mtop=60;
 $fts=array("方正兰亭超细黑简体", "方正舒体", "方正姚体", "仿宋", "汉仪家书简", "汉仪楷体简", "汉仪太极体简", "汉仪娃娃篆简", "汉仪丫丫体简","汉仪丫丫体简", "仿宋", "汉仪家书简", "汉仪楷体简", "汉仪太极体简", "汉仪娃娃篆简", "汉仪丫丫体简", "黑体", "华文彩云", "华文仿宋", "华文行楷", "华文细黑", "华文新魏", "华文中宋", "经典综艺体简", "楷体", "隶书", "宋体", "微软雅黑", "新宋体", "幼圆", "华康娃娃体W5", "华康娃娃体W5", "华康娃娃体W5", "华康娃娃体W5(P)", "華康少女文字W6", "華康娃娃體(P)", "華康娃娃體", );
 //if($pDa['ctop']<50)$pDa['ctop']=50;
@@ -8,64 +13,76 @@ $fts=array("方正兰亭超细黑简体", "方正舒体", "方正姚体", "仿�
 <script type="text/javascript" src="/scan/artDialog/artDialog.js?skin=green"></script>
 <script type="text/javascript" src="/scan/artDialog/jquery.artDialog.js"></script>
 <script src="/scan/artDialog/plugins/iframeTools.js"></script>
-<script>
-	function ax(id){
-art.dialog.open("filingview.php?srid=<?=$srid?>&id="+id, { 
-follow: document.getElementById('th'+id),width: 740, height: 350,title:document.getElementById('th'+id).innerText+' '+id});	
-	}
-</script>
 <script type="text/javascript" src="/content/js/jquery-1.8.2.min.js"></script>
-  <script src="/content/js/jquery-ui.js"></script> 
-  <script type="text/javascript"> 
+<script src="/content/js/jquery-ui.js"></script> 
+<script type="text/javascript"> 
+function ax(id){
+ art.dialog.open("filingview.php?srid=<?=$srid?>&id="+id, { 
+ follow: document.getElementById('th'+id),width: 740, height: 350,title:document.getElementById('th'+id).innerText+' '+id});	
+}
 var theid=-1;
 function cnvs_getCoordinates(e)
-{//x=e.clientX;
-//y=e.clientY;
-if(theid>=0)
-{
-y= $('#ftt'+theid).offset().top-18;
-x= $('#ftt'+theid).offset().left;
-$('#top'+theid).val(y);
-$('#left'+theid).val(x);
-}
+{ //x=e.clientX;
+  //y=e.clientY;
+  if(theid>=0){
+	y= $('#ftt'+theid).offset().top-18;
+	x= $('#ftt'+theid).offset().left;
+	$('#top'+theid).val(y);
+	$('#left'+theid).val(x);
+  }
 }
 </script>
-<style type="text/css" id="internalStyle">
-
-#m{text-align:left;padding:10px;}
-.comcont{color:#333; padding:6px 0px;}.reply{color:#FF3300; font-size:12px;}
-.texts{width:86%; height:150px;}
-</style>
-<div id="m" style="height:<?=$maxtop?>px;width:1000px;background: url('<?=$pDa['backimg']?>') ;" 
-onmousemove="cnvs_getCoordinates(event)" >
+<div id="m"  style="height:<?=$maxtop?>px;width:1000px;background: url('<?=$backimg?>');overflow-x :auto; ">
+<?php if($pDa['imgid'] >0 ){
+$sq1ab = "SELECT * FROM  emlog_attachment WHERE aid=".$pDa['imgid'];
+	$paab = $DB->once_fetch_array($sq1ab);
+?>
 <div class="ui-widget-content" 
-style="cursor:pointer;position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;" >
-<div style="width:<? echo strlen($pDa['text'])*9+140;?>px;"><a onClick="ax(1)">☆</a><span id='th1'><?php echo $pDa['text']; ?></span>&nbsp;
-<span title="<?php echo "+".$pDa['f1']." -".$pDa['f2']." ".$pDa['num_assertions']; 
-?>">关链</span><?php echo $pDa['f3']; ?>
- 查看<?php echo $pDa['words']; ?><a href="index.php?cp=<?=$cpidd?>">预览 </a></div>
-
-
-</div> 
+style="cursor:pointer;position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;">
+<img style="border:0px;" src="<?=$paab['filepath']?>" title="<?=$pDa['text']?>"></div>
+<?php } ?>
+<div class="ui-widget-content" >
+☆<span ><?php echo $pDa['text']; ?></span>&nbsp;
+<span title="<?php echo "+".$pDa['f1']."-".$pDa['f2']."~".$pDa['num_assertions']; 
+?>">相关数</span><?php echo $pDa['f3']; ?>
+ 查看<?php echo $pDa['words']; ?> 
+ <?php if($pDa['url'] !='' ){ ?>
+<a href="<?=$pDa['url']?>">□</a>
+<?php }
+if($pDa['blogid'] >0 ){?>
+<a href="/<?php echo $pDa['blogid']; ?>.html">■</a>
+<?php } ?>
+<a href="index.php?cp=<?=$cpidd?>">预览 </a></div>
+<?php echo $pDaa['content']; ?>
 <?php 
-foreach($concepts as $value):
-//print_r($value);
+foreach($concepts as $k=>$value){
+?>
+<?php if($value['imgid'] >0 ){
+$sq1a = "SELECT * FROM  emlog_attachment WHERE aid=".$value['imgid'];
+	$paa = $DB->once_fetch_array($sq1a);
+ ?>
+<div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=
+$value['itop']?>px;left:<?=$value['ileft']?>px;" >
+<img style="border:0px;" src="<?=$paa['filepath']?>" title='<?=$value['text']?>'></div>
+<?php }
+} ?>
+<?php 
+foreach($concepts as $value){
 $value['atop']=$value['atop']==0?$mtop+=20:$value['atop'];
-$value['aleft']=$value['aleft']==0?rand(1,920):$value['aleft'];?>
+$value['aleft']=$value['aleft']==0?rand(1,920):$value['aleft'];
+?>
 <div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=$value['atop']
 ?>px;left:<?=$value['aleft']?>px;">
-<div style="width:<? echo strlen($value['text'])*9+28;?>px;">
-<a onClick="">○</a><a href="<?php echo BLOG_URL;
-				 ?>m/ainet.php?cp=<?php echo $value['id']; ?>" title="<?=$value['aid']?>"><?php echo $value['text']; ?></a><?php if($value['aurl'] !='' ): ?>
-<a href="<?php echo $value['aurl']; ?>">□</a>
-<?php endif;if($value['url'] !='' ): ?>
-<a href="<?php echo $value['url']; ?>">■</a>
-<?php endif;?></div><?php if($value['img'] !='' ): ?>
-<img style="border:0px;" src="<?=$value['img']?>">
-<?php endif;?>
-
-</div>
-<?php endforeach; ?>
+<a onClick="">○</a>
+<a href="/m/ainet.php?cp=<?php echo $value['id']; ?>" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions']; 
+?>"><?php echo $value['text']; ?></a>
+<?php if($value['url'] !='' ){ ?>
+<a href="<?=$value['url']?>">□</a>
+<?php }
+if($value['blogid'] >0 ){?>
+<a href="/<?php echo $value['blogid']; ?>.html">■</a>
+<?php } ?></div>
+<?php } ?>
 </div>
 =======坐标=====<a onClick="$('.zuobiao').show();">显示</a>=====<a onClick="$('.zuobiao').hide();">隐藏</a>====
 <? for($t=100;$t<$maxtop;$t+=100){?>
