@@ -6,7 +6,7 @@ else{
 	$pa = $DB->once_fetch_array($sq1);
 	$backimg=$pa['filepath'];
 	}
-$mtop=60;
+$mtop=70;
 $fts=array("方正兰亭超细黑简体", "方正舒体", "方正姚体", "仿宋", "汉仪家书简", "汉仪楷体简", "汉仪太极体简", "汉仪娃娃篆简", "汉仪丫丫体简","汉仪丫丫体简", "仿宋", "汉仪家书简", "汉仪楷体简", "汉仪太极体简", "汉仪娃娃篆简", "汉仪丫丫体简", "黑体", "华文彩云", "华文仿宋", "华文行楷", "华文细黑", "华文新魏", "华文中宋", "经典综艺体简", "楷体", "隶书", "宋体", "微软雅黑", "新宋体", "幼圆", "华康娃娃体W5", "华康娃娃体W5", "华康娃娃体W5", "华康娃娃体W5(P)", "華康少女文字W6", "華康娃娃體(P)", "華康娃娃體", );
 //if($pDa['ctop']<50)$pDa['ctop']=50;
 ?>
@@ -16,33 +16,75 @@ $fts=array("方正兰亭超细黑简体", "方正舒体", "方正姚体", "仿�
 <script type="text/javascript" src="/content/js/jquery-1.8.2.min.js"></script>
 <script src="/content/js/jquery-ui.js"></script> 
 <script type="text/javascript"> 
+var editt=1;
+var theid=0;
+var theiid=0;
+function ch(){
+	editt=-editt;
+	//alert(editt);
+	if(editt==1)
+	document.getElementById('thech').innerText='【位置调整】';
+	else
+	document.getElementById('thech').innerText='【编辑内容】';
+	}
 function ax(id){
- art.dialog.open("filingview.php?srid=<?=$srid?>&id="+id, { 
- follow: document.getElementById('th'+id),width: 740, height: 350,title:document.getElementById('th'+id).innerText+' '+id});	
+	if(editt==1){
+		if(theid!=id||theiid!=0)
+		 savecd();
+		theiid=0;
+		theid=id;
+		//alert(theid);
+	}else{
+ art.dialog.open("docp.php?cppid="+id, { 
+ follow: document.getElementById('th'+id),width: 500, height: 350,
+ title:document.getElementById('th'+id).innerText+' '+id});	
+	}
 }
-var theid=-1;
+function axx(id){
+	if(editt==1){
+		if(theiid!=id||theid!=0)
+		 savecd();
+		theid=0;
+		theiid=id;
+		//alert(theid);
+	}
+}
 function cnvs_getCoordinates(e)
 { //x=e.clientX;
   //y=e.clientY;
-  if(theid>=0){
+  if(theid!=0){
 	y= $('#ftt'+theid).offset().top-18;
 	x= $('#ftt'+theid).offset().left;
-	$('#top'+theid).val(y);
-	$('#left'+theid).val(x);
+document.getElementById('thetop').innerText=(y);
+document.getElementById('theleft').innerText=(x);
+  }
+if(theiid!=0){
+	y= $('#ftti'+theiid).offset().top-18;
+	x= $('#ftti'+theiid).offset().left;
+document.getElementById('thetop').innerText=(y);
+document.getElementById('theleft').innerText=(x);
   }
 }
+function savecd(){
+	$.ajax({url:'docp.php?cp=<?=$cpidd?>',type:'POST',
+				data:{x:document.getElementById('theleft').innerText,
+				y:document.getElementById('thetop').innerText,
+				id:theid,iid:theiid},
+				success: function(data){ alert(data);}});
+}
 </script>
-<div id="m"  style="height:<?=$maxtop?>px;width:1000px;background: url('<?=$backimg?>');overflow-x :auto; ">
+<div id="m"  style="height:<?=$maxtop?>px;width:1000px;background: url('<?=$backimg?>');overflow-x :auto;"
+onmousemove="cnvs_getCoordinates(event)"  >
 <?php if($pDa['imgid'] >0 ){
 $sq1ab = "SELECT * FROM  emlog_attachment WHERE aid=".$pDa['imgid'];
 	$paab = $DB->once_fetch_array($sq1ab);
 ?>
 <div class="ui-widget-content" 
-style="cursor:pointer;position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;">
+style="cursor:pointer;position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;" >
 <img style="border:0px;" src="<?=$paab['filepath']?>" title="<?=$pDa['text']?>"></div>
 <?php } ?>
 <div class="ui-widget-content" >
-☆<span ><?php echo $pDa['text']; ?></span>&nbsp;
+<a onClick="ax(<?=$pDa['id']?>)">☆</a><span id='th<?=$pDa['id']?>'><?php echo $pDa['text']; ?></span>&nbsp;
 <span title="<?php echo "+".$pDa['f1']."-".$pDa['f2']."~".$pDa['num_assertions']; 
 ?>">相关数</span><?php echo $pDa['f3']; ?>
  查看<?php echo $pDa['words']; ?> 
@@ -52,7 +94,10 @@ style="cursor:pointer;position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cl
 if($pDa['blogid'] >0 ){?>
 <a href="/<?php echo $pDa['blogid']; ?>.html">■</a>
 <?php } ?>
-<a href="index.php?cp=<?=$cpidd?>">预览 </a></div>
+<a href="index.php?cp=<?=$cpidd?>">预览 </a>
+<span onclick='ch()' id='thech'>【位置调整】</span>
+<span  id='theleft'></span>&nbsp;<span id='thetop'></span>
+</div>
 <?php echo $pDaa['content']; ?>
 <?php 
 foreach($concepts as $k=>$value){
@@ -62,8 +107,8 @@ $sq1a = "SELECT * FROM  emlog_attachment WHERE aid=".$value['imgid'];
 	$paa = $DB->once_fetch_array($sq1a);
  ?>
 <div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=
-$value['itop']?>px;left:<?=$value['ileft']?>px;" >
-<img style="border:0px;" src="<?=$paa['filepath']?>" title='<?=$value['text']?>'></div>
+$value['itop']?>px;left:<?=$value['ileft']?>px;" id='ftti<?=$value['aid']?>'>
+<img onClick="axx(<?=$value['aid']?>)" style="border:0px;" src="<?=$paa['filepath']?>" title='<?=$value['text']?>'></div>
 <?php }
 } ?>
 <?php 
@@ -72,16 +117,16 @@ $value['atop']=$value['atop']==0?$mtop+=20:$value['atop'];
 $value['aleft']=$value['aleft']==0?rand(1,920):$value['aleft'];
 ?>
 <div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=$value['atop']
-?>px;left:<?=$value['aleft']?>px;">
-<a onClick="">○</a>
-<a href="/m/ainet.php?cp=<?php echo $value['id']; ?>" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions']; 
+?>px;left:<?=$value['aleft']?>px;" id='ftt<?=$value['id']?>'>
+<a onClick="ax(<?=$value['id']?>)">○</a><span id='th<?=$value['id']?>'><a href="/m/ainet.php?cp=<?php
+ echo $value['id']; ?>" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions']; 
 ?>"><?php echo $value['text']; ?></a>
 <?php if($value['url'] !='' ){ ?>
 <a href="<?=$value['url']?>">□</a>
 <?php }
 if($value['blogid'] >0 ){?>
 <a href="/<?php echo $value['blogid']; ?>.html">■</a>
-<?php } ?></div>
+<?php } ?></span></div>
 <?php } ?>
 </div>
 =======坐标=====<a onClick="$('.zuobiao').show();">显示</a>=====<a onClick="$('.zuobiao').hide();">隐藏</a>====

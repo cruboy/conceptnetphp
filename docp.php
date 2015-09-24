@@ -29,7 +29,7 @@ $cpidd=intval($_GET['cp']);
 				echo "错误";exit;
 				}
 			
-if(isset($_GET[ecdid])){
+if(isset($_GET['ecdid'])){
 
 	$id=intval($_GET[ecdid]);
 
@@ -48,7 +48,7 @@ if(isset($_GET[ecdid])){
 	echo $msf;
 	exit;
 }
-elseif(isset($_GET[aid])){
+elseif(isset($_GET['aid'])){
 
 		$id=intval($_GET[aid]);
 
@@ -66,7 +66,9 @@ elseif(isset($_GET[aid])){
 		 
 	echo $msf;
 }
-
+else{
+	print_r($_POST);
+	}
 function mMsg($msg, $url) {
 	echo "<script language=\"JavaScript\">alert(\"$msg\");history.back();</script>";
 	exit;
