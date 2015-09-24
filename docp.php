@@ -50,7 +50,7 @@ if(isset($_GET['ecdid'])){
 }
 elseif(isset($_GET['aid'])){
 
-		$id=intval($_GET[aid]);
+		$id=intval($_GET['aid']);
 
 	$uid=UID;
 	$ltime=time();
@@ -66,7 +66,22 @@ elseif(isset($_GET['aid'])){
 		 
 	echo $msf;
 }
-else{
+elseif(isset($_POST['iid'])){
+   $x=intval($_POST['x']);
+   $y=intval($_POST['y']);
+	if($_POST['iid']==3){
+		$DB->query("UPDATE ".$tabf."_concept SET ctop=$y,cleft=$x WHERE id=$cpid");
+	}
+	else if(!empty($_POST['iid'])){
+		$fx=substr($_POST['iid'],-1,1);
+		$rid=substr($_POST['iid'],0,-1);
+		$DB->query("UPDATE ".$tabf."_assertion SET itop{$fx}=$y,ileft{$fx}=$x WHERE id=$rid");
+	}
+	else if(!empty($_POST['id'])){
+		$fx=substr($_POST['id'],-1,1);
+		$rid=substr($_POST['id'],0,-1);
+		$DB->query("UPDATE ".$tabf."_assertion SET atop{$fx}=$y,aleft{$fx}=$x WHERE id=$rid");
+		}
 	print_r($_POST);
 	}
 function mMsg($msg, $url) {

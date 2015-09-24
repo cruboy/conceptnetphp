@@ -70,7 +70,8 @@ function savecd(){
 				data:{x:document.getElementById('theleft').innerText,
 				y:document.getElementById('thetop').innerText,
 				id:theid,iid:theiid},
-				success: function(data){ alert(data);}});
+				success: function(data){ //alert(data);
+				}});
 }
 </script>
 <div id="m"  style="height:<?=$maxtop?>px;width:1000px;background: url('<?=$backimg?>');overflow-x :auto;"
@@ -80,8 +81,8 @@ $sq1ab = "SELECT * FROM  emlog_attachment WHERE aid=".$pDa['imgid'];
 	$paab = $DB->once_fetch_array($sq1ab);
 ?>
 <div class="ui-widget-content" 
-style="cursor:pointer;position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;" >
-<img style="border:0px;" src="<?=$paab['filepath']?>" title="<?=$pDa['text']?>"></div>
+style="cursor:pointer;position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;" id='ftti3'>
+<img style="border:0px;" src="<?=$paab['filepath']?>" title="<?=$pDa['text']?>" onClick="axx(3)"></div>
 <?php } ?>
 <div class="ui-widget-content" >
 <a onClick="ax(<?=$pDa['id']?>)">☆</a><span id='th<?=$pDa['id']?>'><?php echo $pDa['text']; ?></span>&nbsp;
@@ -107,8 +108,8 @@ $sq1a = "SELECT * FROM  emlog_attachment WHERE aid=".$value['imgid'];
 	$paa = $DB->once_fetch_array($sq1a);
  ?>
 <div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=
-$value['itop']?>px;left:<?=$value['ileft']?>px;" id='ftti<?=$value['aid']?>'>
-<img onClick="axx(<?=$value['aid']?>)" style="border:0px;" src="<?=$paa['filepath']?>" title='<?=$value['text']?>'></div>
+$value['itop']?>px;left:<?=$value['ileft']?>px;" id='ftti<?=$value['aid'].$value['fx']?>'>
+<img onClick="axx(<?=$value['aid'].$value['fx']?>)" style="border:0px;" src="<?=$paa['filepath']?>" title='<?=$value['text']?>'></div>
 <?php }
 } ?>
 <?php 
@@ -117,8 +118,8 @@ $value['atop']=$value['atop']==0?$mtop+=20:$value['atop'];
 $value['aleft']=$value['aleft']==0?rand(1,920):$value['aleft'];
 ?>
 <div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=$value['atop']
-?>px;left:<?=$value['aleft']?>px;" id='ftt<?=$value['id']?>'>
-<a onClick="ax(<?=$value['id']?>)">○</a><span id='th<?=$value['id']?>'><a href="/m/ainet.php?cp=<?php
+?>px;left:<?=$value['aleft']?>px;" id='ftt<?=$value['aid'].$value['fx']?>'>
+<a onClick="ax(<?=$value['aid'].$value['fx']?>)">○</a><span id='th<?=$value['id']?>'><a href="/m/ainet.php?cp=<?php
  echo $value['id']; ?>" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions']; 
 ?>"><?php echo $value['text']; ?></a>
 <?php if($value['url'] !='' ){ ?>
