@@ -10,6 +10,7 @@ if (ISLOGIN !== true){
 echo "请先登录或授权！";
 exit;
 }
+define('TEMPLATE_PATH', EMLOG_ROOT.'/m/views/');
 
 $gip=getIp();   
 $uid=UID;
@@ -31,7 +32,7 @@ $cpidd=intval($_GET['cp']);
 			
 if(isset($_GET['ecdid'])){
 
-	$id=intval($_GET[ecdid]);
+	$id=intval($_GET['ecdid']);
 
 	$uid=UID;
 	$ltime=time();
@@ -84,6 +85,20 @@ elseif(isset($_POST['iid'])){
 		}
 	print_r($_POST);
 	}
+elseif(isset($_GET['editid'])){
+	$m=$_GET['m'];
+     $fx=substr($_GET['editid'],-1,1);
+	 $rid=substr($_GET['editid'],0,-1);
+	if($fx==3){
+	$sq1="SELECT * FROM  ".$tabf."_concept WHERE id='$cpid'";
+	$pDa=$DB->once_fetch_array($sq1);
+	include View::getView('cppedit');
+	}else{
+	$sq1="SELECT * FROM  ".$tabf."_assertion WHERE id='$rid'";
+	$value=$DB->once_fetch_array($sq1);
+	include View::getView('cpredit');
+	}
+}
 function mMsg($msg, $url) {
 	echo "<script language=\"JavaScript\">alert(\"$msg\");history.back();</script>";
 	exit;

@@ -35,8 +35,8 @@ function ax(id){
 		theid=id;
 		//alert(theid);
 	}else{
- art.dialog.open("docp.php?cppid="+id, { 
- follow: document.getElementById('th'+id),width: 500, height: 350,
+ art.dialog.open("docp.php?m=a&cp=<?=$cpidd?>&editid="+id, { 
+ follow: document.getElementById('th'+id),width: 300, height: 250,
  title:document.getElementById('th'+id).innerText+' '+id});	
 	}
 }
@@ -47,6 +47,10 @@ function axx(id){
 		theid=0;
 		theiid=id;
 		//alert(theid);
+	}else{
+ art.dialog.open("docp.php?m=i&cp=<?=$cpidd?>&editid="+id, { 
+ follow: document.getElementById('th'+id),width: 300, height: 250,
+ title:document.getElementById('th'+id).innerText+' '+id});	
 	}
 }
 function cnvs_getCoordinates(e)
@@ -85,7 +89,7 @@ style="cursor:pointer;position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cl
 <img style="border:0px;" src="<?=$paab['filepath']?>" title="<?=$pDa['text']?>" onClick="axx(3)"></div>
 <?php } ?>
 <div class="ui-widget-content" >
-<a onClick="ax(<?=$pDa['id']?>)">☆</a><span id='th<?=$pDa['id']?>'><?php echo $pDa['text']; ?></span>&nbsp;
+<a onClick="ax(<?=$pDa['id']?>3)">☆</a><span id='th<?=$pDa['id']?>3'><?php echo $pDa['text']; ?></span>&nbsp;
 <span title="<?php echo "+".$pDa['f1']."-".$pDa['f2']."~".$pDa['num_assertions']; 
 ?>">相关数</span><?php echo $pDa['f3']; ?>
  查看<?php echo $pDa['words']; ?> 
@@ -115,11 +119,11 @@ $value['itop']?>px;left:<?=$value['ileft']?>px;" id='ftti<?=$value['aid'].$value
 <?php 
 foreach($concepts as $value){
 $value['atop']=$value['atop']==0?$mtop+=20:$value['atop'];
-$value['aleft']=$value['aleft']==0?rand(1,920):$value['aleft'];
+//$value['aleft']=$value['aleft']==0?rand(1,920):$value['aleft'];
 ?>
 <div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=$value['atop']
 ?>px;left:<?=$value['aleft']?>px;" id='ftt<?=$value['aid'].$value['fx']?>'>
-<a onClick="ax(<?=$value['aid'].$value['fx']?>)">○</a><span id='th<?=$value['id']?>'><a href="/m/ainet.php?cp=<?php
+<a onClick="ax(<?=$value['aid'].$value['fx']?>)">○</a><span id='th<?=$value['aid'].$value['fx']?>'><a href="/m/ainet.php?cp=<?php
  echo $value['id']; ?>" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions']; 
 ?>"><?php echo $value['text']; ?></a>
 <?php if($value['url'] !='' ){ ?>
