@@ -19,7 +19,11 @@
     <td>概念链接url<input style="width:80px;" value="<?php echo $pDa['url']; ?>"  name="url" /></td>
      <td>关联文章blog<input style="width:30px;" value="<?php echo $pDa['blogid']; ?>"  name="blogid" /></td>
      </tr><tr>
-     <td>可见V<input style="width:20px;" value="<?php echo $pDa['visible']; ?>"  name="visible" /> </td>
+     <tr>
+    <td colspan="2"><textarea name="info"  class="texts"/><?php echo $pDa['info']; ?></textarea></td>
+     </tr><tr>
+     <td>样式<input style="width:20px;" value="<?php echo $pDa['style']; ?>"  name="style" /> 
+     可见V<input style="width:20px;" value="<?php echo $pDa['visible']; ?>"  name="visible" /> </td>
      <td>推荐C<input style="width:20px;" value="<?php echo $pDa['cruboy']; ?>"  name="cruboy" /></td>
   </tr>
   <tr><td><input  type='submit' value='提交'/></td></tr>

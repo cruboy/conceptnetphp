@@ -120,9 +120,10 @@ $value['itop']?>px;left:<?=$value['ileft']?>px;" id='ftti<?=$value['aid'].$value
 foreach($concepts as $value){
 $value['atop']=$value['atop']==0?$mtop+=20:$value['atop'];
 //$value['aleft']=$value['aleft']==0?rand(1,920):$value['aleft'];
+if($value['seq']<8)$value['seq']=14;
 ?>
 <div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=$value['atop']
-?>px;left:<?=$value['aleft']?>px;" id='ftt<?=$value['aid'].$value['fx']?>'>
+?>px;left:<?=$value['aleft']?>px;font-size:<?=$value['seq']?>px;" id='ftt<?=$value['aid'].$value['fx']?>'>
 <a onClick="ax(<?=$value['aid'].$value['fx']?>)">○</a><span id='th<?=$value['aid'].$value['fx']?>'><a href="/m/ainet.php?cp=<?php
  echo $value['id']; ?>" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions']; 
 ?>"><?php echo $value['text']; ?></a>
