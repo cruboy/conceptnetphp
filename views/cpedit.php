@@ -1,6 +1,6 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}
 if($pDa['backimgid'] ==0)
-$backimg="/jt/imgs/bgg.jpg";
+$backimg="/jt/imgs/bgo.jpg";
 else{
 	$sq1 = "SELECT * FROM  emlog_attachment WHERE aid=".$pDa['backimgid'];
 	$pa = $DB->once_fetch_array($sq1);
@@ -16,7 +16,7 @@ $fts=array("方正兰亭超细黑简体", "方正舒体", "方正姚体", "仿�
 <script type="text/javascript" src="/content/js/jquery-1.8.2.min.js"></script>
 <script src="/content/js/jquery-ui.js"></script> 
 <script type="text/javascript"> 
-var editt=1;
+var editt=-1;
 var theid=0;
 var theiid=0;
 function ch(){
@@ -100,7 +100,7 @@ if($pDa['blogid'] >0 ){?>
 <a href="/<?php echo $pDa['blogid']; ?>.html">■</a>
 <?php } ?>
 <a href="index.php?cp=<?=$cpidd?>">预览 </a>
-<span onclick='ch()' id='thech'>【位置调整】</span>
+<span onclick='ch()' id='thech'>【编辑内容】</span>
 <span  id='theleft'></span>&nbsp;<span id='thetop'></span>
 </div>
 <?php echo $pDaa['content']; ?>

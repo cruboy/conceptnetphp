@@ -20,10 +20,12 @@ $cpidd=intval($_GET['cp']);
 			if($cpidd<0){
 				$tabf="cruboy";
 				$vfrom="jcru";
+				$sn='-';
 				$cpid=-$cpidd;
 			}elseif($cpidd>0){
 				$tabf="conceptnet";
 				$vfrom="jind";
+				$sn='';
 				$cpid=$cpidd;
 			}
 			else{
@@ -33,7 +35,16 @@ $cpidd=intval($_GET['cp']);
 if(isset($_GET['ecdid'])){
 
 	$id=intval($_GET['ecdid']);
-
+	$_POST['imgid']=intval($_POST['imgid']);
+	$_POST['backimgid']=intval($_POST['backimgid']);
+$sq1="SELECT * FROM  ".$tabf."_concept WHERE id='$id'";
+	$pDa=$DB->once_fetch_array($sq1);
+	if($pDa['imgid']!=($_POST['imgid']))
+	  $DB->query("UPDATE emlog_attachment SET cid=$sn{$_POST['imgid']} WHERE aid={$pDa['imgid']}");
+	if($pDa['backimgid']!=($_POST['backimgid']))
+	  $DB->query("UPDATE emlog_attachment SET cid=$sn{$_POST['backimgid']} WHERE aid={$pDa['backimgid']}");
+	  
+	    
 	$uid=UID;
 	$ltime=time();
 	$gip=getIP();
@@ -52,7 +63,6 @@ if(isset($_GET['ecdid'])){
 elseif(isset($_GET['aid'])){
 
 		$id=intval($_GET['aid']);
-
 	$uid=UID;
 	$ltime=time();
 	$gip=getIP();

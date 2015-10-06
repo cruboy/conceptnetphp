@@ -1,14 +1,18 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}
 if($pDa['backimgid'] ==0)
-$backimg="/jt/imgs/bgg.jpg";
+$backimg="/jt/imgs/bgo.jpg";
 else{
 	$sq1 = "SELECT * FROM  emlog_attachment WHERE aid=".$pDa['backimgid'];
 	$pa = $DB->once_fetch_array($sq1);
 	$backimg=$pa['filepath'];
 	}
 $mtop=60;
-$fts=array("方正兰亭超细黑简体", "方正舒体", "方正姚体", "仿宋", "汉仪家书简", "汉仪楷体简", "汉仪太极体简", "汉仪娃娃篆简", "汉仪丫丫体简","汉仪丫丫体简", "仿宋", "汉仪家书简", "汉仪楷体简", "汉仪太极体简", "汉仪娃娃篆简", "汉仪丫丫体简", "黑体", "华文彩云", "华文仿宋", "华文行楷", "华文细黑", "华文新魏", "华文中宋", "经典综艺体简", "楷体", "隶书", "宋体", "微软雅黑", "新宋体", "幼圆", "华康娃娃体W5", "华康娃娃体W5", "华康娃娃体W5", "华康娃娃体W5(P)", "華康少女文字W6", "華康娃娃體(P)", "華康娃娃體", );
-
+//$fts=array("方正兰亭超细黑简体", "方正舒体", "方正姚体", "仿宋", "汉仪家书简", "汉仪楷体简", "汉仪
+//太极体简", "汉仪娃娃篆简", "汉仪丫丫体简","汉仪丫丫体简", "仿宋", "汉仪家书简", "汉仪楷体简", "汉仪
+//太极体简", "汉仪娃娃篆简", "汉仪丫丫体简", "黑体", "华文彩云", "华文仿宋", "华文行楷", "华文细黑", 
+//"华文新魏", "华文中宋", "经典综艺体简", "楷体", "隶书", "宋体", "微软雅黑", "新宋体", "幼圆", "华康娃娃体W5", 
+//"华康娃娃体W5", "华康娃娃体W5", "华康娃娃体W5(P)", "華康少女文字W6", "華康娃娃體(P)", "華康娃娃體", );
+//style="font-family:=$fts[rand(0,36)];"
 ?>
 <script type="text/javascript" src="/content/js/jquery-1.8.2.min.js"></script>
 <script src="/content/js/jquery-ui.js"></script> 
@@ -55,7 +59,7 @@ $value['aleft']=$value['aleft']==0?rand(1,920):$value['aleft'];
 <div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=
 $value['atop']?>px;left:<?=$value['aleft']?>px;" >○<span onclick="dotovv(<?php 
 echo $value['id']; ?>)" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions']; 
-?>" style="font-family:<?=$fts[rand(0,36)]?>;"><?=$value['text']?></span>
+?>" ><?=$value['text']?></span>
 <?php if($value['url'] !='' ){ ?>
 <a href="<?=$value['url']?>">□</a>
 <?php }
