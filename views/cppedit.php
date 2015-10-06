@@ -1,10 +1,14 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}?>
+<style type="text/css" id="internalStyle">
+body{background-color:#FFFFFF; font-size:14px; margin: 0; padding:0;}
+</style>
+<body>
 <?php echo $pDa['id']; ?>
 ☆<?php echo $pDa['text'];//print_r($pDa); ?>&nbsp;
 概念数<?php echo $pDa['f3']; ?>（前向<?php echo $pDa['f1']; ?>后向<?php echo $pDa['f2']; ?>）
 关系数<?php echo $pDa['num_assertions']; ?> 查看<?php echo $pDa['words']; ?>
   <form id="fttz" method='post' action='docp.php?cp=<?=$cpidd?>&ecdid=<?=$pDa['id']?>'>
-  <table>
+  <table style=" font-size:14px;">
  <? if(ROLE=='admin'):?>    
   <tr><td>名称<input style="width:60px;" value="<?php echo $pDa['text']; ?>"  name="text" /></td>
   </tr>
@@ -29,3 +33,4 @@
   <tr><td><input  type='submit' value='提交'/></td></tr>
   </table>
     </form>
+</body>
