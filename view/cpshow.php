@@ -55,9 +55,10 @@ $value['itop']?>px;left:<?=$value['ileft']?>px;" >
 foreach($concepts as $k=>$value){
 $value['atop']=$value['atop']==0?$mtop+=20:$value['atop'];
 $value['aleft']=$value['aleft']==0?rand(1,920):$value['aleft'];
+if($value['seq']<8)$value['seq']=14;
 ?>
 <div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=
-$value['atop']?>px;left:<?=$value['aleft']?>px;" >○<span onclick="dotovv(<?php 
+$value['atop']?>px;left:<?=$value['aleft']?>px;font-size:<?=$value['seq']?>px;" >○<span onclick="dotovv(<?php 
 echo $value['id']; ?>)" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions']; 
 ?>" ><?=$value['text']?></span>
 <?php if($value['url'] !='' ){ ?>

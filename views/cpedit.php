@@ -57,13 +57,13 @@ function cnvs_getCoordinates(e)
 { //x=e.clientX;
   //y=e.clientY;
   if(theid!=0){
-	y= $('#ftt'+theid).offset().top-18;
+	y= $('#ftt'+theid).offset().top;
 	x= $('#ftt'+theid).offset().left;
 document.getElementById('thetop').innerText=(y);
 document.getElementById('theleft').innerText=(x);
   }
 if(theiid!=0){
-	y= $('#ftti'+theiid).offset().top-18;
+	y= $('#ftti'+theiid).offset().top;
 	x= $('#ftti'+theiid).offset().left;
 document.getElementById('thetop').innerText=(y);
 document.getElementById('theleft').innerText=(x);
