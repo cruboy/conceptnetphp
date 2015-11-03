@@ -1,13 +1,14 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}?>
 
 <div id="m">
-	<div class="posttitle"><?php echo $log_title; ?></div>
-	<div class="postinfo">post by:<?php echo $user_cache[$author]['name'];?> <?php echo gmdate('Y-n-j G:i', $date); ?>
+	<div class="posttitle"><?php echo $title; ?></div>
+	<div class="postinfo">作者:<?php echo $user_cache[$author]['name'];?> 
+	添加：<?=$addtime?> 修改：<?=$edittime?>
 	<?php if(ROLE == 'admin' || $author == UID): ?>
-	<a href="./?action=dellog&gid=<?php echo $logid;?>">删除</a>
+	<a href="./?action=dellog&gid=<?php echo $gid;?>">删除</a>
 	<?php endif;?>
 	</div>
-	<div class="postcont"><?php echo $log_content; ?></div>
+	<div class="postcont"><?php echo $content; ?></div>
 	<div class="t">评论：</div>
 	<div class="c">
 		<?php foreach($commentStacks as $cid):
@@ -15,8 +16,8 @@
 			$comment['poster'] = $comment['url'] ? '<a href="'.$comment['url'].'" target="_blank">'.$comment['poster'].'</a>' : $comment['poster'];
 		?>
 		<div class="l">
-		<b><?php echo $comment['poster']; ?></b>
-		<div class="info"><?php echo $comment['date']; ?> 
+		<div ><b><?php echo $comment['poster']; ?></b>
+		<?php echo $comment['date']; ?> 
 <?php if(ISLOGIN == true):?>
 	<a href="./?action=reply&cid=<?php echo $comment['cid'];?>">回复</a>
 	<?php endif; ?>

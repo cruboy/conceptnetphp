@@ -37,26 +37,33 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 		$concepts=array();
 	
 	$vsid=intval($_SESSION['views']);
-    $cpr = $CACHE->readCache('cpr');
-	$cpp = $CACHE->readCache('cppublic');
+  
 	
 	$cpidd=($_REQUEST['cp']);
 	if($cpidd=='jty')
 	$cpidd=-97;
 	$cpidd=intval($cpidd);
+	$cpp = $CACHE->readCache('cppublic');
   if(empty($cpidd))
     {  
     $valid=rand(1000,100000);
 	$_SESSION['valid']=$valid;
 	}
   elseif($cpidd>0 and $_POST['valid']!=$_SESSION['valid'] and ISLOGIN !== true)
-	{
+	{//print_r($cpp);
+		if(strstr($cpp['pub'],','.$cpidd.',')){
+			$valid=rand(1000,100000);
+	$_SESSION['valid']=$valid;
+		}else{
 	header('HTTP/1.1 401 Unauthorized'); 
-	header('status: 401 Unauthorized'); exit;
+	header('status: 401 Unauthorized');echo '请登录后查看！'; exit;
+		}
   }else{
 	$valid=rand(1000,100000);
 	$_SESSION['valid']=$valid;
 	}
+	$cpr = $CACHE->readCache('cpr');
+	
    //搜索或空白随机首页
  if(isset($_POST['aikey'])||empty($_REQUEST['cp'])){
 		$akey = addslashes($_POST['aikey']);
@@ -257,7 +264,7 @@ if ($action == 'blog') {
 	$sqlSegment = "ORDER BY top DESC ,edittime DESC";
 	$sta_cache = $CACHE->readCache('sta');
 	$lognum = $sta_cache['lognum'];
-	$pageurl = '?page=';
+	$pageurl = '?action=blog&page=';
 	$logs = $Log_Model->getLogsForHome ($sqlSegment, $page, $index_lognum);
 	$page_url = pagination($lognum, $index_lognum, $page, $pageurl);
     $_SESSION['onm']=1;

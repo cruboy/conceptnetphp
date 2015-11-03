@@ -1,7 +1,7 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}?>
 
 <div id="m">
-<?php if(ISLOGIN === true): ?>
+<?php if(ROLE == 'admin'): ?>
 <form method="post" action="./index.php?action=t" >
 <input name="t" value="" /> <input type="submit" value="发碎语" />
 </form>

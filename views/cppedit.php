@@ -23,12 +23,13 @@ body{background-color:#FFFFFF; font-size:14px; margin: 0; padding:0;}
     <td>概念链接url<input style="width:80px;" value="<?php echo $pDa['url']; ?>"  name="url" /></td>
      <td>关联文章blog<input style="width:30px;" value="<?php echo $pDa['blogid']; ?>"  name="blogid" /></td>
      </tr><tr>
-     <tr>
+     <!--tr>
     <td colspan="2"><textarea name="info"  class="texts"/><?php echo $pDa['info']; ?></textarea></td>
-     </tr><tr>
+     </tr--><tr>
      <td>样式<input style="width:20px;" value="<?php echo $pDa['style']; ?>"  name="style" /> 
-     可见V<input style="width:20px;" value="<?php echo $pDa['visible']; ?>"  name="visible" /> </td>
+    <? if(ROLE=='admin'):?>     可见V<input style="width:20px;" value="<?php echo $pDa['visible']; ?>"  name="visible" /> </td>
      <td>推荐C<input style="width:20px;" value="<?php echo $pDa['cruboy']; ?>"  name="cruboy" /></td>
+      <? endif;?> 
   </tr>
   <tr><td><input  type='submit' value='提交'/></td></tr>
   </table>
