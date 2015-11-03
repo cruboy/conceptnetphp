@@ -267,7 +267,6 @@ if ($action == 'blog') {
 	$pageurl = '?action=blog&page=';
 	$logs = $Log_Model->getLogsForHome ($sqlSegment, $page, $index_lognum);
 	$page_url = pagination($lognum, $index_lognum, $page, $pageurl);
-    $_SESSION['onm']=1;
 	include View::getView('header');
 	include View::getView('log');
 	include View::getView('footer');
@@ -571,17 +570,28 @@ if ($action == 'login' ||$action == 'reg' ) {
 	View::output();
 }
 if ($action == 'auth') {
+	 $username = addslashes(trim($_POST['user']));
+	$password = addslashes(trim($_POST['pw'])); 
+	$gip=getIp();
+		$uid=UID;
+		$ltime = date('Y-m-d H:i:s');
+		$vsid=intval($_SESSION['views']);
+		$ddid=intval($_POST['lv']);
+		$o=serialize($_POST);
+		$DB->query("INSERT INTO vialog (method,uname,viewid,cid,uid,vtime,text,loginip) VALUES (
+				'login','$username','$vsid','$ddid','$uid','$ltime','$o','$gip')");
 	session_start();
-	$username = addslashes(trim($_POST['user']));
-	$password = addslashes(trim($_POST['pw']));
+	
 	$img_code = (Option::get('login_code') == 'y' && isset ($_POST['imgcode'])) ? addslashes (trim (strtoupper ($_POST['imgcode']))) : '';
 	$ispersis = true;
 	if (checkUser($username, $password, $img_code) === true) {
 		setAuthCookie($username, $ispersis);
-		if($_SESSION['onm']==1)
-		emDirect('?tem=' . time());
-		else
+		if($ddid==1)
+		emDirect('/love.php');
+		if($ddid>1)
 		emDirect('/');
+		else
+		emDirect('?tem=' . time());
 	}else {
 		emDirect("?action=login");
 	}
