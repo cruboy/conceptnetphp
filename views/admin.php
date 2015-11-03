@@ -14,6 +14,7 @@
 			</select> 
 			 <input type="submit" value="查询" id="buttonGo" />（!不为空#为空）
              <a href='?action=tongji'>统计</a>
+             <a href='?action=zl'>概念整理</a>
 	</form>
 
 	<table width="98%" cellspacing=2 cellpadding=2

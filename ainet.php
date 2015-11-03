@@ -127,14 +127,30 @@ elseif(isset ($_GET['fre']))
 elseif(isset ($_GET['list']))
 {
    $action='list';
-	$sql = "SELECT * FROM  ".$tabf."_concept WHERE text LIKE '%$akey%' order by f3 desc LIMIT 10";
+	$sql = "SELECT uid,count(1) as a FROM  ".$tabf."_concept WHERE uid>0 group by uid order by a desc";
 			$res = $DB->query($sql);
 		
-			while ($row = $DB->fetch_array($res)) {
-				$concepts[]=$row;
-			}
+			global $CACHE;
+	$user_cache = $CACHE->readCache('user');
+	
   include './view/header.php';
-	include View::getView('list');
+ echo ' <table width="400" border="1">
+  <tr>
+    <th scope="col">会员</th>
+    <th scope="col">图数量</th>
+    <th scope="col">&nbsp;</th>
+  </tr>';
+	while ($row = $DB->fetch_array($res)) {
+			//print_r($row);
+			echo '<tr>
+    <td>'.$user_cache[$row['uid']]['name'].'</td>
+    <td>'.$row['a'].'</td>
+    <td><a href="?u='.$row['uid'].'">查看</a></td>
+  </tr>';
+			}  
+echo '</table>';
+
+
 	include View::getView('footer');
 	View::output();
 }
@@ -145,11 +161,15 @@ else
 	$ltime = date('Y-m-d H:i:s');
 	
 	if(isset($_GET['u'])){
-	$sql = "SELECT * FROM ".$tabf."_concept where uid=".intval($_GET['u'])." limit 1000";
-	$atitle='我添加的图';$action='list';
+		$uid=intval($_GET['u']);
+	global $CACHE;
+	$user_cache = $CACHE->readCache('user');
+	$author = $user_cache[$uid]['name'];
+	$sql = "SELECT * FROM ".$tabf."_concept where uid={$uid} order by edittime desc limit 1000";
+	$atitle=$author.'添加的图';$action='list';
 	$kword='maimy';
 	}elseif(empty ($akey)){
-	$sql = "SELECT * FROM ".$tabf."_concept order by Rand()  LIMIT 30";
+	$sql = "SELECT * FROM ".$tabf."_concept where uid=0 order by Rand()  LIMIT 30";
 	$atitle='点击编辑图：';
 	$aineth=1;
 	$kword='maihome';

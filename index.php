@@ -29,12 +29,13 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 		$description=$bloginfo;
 		$gip=getIp();
 		$uid=UID;
+		$ltime = date('Y-m-d H:i:s');
 		$DB=MySql::getInstance();
 		$usersina_id=intval($_SESSION['oauth2']['user_id']);
 		$cpid=0;
 		$pDs=1;
 		$concepts=array();
-		$ltime = date('Y-m-d H:i:s');
+	
 	$vsid=intval($_SESSION['views']);
     $cpr = $CACHE->readCache('cpr');
 	$cpp = $CACHE->readCache('cppublic');
@@ -98,8 +99,7 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 				if($cpidd==0)
 				$cpid=72;
 			}
-			$ltime=time();
-		
+			
 			$DB->query("UPDATE  ".$tabf."_concept SET words=words+1 WHERE id='$cpid'");
 			
 			$sq1="SELECT * FROM  ".$tabf."_concept WHERE id='$cpid'";
@@ -188,6 +188,8 @@ if ($action == 'ailist' && $_SESSION['views']>2) {
 	}
    $cpr = $CACHE->readCache('cpr');	
 	
+	$gip=getIp();
+	$uid=UID;
 	$ltime = date('Y-m-d H:i:s');
 	
 	if(empty ($akey)){
@@ -578,6 +580,14 @@ if ($action == 'auth') {
 	}
 }
 if ($action== 'new') {
+	    $gip=getIp();
+		$uid=UID;
+		$ltime = date('Y-m-d H:i:s');
+		$vsid=intval($_SESSION['views']);
+		$o=serialize($_POST);
+		$DB->query("INSERT INTO vialog (method,viewid,cid,uid,vtime,text,loginip) VALUES (
+				'reg','$vsid','0','$uid','$ltime','$o','$gip')");
+		$isd = $DB->insert_id();
 		$login = isset($_POST['user']) ? addslashes(trim($_POST['user'])) : '';
 		$password = isset($_POST['pw']) ? addslashes(trim($_POST['pw'])) : '';
 		$password2 = isset($_POST['pw2']) ? addslashes(trim($_POST['pw2'])) : '';
@@ -591,9 +601,13 @@ if ($action== 'new') {
 		if ($password != $password2) {
 			mMsg('两次密码不一致！', './?action=reg');
 		}
-		if ($password3 != 'yulin') 
-			mMsg('注册码不正确！', './?action=reg');
-
+		if ($password3 != 'cruboy') 
+			{
+				if($vsid<4)
+				mMsg('注册码不正确！请再试一次', './?action=reg');
+				else
+				mMsg('注册码不正确！请填写“cruboy”', './?action=reg');
+			}
 		$User_Model = new User_Model();
 		if ($User_Model->isUserExist($login)) {
 			mMsg('用户名已存在！', './?action=reg');
@@ -605,7 +619,9 @@ if ($action== 'new') {
 
 		$User_Model->addUser($login, $password, $role);
 		$CACHE->updateCache(array('sta','user'));
-		mMsg('注册成功！', './?action=login');
+			$DB->query("update vialog set rt=1 where id='$isd'"); 
+			mMsg('注册成功！', './?action=login');
+	
 }
 
 if ($action == 'logout') {

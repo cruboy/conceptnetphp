@@ -8,17 +8,21 @@ require_once '../init.php';
 
 define('TEMPLATE_PATH', EMLOG_ROOT.'/m/views/');//后台当前模板路径
 
-$action = isset($_GET['action']) ? addslashes($_GET['action']) : "";
+$act = isset($_GET['action']) ? addslashes($_GET['action']) : "";
 
 
 $uid = UID;
 $DB = MySql :: getInstance();
+$action='admin';
 include './view/header.php';
-
+if(ROLE != 'admin'){
+	echo '没有权限';
+	exit;
+	} 
 //set_time_limit(0);
 
 
-if ($action == "") {
+if ($act == "") {
 	$opt = $_GET['opt'];
 	if(empty($opt)) $opt='id desc';
 	
@@ -37,6 +41,8 @@ if ($action == "") {
 		$asql2 .= "and visible=1 ";
 	elseif ($used==2)
 		$asql2 .= "and visible=0 ";
+	if(ROLE != 'admin' )
+		$asql2 .= "and uid=".UID;
 	$page = isset($_GET['page']) ? abs(intval ($_GET['page'])) : 1;
 	$nall=intval ($_GET['nall']);
 	if($nall<1)
@@ -57,8 +63,27 @@ $pageurl="/m/admin.php?nall=$nall&page=";
 
 
 }
+elseif($act=='zl'){
+		$page = isset($_GET['page']) ? abs(intval ($_GET['page'])) : 1;
+	$nall=intval ($_GET['nall']);
+	if($nall<1)
+	{
+		$sql = "SELECT count(*) as a  FROM conceptnet_concept where 1 $asql2 ";
+		$res1 = $DB->query($sql);
+		$row1 = $DB->fetch_array($res1);
+		$nall=$row1['a'];
+	}
+    $start=($page-1)*1000;				
+	$sql = "SELECT * FROM conceptnet_concept where 1 $asql2 order by id  LIMIT $start,1000";
+	$res = $DB->query($sql);
+	//$ap = $DB->affected_rows();
+$pageurl="/m/admin.php?action=zl&nall=$nall&page=";
+	
+    include View::getView('zl');
 
-elseif($action =='tongji'){
+
+}
+elseif($act =='tongji'){
    	$cc = $DB->once_fetch_array("SELECT count(*) as a  FROM cruboy_concept ");
 	$ca = $DB->once_fetch_array("SELECT count(*) as a  FROM cruboy_assertion ");
 	$nc = $DB->once_fetch_array("SELECT count(*) as a  FROM conceptnet_concept ");
@@ -97,7 +122,7 @@ elseif($action =='tongji'){
 </table>
 <?
 }
-elseif($action =="edit"){
+elseif($act =="edit"){
     
 	$id=intval($_GET['id']);
     if($id>0){
@@ -107,7 +132,7 @@ elseif($action =="edit"){
 }
 
 
-elseif($action =="editok"){
+elseif($act =="editok"){
 
 	$id=intval($_GET['id']);
 
