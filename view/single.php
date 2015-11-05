@@ -3,7 +3,7 @@
 <div id="m">
 	<div class="posttitle"><?php echo $title; ?></div>
 	<div class="postinfo">作者:<?php echo $user_cache[$author]['name'];?> 
-	添加：<?=$addtime?> 修改：<?=$edittime?>
+	添加：<?=$addtime?> 修改：<?=$edittime?>评论:<?php echo $comnum; ?> 阅读:<?php echo $views; ?> 分类<?=$sortid?>
 	<?php if(ROLE == 'admin' || $author == UID): ?>
 	<a href="./?action=dellog&gid=<?php echo $gid;?>">删除</a>
 	<?php endif;?>
