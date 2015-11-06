@@ -43,7 +43,7 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 <a href="/m/?action=film" <?php if($action=='film')echo 'id="active"'; ?>>影视</a> 
 <a href="/m/?action=story" <?php if($action=='story')echo 'id="active"'; ?>>童话故事</a> 
 <a href="/jt/?m" <?php if($action=='zz')echo 'id="active"'; ?>>节点图</a> 
-<a href="/m/t.php" <?php if($action=='tw')echo 'id="active"'; ?>>碎语</a> 
+
 <a href="/m/?action=com" <?php if($action=='com')echo 'id="active"'; ?>>评论</a> 
 	<?php if(ROLE == 'admin' ): ?>
     <a href="<?php echo BLOG_URL; ?>m/cash.php">支票</a>

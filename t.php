@@ -11,17 +11,77 @@ define ('TEMPLATE_PATH', EMLOG_ROOT . '/m/view/');
 
 $blogtitle = Option::get('twnavi') . ' - ' . Option::get('blogname');
 $description = Option::get('bloginfo');
-
+  $vid=intval($_SESSION['views']);
 $action = isset($_GET['action']) ? addslashes($_GET['action']) : 'tw';
 
-if (Option::get('istwitter') == 'n') {
-    emMsg('抱歉，碎语未开启前台访问！', BLOG_URL);
-}
+if ($action == 'mark') {
+	$tid = intval(trim($_GET['tid']));
+	$r=addslashes(trim($_GET['opt']));
+      $rdata = array(
+            'tid' => $tid,
+            'content' => $r,
+            'name' => '',
+            'hide' => 'y',
+			'method'=>$r,
+             'uid' => UID,
+			 'vdate' => date('Y-m-d H:i:s'),
+			 'ip'=>getIP(),
+			 'viewid'=>$vid
+    );
 
-if ($action == 'cal') {
-    Calendar::generate();
-}
+    $Reply_Model = new Reply_Model();
 
+    $rid = $Reply_Model->addReply($rdata);
+	$DB->query('update emlog_twitter set '.$r.'='.$r.'+1 where id='.$tid);
+	echo $r;
+}
+if ($action == 'mr') {
+	$tid = intval(trim($_GET['tid']));
+
+      $rdata = array(
+            'tid' => $tid,
+            'content' => '',
+            'name' => '',
+            'hide' => 'y',
+			'method'=>'torep',
+             'uid' => UID,
+			 'vdate' => date('Y-m-d H:i:s'),
+			 'ip'=>getIP(),
+			 'viewid'=>$vid
+    );
+    $Reply_Model = new Reply_Model();
+    $rid = $Reply_Model->addReply($rdata);
+?>
+<form action='/m/t.php?action=mo' method='post'>
+	<textarea name='ct' style='width:160px;height:60px'></textarea><br>
+    <input type='hidden' name='id' value='<?=$tid?>'>
+     昵称：<input type="text" name='nc' style='width:60px'/>
+     <input type='submit'>
+     </form>
+<?
+}
+if ($vid<5) {
+    emMsg('抱歉，碎语未开启前台访问！再试一次看看能否开启。', BLOG_URL);
+}
+if ($action == 'mo') {
+		$tid = intval(trim($_POST['id']));
+  $ct=addslashes(trim($_POST['ct']));
+  $nc=addslashes(trim($_POST['nc']));
+      $rdata = array(
+            'tid' => $tid,
+            'content' => $ct,
+            'name' => $nc.$userData['username'],
+            'hide' => 'y',
+			'method'=>'lvrep',
+             'uid' => UID,
+			 'vdate' => date('Y-m-d H:i:s'),
+			 'ip'=>getIP(),
+			 'viewid'=>$vid
+    );
+    $Reply_Model = new Reply_Model();
+    $rid = $Reply_Model->addReply($rdata);
+	echo '谢谢！';
+}
 if ($action == 'tw') {
 	$user_cache = $CACHE->readCache('user');
     $options_cache = $CACHE->readCache('options');
@@ -66,11 +126,11 @@ if ($action == 'reply') {
     $r = isset($_POST['r']) ? addslashes(trim($_POST['r'])) : '';
     $rname = isset($_POST['rname']) ? addslashes(trim($_POST['rname'])) : '';
     $rcode = isset($_POST['rcode']) ? strtoupper(addslashes(trim($_POST['rcode']))) : '';
-    $tid = isset($_POST['tid']) ? intval(trim($_POST['tid'])) : '';
+  $tid = intval(trim($_POST['tid']));
     
     $user_cache = $CACHE->readCache('user');
-  $vid=intval($_SESSION['views']);
-  if( $vid<4)
+
+  if( $vid<5)
   exit('err3');
     if (!$r || strlen($r) > 420){
         exit('err1');
@@ -94,7 +154,7 @@ if ($action == 'reply') {
             'content' => $r,
             'name' => $name,
 
-            'hide' => ROLE == 'visitor' ? Option::get('ischkreply') : 'n',
+            'hide' => ROLE == '' ? 'y' : 'n',
 			'method'=>'rem',
              'uid' => UID,
 			 'vdate' => date('Y-m-d H:i:s'),
@@ -112,7 +172,7 @@ if ($action == 'reply') {
 
     doAction('reply_twitter', $r, $name, $date, $tid);
 
-    if (Option::get('ischkreply') == 'n' || ROLE != 'visitor'){
+    if (Option::get('ischkreply') == 'n' || ROLE != ''){
         $Twitter_Model->updateReplyNum($tid, '+1');
     }else{
         exit('succ1');
@@ -132,4 +192,20 @@ if ($action == 'reply') {
 // 回复验证码.
 if ($action == 'ckcode') {
     require_once EMLOG_ROOT.'/include/lib/checkcode.php';
+}
+if ($action == 'postnew') {
+    $t = isset($_POST['t']) ? addslashes(trim($_POST['t'])) : '';
+
+    if (!$t){
+        echo 'error';exit;
+    }
+$Twitter_Model = new Twitter_Model();
+    $tdata = array('content' => $Twitter_Model->formatTwitter($t),
+            'author' => UID,
+            'vdate' => date('Y-m-d H:i:s'),
+    );
+
+    $Twitter_Model->addTwitter($tdata);
+    $CACHE->updateCache(array('sta','newtw'));
+	emDirect("/m/t.php");
 }

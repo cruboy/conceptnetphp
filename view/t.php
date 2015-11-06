@@ -14,7 +14,12 @@ body{
 </style>
 <div id="tw">
     <?php if(ROLE == 'admin' || ROLE == 'writer'): ?>
-    <div class="top"><a href="/m/?action=tw">发布碎语</a></div>
+    <form action='/m/t.php?action=postnew' method='post'>
+	<textarea name='t' style='width:160px;height:60px'></textarea><br>
+
+     <input type='submit'>
+     </form>
+   
     <?php endif; ?>
     <ul>
     <?php 
