@@ -32,7 +32,7 @@ body{
     ?> 
     <li class="li">
     <div class="main_img"><img src="<?php echo $avatar; ?>" width="32px" height="32px" /></div>
-    <p class="post1"><span><?php echo $author; ?></span><br /><?php echo $val['t'];?></p>
+    <p class="post1"><span>[<?php echo $tid; ?>]<?php echo $author; ?></span><br /><?php echo $val['t'];?></p>
     <div class="clear"></div>
     <div class="bttome">
         <p class="post"><a href="javascript:loadr('<?php echo DYNAMIC_BLOGURL; ?>t.php?action=getr&tid=<?php echo $tid;?>','<?php echo $tid;?>');">回复(<span id="rn_<?php echo $tid;?>"><?php echo $val['replynum'];?></span>)</a></p>
