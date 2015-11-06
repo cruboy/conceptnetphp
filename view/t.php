@@ -8,6 +8,10 @@ if(!defined('EMLOG_ROOT')) {exit('error!');}
 ?>
 <link href="<?php echo TEMPLATE_URL; ?>main.css" rel="stylesheet" type="text/css" />
 <script src="<?php echo BLOG_URL; ?>include/lib/js/common_tpl.js" type="text/javascript"></script>
+<style>
+body{
+	text-align:left;}
+</style>
 <div id="tw">
     <?php if(ROLE == 'admin' || ROLE == 'writer'): ?>
     <div class="top"><a href="/m/?action=tw">发布碎语</a></div>
@@ -27,7 +31,7 @@ if(!defined('EMLOG_ROOT')) {exit('error!');}
     <div class="clear"></div>
     <div class="bttome">
         <p class="post"><a href="javascript:loadr('<?php echo DYNAMIC_BLOGURL; ?>t.php?action=getr&tid=<?php echo $tid;?>','<?php echo $tid;?>');">回复(<span id="rn_<?php echo $tid;?>"><?php echo $val['replynum'];?></span>)</a></p>
-        <p class="time"><?php echo $val['date'];?> </p>
+        <p class="time"><?php echo $val['vdate'];?> </p>
     </div>
 	<div class="clear"></div>
    	<ul id="r_<?php echo $tid;?>" class="r"></ul>

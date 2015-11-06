@@ -55,26 +55,28 @@ if ($action == 'getr') {
     foreach($replys as $val){
          $response .= "
          <li>
-         <span class=\"name\">{$val['name']}</span> {$val['content']}<span class=\"time\">{$val['date']}</span>
+         <span class=\"name\">{$val['name']}</span> {$val['content']}<span class=\"time\">{$val['vdate']}</span>
          <em><a href=\"javascript:re({$tid}, '@".addslashes($val['name'])."：');\">回复</a></em>
          </li>";
     }
     echo $response;
 }
 // 回复碎语.
-if ((ISLOGIN === true)&& $action == 'reply') {
+if ($action == 'reply') {
     $r = isset($_POST['r']) ? addslashes(trim($_POST['r'])) : '';
     $rname = isset($_POST['rname']) ? addslashes(trim($_POST['rname'])) : '';
     $rcode = isset($_POST['rcode']) ? strtoupper(addslashes(trim($_POST['rcode']))) : '';
     $tid = isset($_POST['tid']) ? intval(trim($_POST['tid'])) : '';
     
     $user_cache = $CACHE->readCache('user');
-
+  $vid=intval($_SESSION['views']);
+  if( $vid<4)
+  exit('err3');
     if (!$r || strlen($r) > 420){
         exit('err1');
-    } elseif (ROLE == 'visitor' && empty($rname)) {
+    } elseif (ROLE == '' && empty($rname) ) {
         exit('err2');
-    }elseif (ROLE == 'visitor' && Option::get('reply_code') == 'y' && session_start() && $rcode != $_SESSION['code']){
+    }elseif (ROLE == '' && Option::get('reply_code') == 'y' && session_start() && $rcode != $_SESSION['code']){
         exit('err3');
     }
 
@@ -85,14 +87,19 @@ if ((ISLOGIN === true)&& $action == 'reply') {
     }
 
     $date = time();
-    $name =  subString(ROLE == 'visitor' ? $rname : addslashes($user_cache[UID]['name']), 0, 16);
+    $name =   $rname .$user_cache[UID]['name'];
 
     $rdata = array(
             'tid' => $tid,
             'content' => $r,
             'name' => $name,
-            'date' => $date,
-            'hide' => ROLE == 'visitor' ? Option::get('ischkreply') : 'n'
+
+            'hide' => ROLE == 'visitor' ? Option::get('ischkreply') : 'n',
+			'method'=>'rem',
+             'uid' => UID,
+			 'vdate' => date('Y-m-d H:i:s'),
+			 'ip'=>getIP(),
+			 'viewid'=>$vid
     );
 
     $Twitter_Model = new Twitter_Model();
@@ -117,7 +124,7 @@ if ((ISLOGIN === true)&& $action == 'reply') {
     $r = htmlClean(stripslashes($r));
     $response = "
          <li>
-         <span class=\"name\">".stripslashes(htmlspecialchars($name))."</span> {$r}<span class=\"time\">{$date}</span>
+         <span class=\"name\">".stripslashes(htmlspecialchars($name))."</span> {$r}<span class=\"time\">{$vdate}</span>
          <em><a href=\"javascript:re({$tid}, '@{$name}：');\">回复</a></em>
          </li>";
     echo $response;

@@ -522,43 +522,7 @@ if (ISLOGIN === true && $action == 'reply') {
 	include View::getView('footer');
 	View::output();
 }
-// 碎语
-if ($action == 'tw') {
-    $Twitter_Model = new Twitter_Model();
-    $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-    $user_cache = $CACHE->readCache('user');
-    $tws = $Twitter_Model->getTwitters($page);
-    $twnum = $Twitter_Model->getTwitterNum();
-    $pageurl =  pagination($twnum, Option::get('index_twnum'), $page, './?action=tw&page=');
 
-	include View::getView('header');
-	include View::getView('twitter');
-	include View::getView('footer');
-	View::output();
-}
-if (ISLOGIN === true && $action == 't') {
-    $Twitter_Model = new Twitter_Model();
-
-    $t = isset($_POST['t']) ? addslashes(trim($_POST['t'])) : '';
-    if (!$t){
-        emDirect("./?action=tw");
-    }
-    $tdata = array('content' => $Twitter_Model->formatTwitter($t),
-            'author' => UID,
-            'date' => time(),
-    );
-    $Twitter_Model->addTwitter($tdata);
-    $CACHE->updateCache(array('sta','newtw'));
-    doAction('post_twitter', $t);
-    emDirect("./?action=tw");
-}
-if (ISLOGIN === true && $action == 'delt') {
-    $Twitter_Model = new Twitter_Model();
-    $id = isset($_GET['id']) ? intval($_GET['id']) : '';
-	$Twitter_Model->delTwitter($id);
-	$CACHE->updateCache(array('sta','newtw'));
-	emDirect("./?action=tw");
-}
 if ($action == 'login' ||$action == 'reg' ) {
 	Option::get('login_code') == 'y' ? $ckcode = "<span>验证码</span>
     <div class=\"val\"><img src=\"../include/lib/checkcode.php\" /><br />
