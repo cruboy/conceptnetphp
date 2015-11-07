@@ -24,6 +24,8 @@ if ($action == 'mark') {
             'hide' => 'y',
 			'method'=>$r,
              'uid' => UID,
+			 'seid'=>session_id(),
+			 'lastu'=>addslashes($_SERVER[HTTP_REFERER]),
 			 'vdate' => date('Y-m-d H:i:s'),
 			 'ip'=>getIP(),
 			 'viewid'=>$vid
@@ -45,6 +47,8 @@ if ($action == 'mr') {
             'hide' => 'y',
 			'method'=>'torep',
              'uid' => UID,
+			  'seid'=>session_id(),
+			 'lastu'=>addslashes($_SERVER[HTTP_REFERER]),
 			 'vdate' => date('Y-m-d H:i:s'),
 			 'ip'=>getIP(),
 			 'viewid'=>$vid
@@ -56,7 +60,7 @@ if ($action == 'mr') {
 	<textarea name='ct' style='width:160px;height:60px'></textarea><br>
     <input type='hidden' name='id' value='<?=$tid?>'>
      昵称：<input type="text" name='nc' style='width:60px'/>
-     <input type='submit'>
+     <input type='submit' value='提交'>
      </form>
 <?
 }
@@ -74,6 +78,8 @@ if ($action == 'mo') {
             'hide' => 'y',
 			'method'=>'lvrep',
              'uid' => UID,
+			  'seid'=>session_id(),
+			 'lastu'=>addslashes($_SERVER[HTTP_REFERER]),
 			 'vdate' => date('Y-m-d H:i:s'),
 			 'ip'=>getIP(),
 			 'viewid'=>$vid
@@ -157,6 +163,8 @@ if ($action == 'reply') {
             'hide' => ROLE == '' ? 'y' : 'n',
 			'method'=>'rem',
              'uid' => UID,
+			  'seid'=>session_id(),
+			 'lastu'=>addslashes($_SERVER[HTTP_REFERER]),
 			 'vdate' => date('Y-m-d H:i:s'),
 			 'ip'=>getIP(),
 			 'viewid'=>$vid
