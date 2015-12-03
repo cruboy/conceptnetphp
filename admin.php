@@ -13,12 +13,24 @@ $act = isset($_GET['action']) ? addslashes($_GET['action']) : "";
 
 $uid = UID;
 $DB = MySql :: getInstance();
-$action='admin';
-include './view/header.php';
 if(ROLE != 'admin'){
 	echo '没有权限';
 	exit;
 	} 
+if($act=='ch')
+{
+$eid =intval($_POST['id']);
+$ltime = time();
+$row = $DB->once_fetch_array("select visible from conceptnet_concept WHERE id=".$eid);
+//echo $row['visible'];
+$r=intval(!intval($row['visible']));
+$DB->query("UPDATE conceptnet_concept SET edittime=$ltime,visible={$r} WHERE id=".$eid);
+echo $r;
+exit;
+}
+$action='admin';
+include './view/header.php';
+
 //set_time_limit(0);
 
 
