@@ -6,7 +6,7 @@
 
 require_once '../init.php';
 
-	set_time_limit(0);
+
 $action = isset($_GET['action']) ? addslashes($_GET['action']) : '';
 $gip=getIp();   
 $uid=UID;
@@ -17,7 +17,7 @@ echo "请登录";
 exit;
 }
 if ($action == 'delok') {
-	 $sql = "SELECT * FROM conceptnet_concept WHERE visible=0 ";
+	 $sql = "SELECT * FROM conceptnet_concept WHERE visible=0 limit 10000";
 	 //limit 0,10000
 		$res = $DB->query($sql);
 		while ($row = $DB->fetch_array($res)) {
@@ -30,6 +30,202 @@ if ($action == 'delok') {
 		}
 		echo $sql.' ';
 		echo  $row['text'].$res2."-".$res3;
+}
+if ($action == 'dot') {
+	set_time_limit(0);
+	 $sql = "SELECT * FROM conceptnet_assertion where id> ";
+	 //limit 0,10000
+		$res = $DB->query($sql);
+     $i=1;
+		while ($row = $DB->fetch_array($res)) {
+
+		$DB->query("UPDATE conceptnet_assertion SET fid=".$i." WHERE id=".$row['id']);
+	//	$DB->query("UPDATE conceptnet_assertion set concept1_id='$i' WHERE concept1_id=".$row['id']);
+	//	$DB->query("UPDATE conceptnet_assertion set concept2_id='$i' WHERE concept2_id=".$row['id']);
+		$i++;
+		}
+echo 'ok';
+}
+if ($action == 'dodd-') {
+	set_time_limit(0);
+	 $sql = "SELECT * FROM conceptnet_concept where hn=0 ";
+	 //limit 0,10000
+		$res = $DB->query($sql);
+     $i=1;
+		while ($row = $DB->fetch_array($res)) {
+
+		$DB->query("UPDATE hinet_concept SET fid=".$row['id']." where fid=0 and text like '".$row['text']."'");
+
+		}
+echo 'ok';
+}
+//update a set a.c2=c.fid from `hinet_assertion` a, hinet_concept c where a.concept2_id=c.id and a.c2=0 and a.c1>0
+//update `hinet_assertion` a, hinet_concept c set a.c2=c.fid  where a.concept2_id=c.id and a.c2=0 and a.c1>0
+//update `hinet_assertion` a, hinet_concept c set a.c1=c.fid  where a.concept1_id=c.id and a.c1=0 and a.c2>0
+if ($action == 'dodd2-') {
+	set_time_limit(0);
+	 $sql = "SELECT * FROM hinet_concept where fid>12866 ";
+	 //limit 0,10000
+		$res = $DB->query($sql);
+     $i=1;
+		while ($row = $DB->fetch_array($res)) {
+		$DB->query("UPDATE hinet_assertion SET c1=".$row['fid']." where concept1_id=".$row['id']);
+          $DB->query("UPDATE hinet_assertion SET c2=".$row['fid']." where concept2_id=".$row['id']);
+		}
+echo 'ok';
+}
+if ($action == 'dor') {
+	set_time_limit(0);
+	 $sql = "SELECT * FROM hi_hown et ";
+	 //limit 0,10000
+		$res = $DB->query($sql);
+ 		while ($row = $DB->fetch_array($res)) {
+		   $DB->query("UPDATE hinet_concept SET hn=1 WHERE text like '".$row['word']."'");
+		}
+		echo 'ok';
+}
+if ($action == 'dor2-') {
+	set_time_limit(0);
+	 $sql = "SELECT * FROM hinet_concept where hn=1";
+	 //limit 0,10000
+		$res = $DB->query($sql);
+ 		while ($row = $DB->fetch_array($res)) {
+			$nm=$row['text'];
+		   $sql2 = "SELECT * FROM conceptnet_concept WHERE text like '{$nm}'";
+		$r2 = $DB->once_fetch_array($sql2);
+		$roid=$row['id'];
+       if($r2['id']>0){
+		   $tid=$r2['id'];
+		 //  $DB->query("UPDATE conceptnet_concept SET cruboy=-1 WHERE id=".$tid);
+		  echo $tid.' ';
+		   }
+		   else
+		   {	
+		   unset($row['id']);
+		    unset($row['fid']);
+			unset($row['creator']);
+		   $row['hn']=1;
+		   $kItem = array();
+		$dItem = array();
+		foreach ($row as $key => $data) {
+			$kItem[] = $key;
+			$dItem[] = addslashes($data);
+		}
+		$field = implode(',', $kItem);
+		$values = "'" . implode("','", $dItem) . "'";
+		$DB->query("INSERT INTO conceptnet_concept  ($field) VALUES ($values)");
+		$tid = $DB->insert_id();
+		echo '+'.$tid.' ';
+		   }
+		$DB->query("UPDATE hinet_concept SET fid=".$tid." WHERE id=".$roid);
+		}
+		echo 'ok';
+}
+if ($action == 'dott-') {
+	set_time_limit(0);
+	 $sql = "SELECT * FROM cruboy_concept ";
+	 //limit 0,10000
+		$res = $DB->query($sql);
+ 		while ($row = $DB->fetch_array($res)) {
+			$nm=$row['text'];
+        $sql2 = "SELECT * FROM conceptnet_concept WHERE text like '{$nm}'";
+		$r2 = $DB->once_fetch_array($sql2);
+		$roid=$row['id'];
+       if($r2['id']>0){
+		   $tid=$r2['id'];
+		   $DB->query("UPDATE conceptnet_concept SET cruboy=-1 WHERE id=".$tid);
+		  echo $tid.' ';
+		   }
+		   else
+		   {	
+		   unset($row['id']);
+		    unset($row['fid']);
+		   $row['cruboy']=-2;
+		   $kItem = array();
+		$dItem = array();
+		foreach ($row as $key => $data) {
+			$kItem[] = $key;
+			$dItem[] = addslashes($data);
+		}
+		$field = implode(',', $kItem);
+		$values = "'" . implode("','", $dItem) . "'";
+		$DB->query("INSERT INTO conceptnet_concept  ($field) VALUES ($values)");
+		$tid = $DB->insert_id();
+		echo '+'.$tid.' ';
+		   }
+		    $DB->query("UPDATE cruboy_concept SET fid=".$tid." WHERE id=".$roid);
+	//	$DB->query("UPDATE cruboy_assertion SET fid=".$i." WHERE id=".$row['id']);
+	//	$DB->query("UPDATE conceptnet_assertion set concept1_id='$i' WHERE concept1_id=".$row['id']);
+	//	$DB->query("UPDATE conceptnet_assertion set concept2_id='$i' WHERE concept2_id=".$row['id']);
+		$i++;
+		}
+echo 'ok';
+}
+if ($action == 'dott2-') {
+	set_time_limit(0);
+	$sql = "SELECT * FROM cruboy_concept ";
+	 //limit 0,10000
+		$res = $DB->query($sql);
+ 		while ($row = $DB->fetch_array($res)) {
+		$d[$row['id']]=$row['fid'];
+		}
+	 $sql = "SELECT * FROM cruboy_assertion ";
+	 //limit 0,10000
+		$res = $DB->query($sql);
+ 		while ($row = $DB->fetch_array($res)) {
+			$c1=$d[$row['concept1_id']];
+			$c2=$d[$row['concept2_id']];
+        $sql2 = "SELECT * FROM conceptnet_assertion WHERE concept1_id={$c1} and concept2_id={$c2}  ";
+		$r2 = $DB->once_fetch_array($sql2);
+		$roid=$row['id'];
+       if($r2['id']>0){
+		   $tid=$r2['id'];
+		   $DB->query("UPDATE conceptnet_assertion SET cruboy=-1 WHERE id=".$tid);
+		  echo $tid.' ';
+		   }
+		   else
+		   {	
+		   unset($row['id']);
+		   $row['concept1_id']=$d[$row['concept1_id']];
+		   $row['concept2_id']=$d[$row['concept2_id']];
+		  //  unset($row['fid']);
+		   $row['cruboy']=-2;
+		   $kItem = array();
+		$dItem = array();
+		foreach ($row as $key => $data) {
+			$kItem[] = $key;
+			$dItem[] = addslashes($data);
+		}
+		$field = implode(',', $kItem);
+		$values = "'" . implode("','", $dItem) . "'";
+		$DB->query("INSERT INTO conceptnet_assertion  ($field) VALUES ($values)");
+		$tid = $DB->insert_id();
+		echo '+'.$tid.' ';
+		   }
+	//	    $DB->query("UPDATE cruboy_concept SET fid=".$tid." WHERE id=".$roid);
+	//	$DB->query("UPDATE cruboy_assertion SET fid=".$i." WHERE id=".$row['id']);
+	//	$DB->query("UPDATE conceptnet_assertion set concept1_id='$i' WHERE concept1_id=".$row['id']);
+	//	$DB->query("UPDATE conceptnet_assertion set concept2_id='$i' WHERE concept2_id=".$row['id']);
+		$i++;
+		}
+echo 'ok';
+}
+if ($action == 'doe') {
+	set_time_limit(0);
+
+	 $sql = "SELECT * FROM hinet_assertion where c1>0 and c2>0 ";
+	 //limit 0,10000
+		$res = $DB->query($sql);
+ 		while ($row = $DB->fetch_array($res)) {
+
+
+		$DB->query("INSERT INTO conceptnet_assertion  (relation_id,concept1_id,concept2_id,score,best_frame_id) VALUES (
+		'{$row['relation_id']}','{$row['c1']}','{$row['c2']}','{$row['score']}','{$row['best_frame_id']}')");
+		$tid = $DB->insert_id();
+		echo '+'.$tid.' ';
+
+		}
+echo 'ok';
 }
 if ($action == 'updnum') {
 	 $sql = "SELECT * FROM conceptnet_concept limit 15000,10000";
@@ -50,21 +246,6 @@ if ($action == 'updnum') {
 		}
 		echo $sql.' ';
 		echo  $row['text'].$res2."-".$res3;
-}
-elseif ($action == 'hont') {
-
-	 $sql = "SELE CT * FROM hi_hownet ";
-	 //limit 0,10000
-		$res = $DB->query($sql);
-		$i=0;
-		while ($row = $DB->fetch_array($res)) {
-//conceptnet_concept
-		$DB->query("UPDATE conceptnet_concept SET hn=1 WHERE text like '".$row['word']."'");
-		if($i%100==0)
-		echo $i.$row['word'];
-		$i++;
-		}
-		echo $sql.' ';
 }
 // 按frame统计.
 if ($action == 'frame') {
