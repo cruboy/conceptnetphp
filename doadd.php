@@ -36,6 +36,7 @@ elseif($acidd<0){
 		$acid=-$acidd;
 }else
    mMsg('错误', '-1');
+   $sort =intval($_POST['sort']);
 $ltime = time();
 if($_POST['addrel']=="#"){
 $arlo =intval($_POST['addname']);
@@ -62,14 +63,16 @@ mMsg('概念错误', '-1');
 $cp0s=addslashes(trim($_POST['cp0s'])) ;
 $sq1 = "SELECT * FROM ".$tabf."_concept WHERE text LIKE '$addname'";
 $pDa = $DB->once_fetch_array($sq1);
-$hid=$pDa[id];
+$hid=$pDa['id'];
 if($hid>0)
 {
 if($hid==$acid) mMsg("重复".$hid, '-1');
+if($sort>0)
+$DB->query("UPDATE ".$tabf."_concept SET sort={$sort} WHERE id='$hid'");
 $cpaddid=-$hid;
 }
 else{
-	    $DB->query("INSERT INTO ".$tabf."_concept (text,edittime,uid,visible) VALUES ('$addname',$ltime,$uid,'1' )");
+	    $DB->query("INSERT INTO ".$tabf."_concept (text,edittime,uid,visible,sort) VALUES ('$addname',$ltime,$uid,'1',$sort )");
 		$hid = $DB->insert_id();
 		$cpaddid=$hid;
 //mMsg('ok add'.$hid, '-1');

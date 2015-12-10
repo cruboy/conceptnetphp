@@ -22,11 +22,13 @@ var theiid=0;
 function ch(){
 	editt=-editt;
 	//alert(editt);
-	if(editt==1)
+	if(editt==1){
 	document.getElementById('thech').innerText='【位置调整】';
-	else
+	 $( ".ui-widget-content" ).draggable('enable'); 
+	}else{
 	document.getElementById('thech').innerText='【编辑内容】';
-	}
+	 $( ".ui-widget-content" ).draggable('disable'); 
+	}}
 function ax(id){
 	if(editt==1){
 		if(theid!=id||theiid!=0)
@@ -100,7 +102,7 @@ if($pDa['blogid'] >0 ){?>
 <a href="/<?php echo $pDa['blogid']; ?>.html">■</a>
 <?php } ?>
 <a href="index.php?cp=<?=$cpidd?>">预览 </a>
-<span onclick='ch()' id='thech'>【编辑内容】</span>
+<span onclick='ch()' id='thech' style='cursor:pointer;' title='点击切换'>【编辑内容】</span>
 <span  id='theleft'></span>&nbsp;<span id='thetop'></span>
 </div>
 <?php echo $pDaa['content']; ?>
@@ -145,7 +147,7 @@ if($value['blogid'] >0 ){?>
 <?  }}?>
 <?  }?>
 <div style="text-align:left;">
-提示：点击并移动‘○’进行编辑，双击'○'进行保存。
+提示：点击或移动‘○’进行编辑内容或调整位置，点击文字会跳转。
 	<form id="addcp<?php echo $valid;?>" >
     添加
     <input id="sch" type="radio" value="0" name="dirs" checked />
@@ -164,13 +166,18 @@ if($value['blogid'] >0 ){?>
 	<option value="70" style="background-color:#FFFFFF; color:red">{1}喜欢{2}</font></option><option value="71" style="background-color:#FFFFFF; color:red">{1}想要{2}</option><option value="72" style="background-color:#FFFFFF; color:red">{1}不想要{2}</option><option value="73" style="background-color:#FFFFFF; color:red">{1}害怕{2}</option><option value="75" style="background-color:#FFFFFF; color:red">{1}痛恨{2}</option>
 	<option value="79">{1}是{2}的</option><option value="84">{2}可能代表{1}</option><option value="89">{1}代表{2}</option><option value="92">{1}的时候，你会{2}</option><option value="95">在{1}，你会{2}</option>   
 </option>
-	</select> 
+	</select> 分类<select name="sort" >
+	 <?php 
+	$sub[0]='默认';$sub[1]='概念';if(ROLE=='admin'){ $sub[2]='分类';}$sub[3]='记事';$sub[4]='人';$sub[5]='地方';
+foreach ($sub as $k=>$v) {	
+?><option value="<?=$k?>" <? if($k==$pDa['sort']) echo 'selected="selected"';?> ><?=$v?></option>	
+<?php } ?></select>
 	<? if(ROLE=='admin'):?><br>名称：<textarea name="addname"  class="texts"/></textarea><? else:?>
     名称：<input name="addname"  type="text" value="" style="width:120px;"/>
     <? endif;?>
     <input type="hidden" name="cp0s" value="<?php echo $pDa['text']; ?>" />
     <input type="hidden" name="cid" value="<?php echo $cpidd; ?>" />
-        <input type="hidden" name="valid" value="<?php echo $valid;?>" />
+        <input type="hidden" name="valid" value="<?php echo $valid;?>" /><br>
 	<a onClick=" $.ajax({
 				url:'<?php echo BLOG_URL; ?>m/doadd.php?action=addcp',
 				type:'POST',
@@ -182,4 +189,5 @@ if($value['blogid'] >0 ){?>
 	</form>
 </div>
 <script> 
-	 $(function() {    $( ".ui-widget-content" ).draggable();  });  </script>
+	 $(function() {    $( ".ui-widget-content" ).draggable();  
+	 $( ".ui-widget-content" ).draggable('disable');  });  </script>

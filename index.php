@@ -39,10 +39,7 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 	$vsid=intval($_SESSION['views']);
   
 	
-	$cpidd=($_REQUEST['cp']);
-	if($cpidd=='jty')
-	$cpidd=-97;
-	$cpidd=intval($cpidd);
+	$cpidd=intval($_REQUEST['cp']);
 	$cpp = $CACHE->readCache('cppublic');
   if(empty($cpidd))
     {  
@@ -151,9 +148,9 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 				if($row2['best_frame_id']>0){		
 			$ss=str_replace("1",$row2['text'],$cpr[$row2['best_frame_id']]);
 			$ss=str_replace("2",$pDa['text'],$ss);
-			$row2['frame']=$ss;
+			$row2['frame']='!'.$ss;
 			}else{
-			 $row2['frame']=$cpr[$row2['relation_id']];
+			 $row2['frame']='!'.$cpr[$row2['relation_id']];
 			}
 			$row2['fx']='2';
 				if($tabf=='cruboy')

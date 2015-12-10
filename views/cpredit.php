@@ -13,7 +13,6 @@
  </tr>
  <tr> <td>可用V<input style="width:30px;" value="<?php echo $value['visible']; ?>"  name="visible" /> </td>
      <td>abid<input style="width:40px;" value="<?php echo $value['abid']; ?>"  name="abid" />
-    seq<input style="width:40px;" value="<?php echo $value['abid']; ?>"  name="seq" /></td>
  </tr>
  <? endif;?>  
   <tr>

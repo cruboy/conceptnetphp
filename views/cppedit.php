@@ -24,11 +24,11 @@ body{background-color:#FFFFFF; font-size:14px; margin: 0; padding:0;}
      <td>关联文章ID<input style="width:40px;" value="<?php echo $pDa['blogid']; ?>"  name="blogid" /></td>
      </tr>
      <tr><td>分类<select name="sort" >
-	 <?php if(ROLE=='admin'){ $sub[2]='分类';}
-	$sub[0]='默认';$sub[1]='概念';$sub[3]='记事';$sub[4]='人';$sub[5]='地方';
+	 <?php 
+	$sub[0]='默认';$sub[1]='概念';if(ROLE=='admin'){ $sub[2]='分类';}$sub[3]='记事';$sub[4]='人';$sub[5]='地方';
 foreach ($sub as $k=>$v) {	
 ?><option value="<?=$k?>" <? if($k==$pDa['sort']) echo 'selected="selected"';?> ><?=$v?></option>	
-<?php } ?>
+<?php } ?></select></td>
      <td>显示C <select name="cruboy" >
 <?php if(ROLE=='admin'){ $subs[2]='推荐';$subs[-2]='祭童';$subs[-1]='涉祭';}
 	$subs[0]='正常';$subs[1]='隐藏';
