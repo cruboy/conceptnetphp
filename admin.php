@@ -76,6 +76,7 @@ $pageurl="/m/admin.php?nall=$nall&page=";
 
 }
 elseif($act=='zl'){
+	//$asql2.='and hn=0';
 		$page = isset($_GET['page']) ? abs(intval ($_GET['page'])) : 1;
 	$nall=intval ($_GET['nall']);
 	if($nall<1)
@@ -86,12 +87,22 @@ elseif($act=='zl'){
 		$nall=$row1['a'];
 	}
     $start=($page-1)*1000;				
-	$sql = "SELECT * FROM conceptnet_concept where 1 $asql2 order by id  LIMIT $start,1000";
+	$sql = "SELECT * FROM conceptnet_concept where 1 $asql2 order by text  LIMIT $start,1000";
 	$res = $DB->query($sql);
 	//$ap = $DB->affected_rows();
 $pageurl="/m/admin.php?action=zl&nall=$nall&page=";
 	
     include View::getView('zl');
+
+
+}
+elseif($act=='zll'){
+
+ 		
+	$sql = "SELECT * FROM conceptnet_concept where 1 $asql2 order by text ";
+	$res = $DB->query($sql);
+	
+    include View::getView('zll');
 
 
 }

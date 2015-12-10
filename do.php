@@ -6,7 +6,7 @@
 
 require_once '../init.php';
 
-
+	set_time_limit(0);
 $action = isset($_GET['action']) ? addslashes($_GET['action']) : '';
 $gip=getIp();   
 $uid=UID;
@@ -17,7 +17,7 @@ echo "请登录";
 exit;
 }
 if ($action == 'delok') {
-	 $sql = "SELECT * FROM conceptnet_concept WHERE visible=0 limit 10000";
+	 $sql = "SELECT * FROM conceptnet_concept WHERE visible=0 ";
 	 //limit 0,10000
 		$res = $DB->query($sql);
 		while ($row = $DB->fetch_array($res)) {
@@ -50,6 +50,21 @@ if ($action == 'updnum') {
 		}
 		echo $sql.' ';
 		echo  $row['text'].$res2."-".$res3;
+}
+elseif ($action == 'hont') {
+
+	 $sql = "SELE CT * FROM hi_hownet ";
+	 //limit 0,10000
+		$res = $DB->query($sql);
+		$i=0;
+		while ($row = $DB->fetch_array($res)) {
+//conceptnet_concept
+		$DB->query("UPDATE conceptnet_concept SET hn=1 WHERE text like '".$row['word']."'");
+		if($i%100==0)
+		echo $i.$row['word'];
+		$i++;
+		}
+		echo $sql.' ';
 }
 // 按frame统计.
 if ($action == 'frame') {
