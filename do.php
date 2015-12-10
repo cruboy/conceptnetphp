@@ -250,7 +250,7 @@ if ($action == 'updnum') {
 // 按frame统计.
 if ($action == 'frame') {
 		$a=0;
-    $sql = "SELECT * FROM conceptnet_frame order by id";
+    $sql = "SELECT * FROM conceptnet_frame order by relation_id";
 		$res = $DB->query($sql);
 		while ($row = $DB->fetch_array($res)) {
 			$wd=$row['text']; 
@@ -262,7 +262,7 @@ if ($action == 'frame') {
 		$sql3 = "SELECT count(*) FROM conceptnet_assertion WHERE score>2 AND best_frame_id=".$dd;
 		$res3 = $DB->once_fetch_array($sql3);
 		$comNum3 = $res3['count(*)'];
-		echo $a." ".$row['relation_id'].":".$dd." ".$wd.":".$comNum."--".$comNum3."<br>";
+		echo " ".$row['relation_id'].":".$dd." ".$wd.":".$comNum."--".$comNum3."<br>";
 		
 		}
 }

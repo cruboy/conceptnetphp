@@ -10,25 +10,35 @@ body{background-color:#FFFFFF; font-size:14px; margin: 0; padding:0;}
   <form id="fttz" method='post' action='docp.php?cp=<?=$cpidd?>&ecdid=<?=$pDa['id']?>'>
   <table style=" font-size:14px;">
  <? if(ROLE=='admin'):?>    
-  <tr><td>名称<input style="width:60px;" value="<?php echo $pDa['text']; ?>"  name="text" /></td>
+  <tr><td>名称<input style="width:60px;" value="<?php echo $pDa['text']; ?>"  name="text" /></td><td>可用V<input style="width:30px;" value="<?php echo $pDa['visible']; ?>"  name="visible" /> </td>
   </tr>
   <? endif;?> 
    <tr>
-    <td>图片imgid<input style="width:60px;" value="<?php echo $pDa['imgid']; ?>"  name="imgid" /></td>
-    <td>backimgid<input style="width:60px;" value="<?php echo $pDa['backimgid']; ?>"  name="backimgid" /></td>
+    <td>图片ID<input style="width:60px;" value="<?php echo $pDa['imgid']; ?>"  name="imgid" /></td>
+    <td>背景图ID<input style="width:60px;" value="<?php echo $pDa['backimgid']; ?>"  name="backimgid" /></td>
     </tr>
     <tr><td>图片位置ctop<input style="width:30px;" id="top0" value="<?php echo $pDa['ctop']; ?>"  name="ctop" /></td>
     <td>cleft<input style="width:30px;" id="left0" value="<?php echo $pDa['cleft']; ?>"  name="cleft" /></td>
   </tr><tr>
-    <td>概念链接url<input style="width:80px;" value="<?php echo $pDa['url']; ?>"  name="url" /></td>
-     <td>关联文章blog<input style="width:30px;" value="<?php echo $pDa['blogid']; ?>"  name="blogid" /></td>
-     </tr><tr>
-     <!--tr>
+    <td>链接<input style="width:80px;" value="<?php echo $pDa['url']; ?>"  name="url" /></td>
+     <td>关联文章ID<input style="width:40px;" value="<?php echo $pDa['blogid']; ?>"  name="blogid" /></td>
+     </tr>
+     <tr><td>分类<select name="sort" >
+	 <?php if(ROLE=='admin'){ $sub[2]='分类';}
+	$sub[0]='默认';$sub[1]='概念';$sub[3]='记事';$sub[4]='人';$sub[5]='地方';
+foreach ($sub as $k=>$v) {	
+?><option value="<?=$k?>" <? if($k==$pDa['sort']) echo 'selected="selected"';?> ><?=$v?></option>	
+<?php } ?>
+     <td>显示C <select name="cruboy" >
+<?php if(ROLE=='admin'){ $subs[2]='推荐';$subs[-2]='祭童';$subs[-1]='涉祭';}
+	$subs[0]='正常';$subs[1]='隐藏';
+foreach ($subs as $k=>$v) {	
+?><option value="<?=$k?>" <? if($k==$pDa['cruboy']) echo 'selected="selected"';?> ><?=$v?></option>	
+<?php } ?>	
+	  </select></td>
+      </tr>
+      <?php if(ROLE=='admin'): ?><tr>
     <td colspan="2"><textarea name="info"  class="texts"/><?php echo $pDa['info']; ?></textarea></td>
-     </tr--><tr>
-     <td>样式<input style="width:20px;" value="<?php echo $pDa['style']; ?>"  name="style" /> 
-    <? if(ROLE=='admin'):?>     可见V<input style="width:20px;" value="<?php echo $pDa['visible']; ?>"  name="visible" /> </td>
-     <td>推荐C<input style="width:20px;" value="<?php echo $pDa['cruboy']; ?>"  name="cruboy" /></td>
       <? endif;?> 
   </tr>
   <tr><td><input  type='submit' value='提交'/></td></tr>

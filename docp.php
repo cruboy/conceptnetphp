@@ -106,6 +106,7 @@ elseif(isset($_GET['editid'])){
 	}else{
 	$sq1="SELECT * FROM  ".$tabf."_assertion WHERE id='$rid'";
 	$value=$DB->once_fetch_array($sq1);
+	//print_r($value);
 	include View::getView('cpredit');
 	}
 }

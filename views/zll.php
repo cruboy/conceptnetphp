@@ -22,7 +22,7 @@ function ch(id,t){
 <div class="comcont">
 	<?php 
 while ($value = $DB->fetch_array($res)) {
-	if($lst['text']!=$value['text'])
+	if(trim($lst['text'])!=trim($value['text']))
 	{$lst=$value;
 	continue;
 	}else{
