@@ -14,8 +14,8 @@ body{background-color:#FFFFFF; font-size:14px; margin: 0; padding:0;}
   </tr>
   <? endif;?> 
    <tr>
-    <td>图片ID<input style="width:60px;" value="<?php echo $pDa['imgid']; ?>"  name="imgid" /></td>
-    <td>背景图ID<input style="width:60px;" value="<?php echo $pDa['backimgid']; ?>"  name="backimgid" /></td>
+    <td>图片ID<input style="width:60px;" value="<?php if($pDa['imgid'])echo $pDa['imgid']; ?>"  name="imgid" /></td>
+    <td>背景图ID<input style="width:60px;" value="<?php if($pDa['backimgid'])echo $pDa['backimgid']; ?>"  name="backimgid" /></td>
     </tr>
     <tr><td>图片位置ctop<input style="width:30px;" id="top0" value="<?php echo $pDa['ctop']; ?>"  name="ctop" /></td>
     <td>cleft<input style="width:30px;" id="left0" value="<?php echo $pDa['cleft']; ?>"  name="cleft" /></td>
@@ -25,7 +25,7 @@ body{background-color:#FFFFFF; font-size:14px; margin: 0; padding:0;}
      </tr>
      <tr><td>分类<select name="sort" >
 	 <?php 
-	$sub[0]='默认';$sub[1]='概念';if(ROLE=='admin'){ $sub[2]='分类';}$sub[3]='记事';$sub[4]='人';$sub[5]='地方';
+	$sub[0]='默认';$sub[1]='概念';if(ROLE=='admin'){ $sub[2]='分类';}$sub[3]='记事';$sub[4]='人';$sub[5]='地方';$sub[6]='时间';
 foreach ($sub as $k=>$v) {	
 ?><option value="<?=$k?>" <? if($k==$pDa['sort']) echo 'selected="selected"';?> ><?=$v?></option>	
 <?php } ?></select></td>

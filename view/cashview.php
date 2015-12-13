@@ -13,9 +13,9 @@
 				<option value="BC"	<?php if($v[bank]=='BC') echo "selected='selected'"; ?>>BC</option>
 			</select> 
             名 <select	 name="name" ><?php  echo $v[name]; ?>
-            <option value="" <?php if($v[name]=='') echo "selected='selected'"; ?>>--</option>
-				<option value="ma" <?php if($v[name]=='ma') echo "selected='selected'"; ?>>ma</option>
-				<option value="lin" <?php if($v[name]=='lin') echo "selected='selected'"; ?>>lin</option>
+            <option value="" <?php if($rule=='') echo "selected='selected'"; ?>>--</option>
+				<option value="ma" <?php if($rule=='ma') echo "selected='selected'"; ?>>ma</option>
+				<option value="lin" <?php if($rule=='lin') echo "selected='selected'"; ?>>lin</option>
                 </select>
 			 <select dir="ltr" name="used" id="darom" >
 			<option value="0" <?php if($used==0) echo "selected='selected'"; ?>>所有</option>
@@ -42,7 +42,8 @@
             <td width="10%"><a href='<?=$pageurl?>lixi0'>中息</a></td>
             <td width="10%"><a href='<?=$pageurl?>ends'>结束2</a></td>
 			<td width="10%"><a href='<?=$pageurl?>money'>金额</a></td>
-            <td width="10%"><a href='<?=$pageurl?>lixi'>息</a></td>
+             <td width="6%">率</td>
+            <td width="6%"><a href='<?=$pageurl?>lixi'>息</a></td>
 			<td width="10%"><a href='<?=$pageurl?>'>总</a></td>
             <td width="10%"><a href='<?=$pageurl?>'>活</a></td>
              <td width="10%"><a href='<?=$pageurl?>'>至天</a></td>
@@ -76,7 +77,8 @@
             <td title="<?php echo $row[notexi]; ?>"><?php echo $row[lixi0]; ?>	</td>
            <td> <?php echo $row[ends]; ?></td>
 			<td><?php echo $row[money]; ?></td>
-            <td title="<?php echo $row[lilv]; ?>"><?php echo $row[lixi]; ?></td>
+            <td><?php echo $row[lilv]; ?></td>
+            <td ><?php echo $row[lixi]; ?></td>
             <td><?php echo $row[money]+$row[lixi0]+$row[lixi]; ?></td>
                <td><?php echo $rhuo; ?></td>
                   <td><?php echo $zt; ?></td>
