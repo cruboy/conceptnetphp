@@ -60,7 +60,11 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 	$_SESSION['valid']=$valid;
 	}
 	$cpr = $CACHE->readCache('cpr');
-	
+	if(ROLE == 'admin' ){
+		}else{
+			$cc=' and c.cruboy>=0';
+			$ccx=' and cruboy>-2';
+			}
    //搜索或空白随机首页
  if(isset($_POST['aikey'])||empty($_REQUEST['cp'])){
 		$akey = addslashes($_POST['aikey']);
@@ -71,10 +75,10 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 		{
 			$concepts[]=$p;
 		}
-	$sql = "SELECT * FROM conceptnet_concept order by Rand()  LIMIT 30";
+	$sql = "SELECT * FROM conceptnet_concept  where 1 $ccx  order by Rand() LIMIT 30";
 	}else{
 		$vfdd='msearch';
-	$sql = "SELECT * FROM conceptnet_concept WHERE text LIKE '%$akey%' order by Rand()  LIMIT 100";
+	$sql = "SELECT * FROM conceptnet_concept WHERE text LIKE '%$akey%' $ccx  order by Rand()  LIMIT 100";
 	}
 
 	
@@ -118,9 +122,9 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 			
 			$sq2="SELECT a.concept1_id,a.concept2_id,a.id as aid,a.abid,a.seq,
 		a.relation_id,a.best_frame_id,a.atop1 as atop,a.aleft1 as aleft,a.itop1 as itop,a.ileft1 as ileft,
-		 ".$tabf."_concept.* FROM  ".$tabf."_assertion a LEFT JOIN
-		 ".$tabf."_concept ON a.concept2_id= ".$tabf."_concept.id
-		WHERE concept1_id='$cpid' order by a.relation_id,a.best_frame_id LIMIT 4000";
+		 c.* FROM  ".$tabf."_assertion a LEFT JOIN
+		 ".$tabf."_concept c ON a.concept2_id= c.id
+		WHERE concept1_id='$cpid' $cc order by a.relation_id,a.best_frame_id LIMIT 4000";
 			$res2=$DB->query($sq2);
 			while($row=$DB->fetch_array($res2)){
 			  if($row['best_frame_id']>0){		
@@ -140,9 +144,9 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 			
 			$sq3="SELECT a.concept1_id,a.concept2_id,a.id as aid,a.abid,a.seq,
 		a.relation_id,a.best_frame_id,a.atop2 as atop,a.aleft2 as aleft,a.itop2 as itop,a.ileft2 as ileft,
-		 ".$tabf."_concept.* FROM  ".$tabf."_assertion a LEFT JOIN
-		 ".$tabf."_concept ON a.concept1_id= ".$tabf."_concept.id
-		WHERE concept2_id='$cpid' order by a.seq,a.relation_id,a.best_frame_id LIMIT 4000";
+		 c.* FROM  ".$tabf."_assertion a LEFT JOIN
+		 ".$tabf."_concept c ON a.concept1_id= c.id
+		WHERE concept2_id='$cpid' $cc order by a.seq,a.relation_id,a.best_frame_id LIMIT 4000";
 			$res3=$DB->query($sq3);
 			while($row2=$DB->fetch_array($res3)){
 				if($row2['best_frame_id']>0){		
@@ -191,18 +195,22 @@ if ($action == 'ailist' && $_SESSION['views']>2) {
 	$_SESSION['valid']=$valid;
 	}
    $cpr = $CACHE->readCache('cpr');	
-	
+		if(ROLE == 'admin' ){
+		}else{
+			$cc=' and c.cruboy>-1';
+			$ccx=' and cruboy>-2';
+			}
 	$gip=getIp();
 	$uid=UID;
 	$ltime = date('Y-m-d H:i:s');
 	
 	if(empty ($akey)){
 	  $mnk='mallist';
-	  $sql = "SELECT * FROM conceptnet_concept order by Rand()  LIMIT 10";
+	  $sql = "SELECT * FROM conceptnet_concept where 1 $ccx  order by Rand()  LIMIT 10";
 	 }else{
 	  $mnk='malsearch';
 	  $atitle="测字‘".$akey."’的结果：";
-	  $sql = "SELECT * FROM  conceptnet_concept WHERE text LIKE '%$akey%' order by Rand() LIMIT 20";
+	  $sql = "SELECT * FROM  conceptnet_concept WHERE text LIKE '%$akey%' $ccx order by Rand() LIMIT 20";
 	 }
     $o=$akey.'|';
 	 $res = $DB->query($sql);
@@ -211,9 +219,9 @@ if ($action == 'ailist' && $_SESSION['views']>2) {
 			$o.=$row['text'].' ';
 		// $sql2 = "SELECT * FROM conceptnet_assertion WHERE concept1_id='$row[id]' or concept2_id='$row[id]' LIMIT 2";
 		$sql2 = "SELECT a.concept1_id,a.concept2_id,
-		a.relation_id,a.best_frame_id,conceptnet_concept.text FROM conceptnet_assertion a LEFT JOIN
-		conceptnet_concept ON a.concept2_id=conceptnet_concept.id
-		WHERE concept1_id='{$row['id']}' order by Rand() limit 1";
+		a.relation_id,a.best_frame_id,c.text FROM conceptnet_assertion a LEFT JOIN
+		conceptnet_concept c ON a.concept2_id=c.id
+		WHERE concept1_id='{$row['id']}' $cc order by Rand() limit 1";
 			$aDa = $DB->once_fetch_array($sql2);
 		
 		$row['tx1']=$aDa['text'];
@@ -228,9 +236,9 @@ if ($action == 'ailist' && $_SESSION['views']>2) {
 			}
 
 		 $sql3 = "SELECT a.concept1_id,a.concept2_id,
-		a.relation_id,a.best_frame_id,conceptnet_concept.text FROM conceptnet_assertion a LEFT JOIN
-		conceptnet_concept ON a.concept1_id=conceptnet_concept.id
-		WHERE concept2_id='{$row['id']}' order by Rand() limit 1";
+		a.relation_id,a.best_frame_id,c.text FROM conceptnet_assertion a LEFT JOIN
+		conceptnet_concept c ON a.concept1_id=c.id
+		WHERE concept2_id='{$row['id']}' $cc order by Rand() limit 1";
 			$aDa3 = $DB->once_fetch_array($sql3);
 		
 		$row['tx2']=$aDa3['text'];
