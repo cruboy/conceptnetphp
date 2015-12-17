@@ -37,6 +37,43 @@ if ($action == 'mark') {
 	$DB->query('update emlog_twitter set '.$r.'='.$r.'+1 where id='.$tid);
 	echo $r;
 }
+if ($action == 'getans') {
+	$tid = intval(trim($_GET['tid']));
+	$aid = intval(trim($_GET['aid']));
+	$r=addslashes(trim($_GET['opt']));
+	if($r=='q1'){
+		$andd=array('','家庭','金钱','事业','朋友','性','','');
+		$rr=$andd[$aid];
+		$rd=$tid.':'.$aid.$rr;
+		}
+	if($r=='q2'){
+     $a[1]='你对于目前的恋爱感到傍徨不安，好象缺了点安全感，"既期待又怕被伤害"，不知道该通敢去爱，还是悄悄的走开。虽然你的他条件并不差，你总是没办法把心交给他，要得到你完全的信任，似乎还要再加把劲儿。';
+	 $a[2]='你的恋爱哲学是：只要是我喜欢，有什么不可以。你不排斥条件比你差的情人或异国恋情，反正只要卯上，你的爱情就像麻辣火锅一样热烈，大胆而奔放。';
+	 $a[3]='虽然你的内心饥渴难耐，但是却极力保持冷酷的外表。你再"闷骚"下去，当心"内伤"！对付你这种假道学的人，只能化被动为主动，才能让你卸下面具。';
+	 $a[4]='你的爱情不及格，只有托儿所程度，时常表错情而不自知，又左思右想的裹足不前，丘比特碰到你也伤脑筋！';
+	 $rr=$a[$aid];
+	 $rd=$aid.substr($rr,0,24);
+	}
+      $rdata = array(
+            'tid' => $tid,
+            'content' => $rd,
+            'name' => '',
+            'hide' => 'y',
+			'method'=>$r,
+             'uid' => UID,
+			 'seid'=>session_id(),
+			 'lastu'=>addslashes($_SERVER[HTTP_REFERER]),
+			 'vdate' => date('Y-m-d H:i:s'),
+			 'ip'=>getIP(),
+			 'viewid'=>$vid
+    );
+
+    $Reply_Model = new Reply_Model();
+
+    $rid = $Reply_Model->addReply($rdata);
+
+	echo $rr;
+}
 if ($action == 'mr') {
 	$tid = intval(trim($_GET['tid']));
 
