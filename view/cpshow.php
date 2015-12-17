@@ -16,13 +16,16 @@ $mtop=60;
 ?>
 <script type="text/javascript" src="/content/js/jquery-1.8.2.min.js"></script>
 <script src="/content/js/jquery-ui.js"></script> 
+<style>
+.ui-widget-content{cursor:pointer;position:absolute;}
+</style>
 <div id="m"  style="height:<?=$maxtop?>px;width:1000px;background: url('<?=$backimg?>');overflow-x :auto; ">
 <?php if($pDa['imgid'] >0 ){
 $sq1ab = "SELECT * FROM  emlog_attachment WHERE aid=".$pDa['imgid'];
 	$paab = $DB->once_fetch_array($sq1ab);
  ?>
 <div class="ui-widget-content" 
-style="cursor:pointer;position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;">
+style="top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;">
 <img style="border:0px;" src="<?=$paab['filepath']?>" title="<?=$pDa['text']?>"></div>
 <?php } ?>
 <div class="ui-widget-content" >
@@ -46,7 +49,7 @@ foreach($concepts as $k=>$value){
 $sq1a = "SELECT * FROM  emlog_attachment WHERE aid=".$value['imgid'];
 	$paa = $DB->once_fetch_array($sq1a);
  ?>
- <div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=
+ <div class="ui-widget-content" style="top:<?=
 $value['itop']?>px;left:<?=$value['ileft']?>px;" >
 <img style="border:0px;" src="<?=$paa['filepath']?>" title='<?=$value['text']?>'></div>
 <?php }
@@ -57,7 +60,7 @@ $value['atop']=$value['atop']==0?$mtop+=20:$value['atop'];
 $value['aleft']=$value['aleft']==0?rand(1,920):$value['aleft'];
 if($value['seq']<8)$value['seq']=14;
 ?>
-<div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=
+<div class="ui-widget-content" style="top:<?=
 $value['atop']?>px;left:<?=$value['aleft']?>px;font-size:<?=$value['seq']?>px;" >○<span onclick="dotovv(<?php 
 echo $value['id']; ?>)" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions']; 
 ?>" ><?=$value['text']?></span>
