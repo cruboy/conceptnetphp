@@ -18,7 +18,7 @@
 <?php echo $pDa['text']; ?></SPAN>&nbsp;
 
 （前向<?php echo $pDa['f1']; ?>
-后向<?php echo $pDa['f2']; ?>）
+后向<?php echo $pDa['f2']; ?>）C<?php echo $pDa['cruboy']; ?>S<?php echo $pDa['sort']; ?>
  查看<?php echo $pDa['words']; ?>
 
 </div>   
@@ -58,7 +58,16 @@ foreach($concepts as $value):
 	<option value="79">{1}是{2}的</option><option value="84">{2}可能代表{1}</option><option value="89">{1}代表{2}</option><option value="92">{1}的时候，你会{2}</option><option value="95">在{1}，你会{2}</option>   
 </option>
 	</select> 
-	名称：<input name="addname"  type="text" value="" style="width:120px;"/>
+	</select> 分类<select name="sort" >
+	 <?php 
+	$sub[0]='默认';$sub[1]='概念';if(ROLE=='admin'){ $sub[2]='分类';}$sub[3]='记事';$sub[4]='人';$sub[5]='地方';$sub[6]='时间';
+foreach ($sub as $k=>$v) {	
+?><option value="<?=$k?>" <? if($k==$pDa['sort']) echo 'selected="selected"';?> ><?=$v?></option>	
+<?php } ?></select>
+	<? if(ROLE=='admin'):?><br>名称：<textarea name="addname"  class="texts"/></textarea><? else:?>
+    名称：<input name="addname"  type="text" value="" style="width:120px;"/>
+    <? endif;?>
+     <input type="hidden" name="cruboy" value="<?php echo $pDa['cruboy']; ?>" />
     <input type="hidden" name="cp0s" value="<?php echo $pDa['text']; ?>" />
     <input type="hidden" name="cid" value="<?php echo $pDa['id']; ?>" />
         <input type="hidden" name="valid" value="<?php echo $valid;?>" />

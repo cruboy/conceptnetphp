@@ -25,6 +25,7 @@ $usersina_id= intval($_SESSION['oauth2']["user_id"]);
 if($action == 'addcp')
 {
 $acidd =intval($_POST['cid']);
+$cruboy =intval($_POST['cruboy']);
 if($acidd>0) {
 	$tabf="conceptnet";
 		$vfrom="ladd";
@@ -54,27 +55,41 @@ mMsg('关系号超出范围', '-1');
 if(intval($_POST['dirs'])==1)
 $ar=-$ar;
 $arrr=$ar;
-$addnamess =addslashes(trim(str_replace('，',',',$_POST['addname']))) ;
+$ro=str_replace('，',',',trim($_POST['addname']));
+$ro=str_replace(' ',',',$ro);
+$addnamess =addslashes($ro) ;
 $addnames=explode(',',$addnamess);
+$n=0;
 foreach($addnames as $addname)
 {
+if(empty($addname))continue;	
+$n++;
+$msg.=$addname;
 if(strlen($addname)==0 || strlen($addname)>200)
-mMsg('概念错误', '-1');
+{$msg.='概念错误';continue;}
+
 $cp0s=addslashes(trim($_POST['cp0s'])) ;
 $sq1 = "SELECT * FROM ".$tabf."_concept WHERE text LIKE '$addname'";
 $pDa = $DB->once_fetch_array($sq1);
 $hid=$pDa['id'];
 if($hid>0)
 {
-if($hid==$acid) mMsg("重复".$hid, '-1');
+if($hid==$acid) {$msg.="重复".$hid;continue;}
 if($sort>0)
-$DB->query("UPDATE ".$tabf."_concept SET sort={$sort} WHERE id='$hid'");
+$svv='sort='.$sort.',';
+if($cruboy==-2)
+$svv.='cruboy=-1,';
+if(!empty($svv)){
+$DB->query("UPDATE ".$tabf."_concept SET ".substr($svv,0,-1)." WHERE id='$hid'");
+$msg.="U";
+}
 $cpaddid=-$hid;
 }
-else{
-	    $DB->query("INSERT INTO ".$tabf."_concept (text,edittime,uid,visible,sort) VALUES ('$addname',$ltime,$uid,'1',$sort )");
+else{    $cbn=0;if($cruboy==-2)$cbn=-2;
+	    $DB->query("INSERT INTO ".$tabf."_concept (text,edittime,uid,visible,sort,cruboy) VALUES ('$addname',$ltime,$uid,'1',$sort,$cbn)");
 		$hid = $DB->insert_id();
 		$cpaddid=$hid;
+		$msg.="+";
 //mMsg('ok add'.$hid, '-1');
 }
 if($ar>0)
@@ -113,12 +128,12 @@ if($rid>0)
 //
 $DB->query("UPDATE ".$tabf."_assertion SET edittime=$ltime,".$sq4.$sq2 );
 //mMsg("关系已改".$rid, '-1');
-$pp.="关系已改";
+$msg.="V ";
 }
 else{
 $DB->query($sq3);
 $rid = $DB->insert_id();
-
+$msg.="# ";
 }
 
 $sst=date('Y-m-d H:i:s', $ltime);
@@ -128,7 +143,7 @@ $DB->query("INSERT INTO vaddlog (viewid,cp0,cp0id,rid,cpadd,cpaddid,relation,
 		'$vsid','$cp0s','$acidd','$arrr','$addname','$cpaddid','$rid',
 		'$uid','$usersina_id','$ltime','$sst','$gip')");
 }
-mMsg('添加成功！'.$pp."C".$cpaddid."R".$rid,'');
+mMsg('添加了'.$n.'个：'.$msg."C".$cpaddid."R".$rid,'');
 
 }
 

@@ -176,6 +176,7 @@ foreach ($sub as $k=>$v) {
     名称：<input name="addname"  type="text" value="" style="width:120px;"/>
     <? endif;?>
     <input type="hidden" name="cp0s" value="<?php echo $pDa['text']; ?>" />
+      <input type="hidden" name="cruboy" value="<?php echo $pDa['cruboy']; ?>" />
     <input type="hidden" name="cid" value="<?php echo $cpidd; ?>" />
         <input type="hidden" name="valid" value="<?php echo $valid;?>" /><br>
 	<a onClick=" $.ajax({
