@@ -29,7 +29,7 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 <div id="blogname"><?php echo Option::get('blogname'); ?></div>
 </div>
 <div id="navi">
-<?php if(UID) echo $userData['username']; else echo "游客"; ?></a>，您好！
+<?php if(UID) echo $userData['username']; else echo "游客"; ?>，您好！
 <a href="/" >首页</a> 
 <a href="/m" <?php if($action=='' and empty($aineth))echo 'id="active"'; ?>>导图</a> 
 <a href="/m/?action=ailist&cplist" <?php if($action=='ailist'||$action=='aishow')echo 'id="active"'; ?>>测字</a>
