@@ -10,7 +10,7 @@ body{background-color:#FFFFFF; font-size:14px; margin: 0; padding:0;}
   <form id="fttz" method='post' action='docp.php?cp=<?=$cpidd?>&ecdid=<?=$pDa['id']?>'>
   <table style=" font-size:14px;">
  <? if(ROLE=='admin'):?>    
-  <tr><td>名称<input style="width:60px;" value="<?php echo $pDa['text']; ?>"  name="text" /></td><td>可用V<input style="width:30px;" value="<?php echo $pDa['visible']; ?>"  name="visible" /> </td>
+  <tr><td>名称<input style="width:60px;" value="<?php echo $pDa['text']; ?>"  name="text" /></td><td> </td>
   </tr>
   <? endif;?> 
    <tr>
@@ -29,11 +29,11 @@ body{background-color:#FFFFFF; font-size:14px; margin: 0; padding:0;}
 foreach ($sub as $k=>$v) {	
 ?><option value="<?=$k?>" <? if($k==$pDa['sort']) echo 'selected="selected"';?> ><?=$v?></option>	
 <?php } ?></select></td>
-     <td>显示C <select name="cruboy" >
-<?php if(ROLE=='admin'){ $subs[2]='推荐';$subs[-2]='祭童';$subs[-1]='涉祭';}
-	$subs[0]='正常';$subs[1]='隐藏';
+     <td>显示C <select name="visible" >
+<?php if(ROLE=='admin'){ $subs[2]='推荐';$subs[-2]='删除';}$subs[-1]='仅自己见';
+	$subs[0]='登录可见';$subs[1]='正常';
 foreach ($subs as $k=>$v) {	
-?><option value="<?=$k?>" <? if($k==$pDa['cruboy']) echo 'selected="selected"';?> ><?=$v?></option>	
+?><option value="<?=$k?>" <? if($k==$pDa['visible']) echo 'selected="selected"';?> ><?=$v?></option>	
 <?php } ?>	
 	  </select></td>
       </tr>

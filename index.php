@@ -62,8 +62,8 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 	$cpr = $CACHE->readCache('cpr');
 	if(ROLE == 'admin' ){
 		}else{
-			$cc=' and c.cruboy>=0';
-			$ccx=' and cruboy>-2';
+			$cc=' and c.visible>=0';
+			$ccx=' and visible>-2';
 			}
    //搜索或空白随机首页
  if(isset($_POST['aikey'])||empty($_REQUEST['cp'])){
@@ -197,8 +197,8 @@ if ($action == 'ailist' && $_SESSION['views']>2) {
    $cpr = $CACHE->readCache('cpr');	
 		if(ROLE == 'admin' ){
 		}else{
-			$cc=' and c.cruboy>-1';
-			$ccx=' and cruboy>-2';
+			$cc=' and c.visible>-1';
+			$ccx=' and visible>-2';
 			}
 	$gip=getIp();
 	$uid=UID;

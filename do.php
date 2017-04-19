@@ -16,7 +16,7 @@ if (ISLOGIN !== true){
 echo "请登录";
 exit;
 }
-if ($action == 'delok') {
+if ($action == 'delok') { //删除标记不可见的
 	 $sql = "SELECT * FROM conceptnet_concept WHERE visible=0 limit 10000";
 	 //limit 0,10000
 		$res = $DB->query($sql);
@@ -31,7 +31,7 @@ if ($action == 'delok') {
 		echo $sql.' ';
 		echo  $row['text'].$res2."-".$res3;
 }
-if ($action == 'dot') {
+if ($action == 'dot') { //重整ass编号
 	set_time_limit(0);
 	 $sql = "SELECT * FROM conceptnet_assertion where id> ";
 	 //limit 0,10000
@@ -46,7 +46,7 @@ if ($action == 'dot') {
 		}
 echo 'ok';
 }
-if ($action == 'dodd-') {
+if ($action == 'dodd-') {  //比对
 	set_time_limit(0);
 	 $sql = "SELECT * FROM conceptnet_concept where hn=0 ";
 	 //limit 0,10000
@@ -62,7 +62,7 @@ echo 'ok';
 //update a set a.c2=c.fid from `hinet_assertion` a, hinet_concept c where a.concept2_id=c.id and a.c2=0 and a.c1>0
 //update `hinet_assertion` a, hinet_concept c set a.c2=c.fid  where a.concept2_id=c.id and a.c2=0 and a.c1>0
 //update `hinet_assertion` a, hinet_concept c set a.c1=c.fid  where a.concept1_id=c.id and a.c1=0 and a.c2>0
-if ($action == 'dodd2-') {
+if ($action == 'dodd2-') {  //ass重编cp号
 	set_time_limit(0);
 	 $sql = "SELECT * FROM hinet_concept where fid>12866 ";
 	 //limit 0,10000
@@ -74,7 +74,7 @@ if ($action == 'dodd2-') {
 		}
 echo 'ok';
 }
-if ($action == 'dor') {
+if ($action == 'dor') {  //hownet比对
 	set_time_limit(0);
 	 $sql = "SELECT * FROM hi_hown et ";
 	 //limit 0,10000
@@ -84,7 +84,7 @@ if ($action == 'dor') {
 		}
 		echo 'ok';
 }
-if ($action == 'dor2-') {
+if ($action == 'dor2-') { //重提取原hinet中hownet的词
 	set_time_limit(0);
 	 $sql = "SELECT * FROM hinet_concept where hn=1";
 	 //limit 0,10000
@@ -121,7 +121,7 @@ if ($action == 'dor2-') {
 		}
 		echo 'ok';
 }
-if ($action == 'dott-') {
+if ($action == 'dott-') { //一个net融入总的net
 	set_time_limit(0);
 	 $sql = "SELECT * FROM cruboy_concept ";
 	 //limit 0,10000
@@ -161,7 +161,7 @@ if ($action == 'dott-') {
 		}
 echo 'ok';
 }
-if ($action == 'dott2-') {
+if ($action == 'dott2-') { //一个net的关系融入总的net
 	set_time_limit(0);
 	$sql = "SELECT * FROM cruboy_concept ";
 	 //limit 0,10000
@@ -210,7 +210,7 @@ if ($action == 'dott2-') {
 		}
 echo 'ok';
 }
-if ($action == 'doe') {
+if ($action == 'doe') {  //取回hownet中有词的关系
 	set_time_limit(0);
 
 	 $sql = "SELECT * FROM hinet_assertion where c1>0 and c2>0 ";

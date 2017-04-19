@@ -18,7 +18,7 @@ foreach($concepts as $value):
 
 <div class="comcont" >
 &nbsp;&nbsp;
-<SPAN style="cursor:pointer;<?php if($value['visible'] == false ): ?>TEXT-DECORATION: line-through <?php 
+<SPAN style="cursor:pointer;<?php if($value['visible'] == -2 ): ?>TEXT-DECORATION: line-through <?php 
 endif;?>" onclick='dotu(<?php echo $value['id']; ?>);' title='<?php echo $value['f3']; ?>'>
 <?php echo $value['text']; ?></SPAN>&nbsp;&nbsp;&nbsp;&nbsp;
 

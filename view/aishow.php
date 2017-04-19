@@ -14,7 +14,7 @@
     
 <div class="comcont">
 &nbsp;&nbsp;
-<SPAN title='<?=$pDa['id']?>' <?php if($pDa['visible'] == false ): ?>style="TEXT-DECORATION: line-through"<?php endif;?>  onclick="dotu(<?php echo $pDa['id']; ?>)">
+<SPAN title='<?=$pDa['id']?>' <?php if($pDa['visible'] == -2 ): ?>style="TEXT-DECORATION: line-through"<?php endif;?>  onclick="dotu(<?php echo $pDa['id']; ?>)">
 <?php echo $pDa['text']; ?></SPAN>&nbsp;
 （前向<?php echo $pDa['f1']; ?>
 后向<?php echo $pDa['f2']; ?>）C<?php echo $pDa['cruboy']; ?>S<?php echo $pDa['sort']; ?>
@@ -26,7 +26,7 @@
 foreach($concepts as $value):
 ?>
 <div class="comcont" ><?php if($value['fx']==2)echo '-'; ?>
-&nbsp;&nbsp;<SPAN style="cursor:pointer;<?php if($value['visible'] == false ): ?>TEXT-DECORATION: line-through<?php endif;?>"  onclick="dotu(<?php echo $value['id'];?>);" >
+&nbsp;&nbsp;<SPAN style="cursor:pointer;<?php if($value['visible'] == -2 ): ?>TEXT-DECORATION: line-through<?php endif;?>"  onclick="dotu(<?php echo $value['id'];?>);" >
 <?php echo $value['text']; ?></SPAN>
 &nbsp;&nbsp;
 <SPAN  title='<?php echo $value['best_frame_id']; ?>'>

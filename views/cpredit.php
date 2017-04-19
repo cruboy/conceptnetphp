@@ -11,7 +11,7 @@
  <tr> <td>r_id<input style="width:40px;" value="<?php echo $value['relation_id']; ?>"  name="relation_id" /></td>
      <td>b_f_id<input style="width:40px;" value="<?php echo $value['best_frame_id']; ?>"  name="best_frame_id" /></td>
  </tr>
- <tr> <td>可用V<input style="width:30px;" value="<?php echo $value['visible']; ?>"  name="visible" /> </td>
+ <tr> <td></td>
      <td>abid<input style="width:40px;" value="<?php echo $value['abid']; ?>"  name="abid" />
  </tr>
  <? endif;?>  
@@ -20,13 +20,7 @@
     <td>left<input style="width:50px;"  value="<?php echo $value[$m.'left'.$fx]; ?>"  name="<?php echo $m.'left'.$fx; ?>" /></td>
     </tr>
     <tr><td>字体大小<input style="width:30px;" value="<?php echo $value['seq']; ?>"  name="seq" /></td>
-    <td>显示C <select name="cruboy" >
-<?php if(ROLE=='admin'){ $subs[2]='推荐';$subs[-2]='祭童';$subs[-1]='涉祭';}
-	$subs[0]='正常';$subs[1]='隐藏';
-foreach ($subs as $k=>$v) {	
-?><option value="<?=$k?>" <? if($k==$pDa['cruboy']) echo 'selected="selected"';?> ><?=$v?></option>	
-<?php } ?>	
-	  </select></td>
+    <td></td>
     </tr>
     
   <tr><td><input  type='submit' value='提交'/></td></tr>
