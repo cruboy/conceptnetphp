@@ -5,7 +5,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title><?php echo Option::get('blogname'); ?></title>
+<title><?php echo $pDa['text']; ?> <?php echo Option::get('blogname'); ?></title>
 <style type="text/css" id="internalStyle">
 body{background-color:#FFFFFF; font-size:14px; margin: 0; padding:0;}
 a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
@@ -32,8 +32,8 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 <?php if(UID) echo $userData['username']; else echo "游客"; ?>，您好！
 <a href="/" >首页</a> 
 <a href="/m" <?php if($action=='' and empty($aineth))echo 'id="active"'; ?>>导图</a> 
-<a href="/m/?action=ailist&cplist" <?php if($action=='ailist'||$action=='aishow')echo 'id="active"'; ?>>测字</a>
-
+<a href="/m/?action=ailist&cplist" <?php if($action=='ailist'||$action=='aishow')echo 'id="active"'; ?>>概念</a>
+<a href="/m/ass.php" <?php if($ass)echo 'id="active"'; ?>>思维</a>
 <a href="/m/ainet.php" <?php if($aineth)echo 'id="active"'; ?>>图编辑</a>
 <a href="<?php echo BLOG_URL; ?>m/ainet.php?list" <?php if($action=='list')echo 'id="active"'; ?>>各家图</a>
 <?php if(ROLE == 'admin' ): ?>
@@ -47,7 +47,7 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 <a href="/m/?action=com" <?php if($action=='com')echo 'id="active"'; ?>>评论</a> 
 	<?php if(ROLE == 'admin' ): ?>
     <a href="<?php echo BLOG_URL; ?>m/cash.php">支票</a>
-<a href="<?php echo BLOG_URL; ?>m/enet.php">enet管理</a>
+<a href="<?php echo BLOG_URL; ?>m/enet.php">enet</a>
 <a href="<?php echo BLOG_URL; ?>m/dict.php">词典</a>
  <a href="<?php echo BLOG_URL; ?>m/lilv.php">利率</a>
 <a href="/m/?action=write" <?php if($action=='write')echo 'id="active"'; ?>>写日志</a> 

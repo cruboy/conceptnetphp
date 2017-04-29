@@ -101,7 +101,8 @@ style="cursor:pointer;position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cl
 if($pDa['blogid'] >0 ){?>
 <a href="/<?php echo $pDa['blogid']; ?>.html">■</a>
 <?php } ?>
-<a href="index.php?cp=<?=$cpidd?>">预览 </a>
+<a href="/m/?cp=<?=$cpidd?>">预览 </a>
+<a href="/m/?action=aishow&cp=<?=$cpidd?>">列表</a>
 <span onclick='ch()' id='thech' style='cursor:pointer;' title='点击切换'>【编辑内容】</span>
 <span  id='theleft'></span>&nbsp;<span id='thetop'></span>
 </div>

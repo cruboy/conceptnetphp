@@ -17,7 +17,7 @@ foreach($concepts as $value):
 
 <div class="comcont">
 &nbsp;&nbsp;
-<?php if($value['visible'] == true ): ?>
+<?php if($value['visible'] >-2 ): ?>
 <a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=<?php echo $value['id']; ?>">
 <?php echo $value['text']; ?></a>&nbsp;
 <?php else:?>

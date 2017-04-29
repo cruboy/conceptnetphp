@@ -2,7 +2,7 @@
 <script type="text/javascript" src="/content/js/jquery-1.8.2.min.js"></script>
 <div id="m">
    	<li>
-	<h3><span>cruboy测字查看</span></h3>
+	<h3><span>概念查看</span></h3>
 	<ul id="logserch">
 	<form name="keycp" method="post" action="<?php echo BLOG_URL; ?>m/index.php?action=ailist">
 	<input name="aikey"  type="text" value="<?php echo $akey; ?>" style="width:120px;"/>
@@ -19,11 +19,27 @@
 （前向<?php echo $pDa['f1']; ?>
 后向<?php echo $pDa['f2']; ?>）C<?php echo $pDa['cruboy']; ?>S<?php echo $pDa['sort']; ?>
  查看<?php echo $pDa['words']; ?>
-
+<?php 
+	if(ISLOGIN === true){?>
+    <a href="/m/?action=aishow&cp=<?=$cpidd?>">刷新</a>
+    <a href="/m/?cp=<?=$cpidd?>">导图 </a>
+    <a href="/m/ainet.php?cp=<?=$cpidd?>">导图编辑</a>
+    <?php } ?>
 </div>   
 ===========================<br>
 	<?php 
+	if(ISLOGIN === true)
 foreach($concepts as $value):
+?>
+<div class="comcont" ><?php if($value['fx']==2)echo '-'; ?>
+&nbsp;&nbsp;<a style="cursor:pointer;<?php if($value['visible'] == -2 ): ?>TEXT-DECORATION: line-through<?php endif;?>"  href="?action=aishow&cp=<?php echo $value['id'];?>" >
+<?php echo $value['text']; ?></a>
+&nbsp;&nbsp;
+<SPAN  title='<?php echo $value['best_frame_id']; ?>'>
+<?php echo $value['frame']; ?>
+</SPAN>
+</div>
+<?php endforeach; else foreach($concepts as $value):
 ?>
 <div class="comcont" ><?php if($value['fx']==2)echo '-'; ?>
 &nbsp;&nbsp;<SPAN style="cursor:pointer;<?php if($value['visible'] == -2 ): ?>TEXT-DECORATION: line-through<?php endif;?>"  onclick="dotu(<?php echo $value['id'];?>);" >
@@ -46,16 +62,17 @@ foreach($concepts as $value):
 	的关联概念：<br>
 	关系：
     <select dir="ltr" name="addrel" id="darom" >
-	<option value="0">请选择...</option>
-	<option value="83" style="color:grey">{1}包括{2}</option><option value="33" >{1}会让你想要{2}</option>
-	<option value="34" style="background-color:#FFFFFF; color:blue">{1}会让你{2}</option><option value="35" style="background-color:#FFFFFF; color:blue">{1}之后可能会发生的事情是{2}</option><option value="36" style="color:blue">因为{1}所以{2}</option><option value="37" style="background-color:#FFFFFF; color:blue">{1}可能会带来{2}</option><option value="38" style="background-color:#FFFFFF; color:blue">{1}可能会引起{2}</option>
-	<option value="40">{1}的时候，首先要{2}</option><option value="45">{1}是{2}的一部分</option>
-	<option value="46" >{1}可以用{2}制成</option><option value="47" >{1}由{2}组成</option><option value="50">{1}是一种{2}</option><option value="51" style="color:grey">{1}在{2}里</option><option value="55" style="color:grey">{1}在{2}外</option><option value="57" style="color:grey">你可以在{2}找到{1}</option><option value="58" style="color:grey">{2}有{1}</option>
-	<option value="60">{2}的时候可能会用到{1}</option><option value="63">{1}能做的事情有{2}</option><option value="64">{1}会{2}</option>
-	<option value="65" style="background-color:#FFFFFF; color:green">你会{1}因为你{2}</option>	<option value="66" style="color:green">{1}是为了{2}</option><option value="67" style="color:green">想要有{2}应该要{1}</option><option value="68" style="color:green">当你想要{2}的时候你可能会{1}</option><option value="69" style="color:green">{2}的时候会想要{1}</option>
-	<option value="70" style="background-color:#FFFFFF; color:red">{1}喜欢{2}</font></option><option value="71" style="background-color:#FFFFFF; color:red">{1}想要{2}</option><option value="72" style="background-color:#FFFFFF; color:red">{1}不想要{2}</option><option value="73" style="background-color:#FFFFFF; color:red">{1}害怕{2}</option><option value="75" style="background-color:#FFFFFF; color:red">{1}痛恨{2}</option>
-	<option value="79">{1}是{2}的</option><option value="84">{2}可能代表{1}</option><option value="89">{1}代表{2}</option><option value="92">{1}的时候，你会{2}</option><option value="95">在{1}，你会{2}</option>   
-</option>
+	    <?
+		   if(ROLE!='admin') $dadda="where n1>0";
+      $sql2p="select * from conceptnet_frame $dadda order by relation_id asc,n1 desc";
+	  $res=$DB->query($sql2p);
+         while($arr=$DB->fetch_array($res))
+                {
+            ?>
+   <option value="<?=$arr['id']?>" <? if($arr['id']==83) echo "selected";?>>
+         【<?=$arr['relation_id']?>】<?=$arr['text']?>(<?=$arr['n1']?>)
+        </option>
+        <?  }	?>
 	</select> 
 	</select> 分类<select name="sort" >
 	 <?php 

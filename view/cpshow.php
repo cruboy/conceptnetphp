@@ -39,7 +39,9 @@ style="top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;">
 if($pDa['blogid'] >0 ){?>
 <a href="/<?php echo $pDa['blogid']; ?>.html">■</a>
 <?php } ?>
- <?php if(ISLOGIN === true):?><a href="/m/ainet.php?cp=<?=$pDa['id']?>">编辑</a><? endif;?>
+ <?php if(ISLOGIN === true):?>
+ <a href="/m/?action=aishow&cp=<?=$cpidd?>">列表</a>
+ <a href="/m/ainet.php?cp=<?=$pDa['id']?>">编辑</a><? endif;?>
 </div> 
 <?php echo $pDaa['content']; ?>
 <?php 
@@ -55,6 +57,23 @@ $value['itop']?>px;left:<?=$value['ileft']?>px;" >
 <?php }
 } ?>
 <?php 
+if(ISLOGIN === true)
+foreach($concepts as $k=>$value){
+$value['atop']=$value['atop']==0?$mtop+=20:$value['atop'];
+$value['aleft']=$value['aleft']==0?rand(1,920):$value['aleft'];
+if($value['seq']<8)$value['seq']=14;
+?>
+<div class="ui-widget-content" style="top:<?=
+$value['atop']?>px;left:<?=$value['aleft']?>px;font-size:<?=$value['seq']?>px;" >○<a href="?cp=<?php 
+echo $value['id']; ?>" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions']; 
+?>" ><?=$value['text']?></a>
+<?php if($value['url'] !='' ){ ?>
+<a href="<?=$value['url']?>">□</a>
+<?php }
+if($value['blogid'] >0 ){?>
+<a href="/<?php echo $value['blogid']; ?>.html">■</a>
+<?php } ?></div>
+<?php } else 
 foreach($concepts as $k=>$value){
 $value['atop']=$value['atop']==0?$mtop+=20:$value['atop'];
 $value['aleft']=$value['aleft']==0?rand(1,920):$value['aleft'];
