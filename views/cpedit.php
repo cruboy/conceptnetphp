@@ -39,7 +39,7 @@ function ax(id){
 	}else{
  art.dialog.open("docp.php?m=a&cp=<?=$cpidd?>&editid="+id, { 
  follow: document.getElementById('th'+id),width: 300, height: 250,
- title:document.getElementById('th'+id).innerText+' '+id});	
+ title:"<?=$pDa['text']; ?>--"+document.getElementById('th'+id).innerText+' '+id});	
 	}
 }
 function axx(id){
@@ -52,7 +52,7 @@ function axx(id){
 	}else{
  art.dialog.open("docp.php?m=i&cp=<?=$cpidd?>&editid="+id, { 
  follow: document.getElementById('th'+id),width: 300, height: 250,
- title:document.getElementById('th'+id).innerText+' '+id});	
+ title:"<?=$pDa['text']; ?>--"+document.getElementById('th'+id).innerText+' '+id});	
 	}
 }
 function cnvs_getCoordinates(e)
@@ -157,15 +157,17 @@ if($value['blogid'] >0 ){?>
 	的关联概念：<br>
 	关系：
     <select dir="ltr" name="addrel" id="darom" >
-	<option value="83" style="color:grey" selected='selected'>{1}包括{2}</option><option value="33" >{1}会让你想要{2}</option>
-	<option value="34" style="background-color:#FFFFFF; color:blue">{1}会让你{2}</option><option value="35" style="background-color:#FFFFFF; color:blue">{1}之后可能会发生的事情是{2}</option><option value="36" style="color:blue">因为{1}所以{2}</option><option value="37" style="background-color:#FFFFFF; color:blue">{1}可能会带来{2}</option><option value="38" style="background-color:#FFFFFF; color:blue">{1}可能会引起{2}</option>
-	<option value="40">{1}的时候，首先要{2}</option><option value="45">{1}是{2}的一部分</option>
-	<option value="46" >{1}可以用{2}制成</option><option value="47" >{1}由{2}组成</option><option value="50">{1}是一种{2}</option><option value="51" style="color:grey">{1}在{2}里</option><option value="55" style="color:grey">{1}在{2}外</option><option value="57" style="color:grey">你可以在{2}找到{1}</option><option value="58" style="color:grey">{2}有{1}</option>
-	<option value="60">{2}的时候可能会用到{1}</option><option value="63">{1}能做的事情有{2}</option><option value="64">{1}会{2}</option>
-	<option value="65" style="background-color:#FFFFFF; color:green">你会{1}因为你{2}</option>	<option value="66" style="color:green">{1}是为了{2}</option><option value="67" style="color:green">想要有{2}应该要{1}</option><option value="68" style="color:green">当你想要{2}的时候你可能会{1}</option><option value="69" style="color:green">{2}的时候会想要{1}</option>
-	<option value="70" style="background-color:#FFFFFF; color:red">{1}喜欢{2}</font></option><option value="71" style="background-color:#FFFFFF; color:red">{1}想要{2}</option><option value="72" style="background-color:#FFFFFF; color:red">{1}不想要{2}</option><option value="73" style="background-color:#FFFFFF; color:red">{1}害怕{2}</option><option value="75" style="background-color:#FFFFFF; color:red">{1}痛恨{2}</option>
-	<option value="79">{1}是{2}的</option><option value="84">{2}可能代表{1}</option><option value="89">{1}代表{2}</option><option value="92">{1}的时候，你会{2}</option><option value="95">在{1}，你会{2}</option>   
-</option>
+           <?
+		   if(ROLE!='admin') $dadda="where n1>0";
+      $sql2p="select * from conceptnet_frame $dadda order by relation_id asc,n1 desc";
+	  $res=$DB->query($sql2p);
+         while($arr=$DB->fetch_array($res))
+                {
+            ?>
+   <option value="<?=$arr['id']?>" <? if($arr['id']==83) echo "selected";?>>
+         【<?=$arr['relation_id']?>】<?=$arr['text']?>(<?=$arr['n1']?>)
+        </option>
+        <?  }	?>
 	</select> 分类<select name="sort" >
 	 <?php 
 	$sub[0]='默认';$sub[1]='概念';if(ROLE=='admin'){ $sub[2]='分类';}$sub[3]='记事';$sub[4]='人';$sub[5]='地方';$sub[6]='时间';

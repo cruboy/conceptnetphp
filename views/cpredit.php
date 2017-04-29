@@ -1,21 +1,31 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}?>
 
-关联<?php echo $value['concept1_id'].'与'.$value['concept2_id'].'评分'.$value['score']; ?>
-<br><?php echo $value['num_assertions']; ?>:
-<?php echo $value['relation_id'].".".$value['best_frame_id'].' '.$value['rela'].":".$value['frame']; ?>:好<?php echo $value['good']; ?>:坏<?php echo $value['bad']; ?>
-<br>创建<?=$value['creator']?>，<?=$value['uid']?>时<?=date('Y-m-d H:i:s',$value['edittime'])?>
-  <br>a1t <?=$value['atop1']?>,<?=$value['aleft1']?> a2 <?=$value['atop2']?>,<?=$value['aleft2']?> i1 <?=$value['itop1']?>,<?=$value['ileft1']?> i2 <?=$value['itop2']?>,<?=$value['ileft2']?>
+ <img src="/m/images/fav.gif" title="<?php echo $value['concept1_id'].'与'.$value['concept2_id']; ?>"><?=$value['score']?>
+<?=$value['relation_id'].".".$value['best_frame_id']?><img src="/m/images/thread_rate.gif"><?php echo $value['good']; ?><img src="/m/images/disagree.gif"><?php echo $value['bad']; ?>
+<img src="/m/images/moderator.gif"><span title="<?=$value['creator']?>@<?=date('Y-m-d H:i:s',$value['edittime'])?>"><?=getUser($value['uid'])?>
+  <img src="/m/images/info.gif" title="a1 <?=$value['atop1']?>,<?=$value['aleft1']?> a2 <?=$value['atop2']?>,<?=$value['aleft2']?> i1 <?=$value['itop1']?>,<?=$value['ileft1']?> i2 <?=$value['itop2']?>,<?=$value['ileft2']?>" />
   <form method='post' action='docp.php?cp=<?=$cpidd?>&aid=<?=$rid?>' >
  <table>
- <? if(ROLE=='admin'):?>  
- <tr> <td>r_id<input style="width:40px;" value="<?php echo $value['relation_id']; ?>"  name="relation_id" /></td>
-     <td>b_f_id<input style="width:40px;" value="<?php echo $value['best_frame_id']; ?>"  name="best_frame_id" /></td>
+ 
+ <tr> <td colspan="2"><input type="hidden" value="<?php echo $value['relation_id']; ?>"  name="relation_id" />
+      <select  name="best_frame_id" >
+           <?
+       if(ROLE!='admin') $dadda="where n1>0";
+      $sql2p="select * from conceptnet_frame $dadda order by relation_id asc,n1 desc";
+	  $res=$DB->query($sql2p);
+         while($arr=$DB->fetch_array($res))
+                {
+            ?>
+   <option value="<?=$arr['id']?>" <? if($arr['id']==$value['best_frame_id']) echo "selected";?>>
+         【<?=$arr['relation_id']?>】<?=$arr['text']?>(<?=$arr['n1']?>)
+        </option>
+        <?  }	?>
+        </select></td>
  </tr>
  <tr> <td></td>
      <td>abid<input style="width:40px;" value="<?php echo $value['abid']; ?>"  name="abid" />
  </tr>
- <? endif;?>  
-  <tr>
+   <tr>
   <td>位置top<input style="width:50px;"  value="<?php echo $value[$m.'top'.$fx]; ?>"  name="<?php echo $m.'top'.$fx; ?>" /></td>
     <td>left<input style="width:50px;"  value="<?php echo $value[$m.'left'.$fx]; ?>"  name="<?php echo $m.'left'.$fx; ?>" /></td>
     </tr>
