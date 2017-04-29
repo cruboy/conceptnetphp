@@ -5,11 +5,7 @@
 
 require_once '../init.php';
 
-if (ISLOGIN !== true){
-//empty($_SESSION['oauth2']["user_id"])||empty($_SESSION['u_name']))){
-echo "请先登录或授权！";
-exit;
-}
+
 define('TEMPLATE_PATH', EMLOG_ROOT.'/m/views/');
 
 $gip=getIp();   
@@ -35,6 +31,12 @@ $DB->query("INSERT INTO vasslog (cpid,rid,method,edate,uid,content,ip,seid) VALU
 $DB->query("UPDATE conceptnet_assertion SET edittime='$ltime',good=good+1 WHERE id=".$rid);
 exit;
 }
+if (ISLOGIN !== true){
+//empty($_SESSION['oauth2']["user_id"])||empty($_SESSION['u_name']))){
+echo "请先登录或授权！";
+exit;
+}
+
 $cpidd=intval($_GET['cp']);
 			if($cpidd<0){
 				$tabf="cruboy";

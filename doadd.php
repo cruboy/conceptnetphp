@@ -86,7 +86,7 @@ $msg.="U";
 $cpaddid=-$hid;
 }
 else{    $cbn=0;if($cruboy==-2)$cbn=-2;
-	    $DB->query("INSERT INTO ".$tabf."_concept (text,edittime,uid,visible,sort,cruboy) VALUES ('$addname',$ltime,$uid,'1',$sort,$cbn)");
+	    $DB->query("INSERT INTO ".$tabf."_concept (text,edittime,uid,visible,sort) VALUES ('$addname',$ltime,$uid,'1',$sort)");
 		$hid = $DB->insert_id();
 		$cpaddid=$hid;
 		$msg.="+";

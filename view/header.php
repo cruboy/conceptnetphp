@@ -33,7 +33,7 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 <a href="/" >首页</a> 
 <a href="/m" <?php if($action=='' and empty($aineth))echo 'id="active"'; ?>>导图</a> 
 <a href="/m/?action=ailist&cplist" <?php if($action=='ailist'||$action=='aishow')echo 'id="active"'; ?>>概念</a>
-<a href="/m/ass.php" <?php if($ass)echo 'id="active"'; ?>>思维</a>
+<a href="/m/ass.php" <?php if(isset($freid))echo 'id="active"'; ?>>思维</a>
 <a href="/m/ainet.php" <?php if($aineth)echo 'id="active"'; ?>>图编辑</a>
 <a href="<?php echo BLOG_URL; ?>m/ainet.php?list" <?php if($action=='list')echo 'id="active"'; ?>>各家图</a>
 <?php if(ROLE == 'admin' ): ?>

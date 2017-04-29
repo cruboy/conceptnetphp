@@ -6,7 +6,7 @@
 
 require_once '../init.php';
 
-define('TEMPLATE_PATH', EMLOG_ROOT.'/m/views/');
+define('TEMPLATE_PATH', EMLOG_ROOT.'/m/view/');
 
 $DB = MySql::getInstance();
 $concepts=array();
@@ -28,7 +28,7 @@ $vsid=intval($_SESSION['views']);
 			}
 	
 	$cpr = $CACHE->readCache('cpr');	
-
+  $cpr[0]="{1}--{2}";
 	$ltime = date('Y-m-d H:i:s');
 
 	//$DB->query("UPDATE  ".$tabf."_concept SET words=words+1 WHERE id='$cpid'");
@@ -36,21 +36,18 @@ $vsid=intval($_SESSION['views']);
 		//$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,date,text,loginip) VALUES (
 			//	'$vfrom','$vsid','$cpidd','$uid','$usersina_id','$ltime','$pDa[text]','$gip')");
 	
-print_r($cpr);
+//print_r($cpr);
 	$freid = intval ($_GET['fre']);
-	if($freid)$sqladd=" and best_frame_id='$freid' ";
-	$sql2 = "SELECT a.concept1_id,a.concept2_id,
-		a.score,a.best_frame_id,c.text as cp1,d.text as cp2 FROM 
+	if($freid)$sqlad=" and a.best_frame_id='$freid' ";
+	$sql2 = "SELECT a.id as aid,a.concept1_id,a.concept2_id,
+		a.score,a.relation_id,a.best_frame_id,a.good,a.bad,c.text as cp1,d.text as cp2 FROM 
 		conceptnet_assertion a LEFT JOIN conceptnet_concept c ON a.concept1_id=c.id 
 		 LEFT JOIN conceptnet_concept d ON a.concept2_id=d.id
-		WHERE 1 order by a.id desc limit 100";
+		WHERE 1 {$sqlad} order by a.id desc limit 100";
 	$res2 = $DB->query($sql2);
-	while ($row = $DB->fetch_array($res2)) {
- print_r($row);
-		echo $a.$row[text1]."-->".$row[text].$row[score]."<br>";
-		$a++;
-	}
-
+   include View::getView('header');
+   include View::getView('ass');
+	include View::getView('footer');
 	
 
 if(isset ($_GET['list']))

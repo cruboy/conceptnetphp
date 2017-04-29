@@ -16,23 +16,24 @@
          while($arr=$DB->fetch_array($res))
                 {
             ?>
-   <option value="<?=$arr['id']?>" <? if($arr['id']==$value['best_frame_id']) echo "selected";?>>
+   <option value="<?=$arr['id']?>" <? if($value['best_frame_id']>0 && $arr['id']==$value['best_frame_id'] || $value['best_frame_id']==0 && $arr['relation_id']==$value['relation_id']) echo "selected";?>>
          【<?=$arr['relation_id']?>】<?=$arr['text']?>(<?=$arr['n1']?>)
         </option>
         <?  }	?>
         </select></td>
  </tr>
- <tr> <td></td>
-     <td>abid<input style="width:40px;" value="<?php echo $value['abid']; ?>"  name="abid" />
+ <tr> <td>图片ID<input style="width:50px;"  value="<?php echo $value['img'.$fx]; ?>"  name="<?php echo 'img'.$fx; ?>" /><a href="/admin/attachment.php" target='_blank'>查看</a></td>
+     <td>关联文章ID<input style="width:40px;" value="<?php echo $value['abid']; ?>"  name="abid" />
  </tr>
    <tr>
   <td>位置top<input style="width:50px;"  value="<?php echo $value[$m.'top'.$fx]; ?>"  name="<?php echo $m.'top'.$fx; ?>" /></td>
     <td>left<input style="width:50px;"  value="<?php echo $value[$m.'left'.$fx]; ?>"  name="<?php echo $m.'left'.$fx; ?>" /></td>
     </tr>
-    <tr><td>字体大小<input style="width:30px;" value="<?php echo $value['seq']; ?>"  name="seq" /></td>
+  <?
+       if(ROLE=='admin') {?>  <tr><td>字体大小<input style="width:30px;" value="<?php echo $value['seq']; ?>"  name="seq" /></td>
     <td></td>
     </tr>
-    
+    <? }?>
   <tr><td><input  type='submit' value='提交'/></td></tr>
   </table>
     </form>

@@ -175,8 +175,8 @@ if($value['blogid'] >0 ){?>
 foreach ($sub as $k=>$v) {	
 ?><option value="<?=$k?>" <? if($k==$pDa['sort']) echo 'selected="selected"';?> ><?=$v?></option>	
 <?php } ?></select>
-	<? if(ROLE=='admin'):?><br>名称：<textarea name="addname"  class="texts"/></textarea><? else:?>
-    名称：<input name="addname"  type="text" value="" style="width:120px;"/>
+	<? if(ROLE=='admin'):?><br>名称：<textarea name="addname" style="height:90px;width:350px" class="texts"/></textarea><? else:?>
+    名称：<input name="addname"  type="text" value="" style="width:120px;" />
     <? endif;?>
     <input type="hidden" name="cp0s" value="<?php echo $pDa['text']; ?>" />
       <input type="hidden" name="cruboy" value="<?php echo $pDa['cruboy']; ?>" />
