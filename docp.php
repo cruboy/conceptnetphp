@@ -14,8 +14,27 @@ define('TEMPLATE_PATH', EMLOG_ROOT.'/m/views/');
 
 $gip=getIp();   
 $uid=UID;
-
+$ltime=time();
+$rtime= date('Y-m-d H:i:s');
 	$DB = MySql::getInstance();
+if(isset($_POST['badr']) )
+{
+$hhtitle="bad";
+$rid =intval($_POST['badr']);
+$DB->query("INSERT INTO vasslog (cpid,rid,method,edate,uid,content,ip,seid) VALUES (
+				0,'$rid','badr','$rtime','$uid','','$gip','".session_id()."')");
+$DB->query("UPDATE conceptnet_assertion SET edittime='$ltime',bad=bad+1 WHERE id=".$rid);
+exit;
+}
+else if(isset($_POST['goodr']) )
+{
+$hhtitle="good";
+$rid =intval($_POST['goodr']);
+$DB->query("INSERT INTO vasslog (cpid,rid,method,edate,uid,content,ip,seid) VALUES (
+				0,'$rid','goodr','$rtime','$uid','','$gip','".session_id()."')");
+$DB->query("UPDATE conceptnet_assertion SET edittime='$ltime',good=good+1 WHERE id=".$rid);
+exit;
+}
 $cpidd=intval($_GET['cp']);
 			if($cpidd<0){
 				$tabf="cruboy";
@@ -44,10 +63,7 @@ $sq1="SELECT * FROM  ".$tabf."_concept WHERE id='$id'";
 	if($pDa['backimgid']!=($_POST['backimgid']))
 	  $DB->query("UPDATE emlog_attachment SET cid=$sn{$_POST['backimgid']} WHERE aid={$pDa['backimgid']}");
 	  
-	    
-	$uid=UID;
-	$ltime=time();
-	$gip=getIP();
+
 	$_POST['edittime']=$ltime;
 	  $Item = array();
 		foreach ($_POST as $key => $data) {
@@ -63,9 +79,7 @@ $sq1="SELECT * FROM  ".$tabf."_concept WHERE id='$id'";
 elseif(isset($_GET['aid'])){
 
 		$id=intval($_GET['aid']);
-	$uid=UID;
-	$ltime=time();
-	$gip=getIP();
+
 	$_POST['edittime']=$ltime;
 	  $Item = array();
 		foreach ($_POST as $key => $data) {
@@ -110,6 +124,7 @@ elseif(isset($_GET['editid'])){
 	include View::getView('cpredit');
 	}
 }
+
 function mMsg($msg, $url) {
 	echo "<script language=\"JavaScript\">alert(\"$msg\");history.back();</script>";
 	exit;

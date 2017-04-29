@@ -1,5 +1,9 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}?>
+ <script type="text/javascript" src="/scan/artDialog/artDialog.js?skin=green"></script>
+<script type="text/javascript" src="/scan/artDialog/jquery.artDialog.js"></script>
+<script src="/scan/artDialog/plugins/iframeTools.js"></script>
 <script type="text/javascript" src="/content/js/jquery-1.8.2.min.js"></script>
+
 <div id="m">
    	<li>
 	<h3><span>概念查看</span></h3>
@@ -32,24 +36,30 @@
 foreach($concepts as $value):
 ?>
 <div class="comcont" ><?php if($value['fx']==2)echo '-'; ?>
-&nbsp;&nbsp;<a style="cursor:pointer;<?php if($value['visible'] == -2 ): ?>TEXT-DECORATION: line-through<?php endif;?>"  href="?action=aishow&cp=<?php echo $value['id'];?>" >
+&nbsp;&nbsp;<a style="cursor:pointer;<?php if($value['visible'] == -2 ): ?>TEXT-DECORATION: line-through<?php endif;?>"  href="?action=aishow&cp=<?php echo $value['id'];?>" id="th<?=$value['aid'].$value['fx']?>">
 <?php echo $value['text']; ?></a>
 &nbsp;&nbsp;
 <SPAN  title='<?php echo $value['best_frame_id']; ?>'>
 <?php echo $value['frame']; ?>
 </SPAN>
-</div>
+
+<span onclick="mark(this,<?=$value['aid']?>,'goodr')">
+<img src="/m/images/thread_rate.gif"><?php echo $value['good']; ?></span>
+    <span onclick="mark(this,<?=$value['aid']?>,'badr')">
+    <img src="/m/images/disagree.gif"><?php echo $value['bad']; ?></span>
+<span onclick="ed(this,<?=$value['aid'].$value['fx']?>)"><img src='/m/images/edt.gif'></span>
 <?php endforeach; else foreach($concepts as $value):
 ?>
 <div class="comcont" ><?php if($value['fx']==2)echo '-'; ?>
-&nbsp;&nbsp;<SPAN style="cursor:pointer;<?php if($value['visible'] == -2 ): ?>TEXT-DECORATION: line-through<?php endif;?>"  onclick="dotu(<?php echo $value['id'];?>);" >
+&nbsp;&nbsp;<SPAN style="cursor:pointer;<?php if($value['visible'] == -2 ): ?>TEXT-DECORATION: line-through<?php endif;?>"  onclick="dotu(<?php echo $value['id'];?>);" id="th<?=$value['aid'].$value['fx']?>">
 <?php echo $value['text']; ?></SPAN>
-&nbsp;&nbsp;
-<SPAN  title='<?php echo $value['best_frame_id']; ?>'>
-<?php echo $value['frame']; ?>
-</SPAN>
-</div>
+<span onclick="mark(this,<?=$value['aid']?>,'goodr')">
+<img src="/m/images/thread_rate.gif"><?php echo $value['good']; ?></span>
+    <span onclick="mark(this,<?=$value['aid']?>,'badr')">
+    <img src="/m/images/disagree.gif"><?php echo $value['bad']; ?></span>
+<span onclick="ed(this,<?=$value['aid'].$value['fx']?>)"><img src='/m/images/edt.gif'></span>
 <?php endforeach; ?>
+</div>
 ==========================<br>
 
 <br>
@@ -115,4 +125,22 @@ foreach ($sub as $k=>$v) {
    temp.submit();         
    return temp;
  }
+
+	function mark(t,id,opt){
+    var ord = {}; ord[opt] =id;
+	$.ajax({
+				url:'/m/docp.php',
+				type:'POST',
+				data:ord,
+				success: function(data){ 
+				if(opt=="goodr")
+					 t.innerText="已赞";	else	
+					 t.innerText="已踩";				
+				}
+		});	
+	}
+	function ed(t,id){
+art.dialog.open("docp.php?m=a&cp=<?=$cpidd?>&editid="+id, { 
+follow: t,width: 300, height: 260,title:'<?php echo $pDa['text']; ?>--'+document.getElementById('th'+id).innerText+' '+id} );	
+	}
 </script>

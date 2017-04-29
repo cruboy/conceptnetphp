@@ -305,22 +305,7 @@ $DB->query("INSERT INTO oplog (opid,concept,gid,sina_uid,date,loginip) VALUES (
 $DB->query("UPDATE conceptnet_concept SET edittime=$ltime,visible=1 WHERE id=".$eid);
 }
 
-else if(isset($_POST['badr']) )
-{
-$hhtitle="bad";
-$rid =intval($_POST['badr']);
-$DB->query("INSERT INTO oplog (opid,relation,gid,sina_uid,date,loginip) VALUES (
-				'7','$rid','$uid','$usersina_id','$ltime','$gip')");
-$DB->query("UPDATE conceptnet_assertion SET edittime='$ltime',bad=bad+1 WHERE id=".$rid);
-}
-else if(isset($_POST['goodr']) )
-{
-$hhtitle="good";
-$rid =intval($_POST['goodr']);
-$DB->query("INSERT INTO oplog (opid,relation,gid,sina_uid,date,loginip) VALUES (
-				'6','$rid','$uid','$usersina_id','$ltime','$gip')");
-$DB->query("UPDATE conceptnet_assertion SET edittime='$ltime',good=good+1 WHERE id=".$rid);
-}
+
 else
 $hhtitle="错误";
 
