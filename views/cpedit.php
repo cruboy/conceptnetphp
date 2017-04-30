@@ -51,7 +51,7 @@ function axx(id){
 		//alert(theid);
 	}else{
  art.dialog.open("docp.php?m=i&cp=<?=$cpidd?>&editid="+id, { 
- follow: document.getElementById('th'+id),width: 300, height: 250,
+ follow: document.getElementById('th'+id),width: 350, height: 300,
  title:"<?=$pDa['text']; ?>--"+document.getElementById('th'+id).innerText+' '+id});	
 	}
 }
@@ -182,14 +182,14 @@ foreach (getcptype() as $k=>$v) {
       <input type="hidden" name="cruboy" value="<?php echo $pDa['cruboy']; ?>" />
     <input type="hidden" name="cid" value="<?php echo $cpidd; ?>" />
         <input type="hidden" name="valid" value="<?php echo $valid;?>" /><br>
-	<a onClick=" $.ajax({
+	<div style="width:500px;text-align:center;"><a onClick=" $.ajax({
 				url:'<?php echo BLOG_URL; ?>m/doadd.php?action=addcp',
 				type:'POST',
 				data:$('#addcp<?php echo $valid;?>').serialize(),
 				success: function(data){
                      alert(data);
 					}
-		});">添加</a>
+		});" title="添加"><img src="/m/images/tijiao.gif"></a></div>
 	</form>
 </div>
 <script> 

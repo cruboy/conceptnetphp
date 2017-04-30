@@ -104,7 +104,7 @@ foreach ($sub as $k=>$v) {
 				success: function(data){
                      alert(data);
 					}
-		});">添加</a>
+		});" title="添加"><img src="/m/images/tijiao.gif"></a>
 	</form>
 </div>
 <SCRIPT type=text/javascript>
