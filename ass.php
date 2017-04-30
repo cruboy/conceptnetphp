@@ -43,7 +43,7 @@ $vsid=intval($_SESSION['views']);
 		a.score,a.relation_id,a.best_frame_id,a.good,a.bad,c.text as cp1,d.text as cp2 FROM 
 		conceptnet_assertion a LEFT JOIN conceptnet_concept c ON a.concept1_id=c.id 
 		 LEFT JOIN conceptnet_concept d ON a.concept2_id=d.id
-		WHERE 1 {$sqlad} order by a.id desc limit 100";
+		WHERE 1 {$sqlad} order by rand() limit 30";
 	$res2 = $DB->query($sql2);
    include View::getView('header');
    include View::getView('ass');

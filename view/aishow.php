@@ -86,8 +86,7 @@ foreach($concepts as $value):
 	</select> 
 	</select> 分类<select name="sort" >
 	 <?php 
-	$sub[0]='默认';$sub[1]='概念';if(ROLE=='admin'){ $sub[2]='分类';}$sub[3]='记事';$sub[4]='人';$sub[5]='地方';$sub[6]='时间';
-foreach ($sub as $k=>$v) {	
+ foreach (getcptype() as $k=>$v) {	
 ?><option value="<?=$k?>" <? if($k==$pDa['sort']) echo 'selected="selected"';?> ><?=$v?></option>	
 <?php } ?></select>
 	<? if(ROLE=='admin'):?><br>名称：<textarea name="addname" rows="4" /></textarea><? else:?>
