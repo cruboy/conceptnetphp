@@ -121,7 +121,7 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 				'$vfrom','$vsid','$cpidd','$uid','$usersina_id','$ltime','{$pDa['text']}','$gip')");
 			
 			$sq2="SELECT a.concept1_id,a.concept2_id,a.id as aid,a.abid,a.seq,
-		a.relation_id,a.best_frame_id,a.atop1 as atop,a.aleft1 as aleft,a.itop1 as itop,a.ileft1 as ileft,a.good,a.bad,
+		a.relation_id,a.best_frame_id,a.atop1 as atop,a.aleft1 as aleft,a.itop1 as itop,a.ileft1 as ileft,a.good,a.bad,a.img1 as img,a.imgsize1 as imgsz,a.infos,
 		 c.* FROM  ".$tabf."_assertion a LEFT JOIN
 		 ".$tabf."_concept c ON a.concept2_id= c.id
 		WHERE concept1_id='$cpid' $cc order by a.relation_id,a.best_frame_id LIMIT 4000";
@@ -143,7 +143,7 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 			}
 			
 			$sq3="SELECT a.concept1_id,a.concept2_id,a.id as aid,a.abid,a.seq,
-		a.relation_id,a.best_frame_id,a.atop2 as atop,a.aleft2 as aleft,a.itop2 as itop,a.ileft2 as ileft,a.good,a.bad,
+		a.relation_id,a.best_frame_id,a.atop2 as atop,a.aleft2 as aleft,a.itop2 as itop,a.ileft2 as ileft,a.good,a.bad,a.img2 as img,a.imgsize2 as imgsz,a.infos,
 		 c.* FROM  ".$tabf."_assertion a LEFT JOIN
 		 ".$tabf."_concept c ON a.concept1_id= c.id
 		WHERE concept2_id='$cpid' $cc order by a.seq,a.relation_id,a.best_frame_id LIMIT 4000";

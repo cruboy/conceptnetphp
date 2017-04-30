@@ -1,8 +1,8 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}
-if($pDa['backimgid'] ==0)
+if($pDa['imgsize'] !=-1)
 $backimg="/jt/imgs/bgo.jpg";
 else{
-	$sq1 = "SELECT * FROM  emlog_attachment WHERE aid=".$pDa['backimgid'];
+	$sq1 = "SELECT * FROM  emlog_attachment WHERE aid=".$pDa['imgid'];
 	$pa = $DB->once_fetch_array($sq1);
 	$backimg=$pa['filepath'];
 	}
@@ -20,7 +20,7 @@ $mtop=60;
 .ui-widget-content{cursor:pointer;position:absolute;}
 </style>
 <div id="m"  style="height:<?=$maxtop?>px;width:1000px;background: url('<?=$backimg?>');overflow-x :auto; ">
-<?php if($pDa['imgid'] >0 ){
+<?php if($pDa['imgid'] >0 &&$pDa['imgsize'] !=-1 ){
 $sq1ab = "SELECT * FROM  emlog_attachment WHERE aid=".$pDa['imgid'];
 	$paab = $DB->once_fetch_array($sq1ab);
  ?>
@@ -43,17 +43,17 @@ if($pDa['blogid'] >0 ){?>
  <a href="/m/?action=aishow&cp=<?=$cpidd?>">列表</a>
  <a href="/m/ainet.php?cp=<?=$pDa['id']?>">编辑</a><? endif;?>
 </div> 
-<?php echo $pDaa['content']; ?>
+<br><?php echo $pDa['info']; ?>
 <?php 
 foreach($concepts as $k=>$value){
 ?>
-<?php if($value['imgid'] >0 ){
-$sq1a = "SELECT * FROM  emlog_attachment WHERE aid=".$value['imgid'];
+<?php if($value['img'] >0 ){
+$sq1a = "SELECT * FROM  emlog_attachment WHERE aid=".$value['img'];
 	$paa = $DB->once_fetch_array($sq1a);
  ?>
  <div class="ui-widget-content" style="top:<?=
 $value['itop']?>px;left:<?=$value['ileft']?>px;" >
-<img style="border:0px;" src="<?=$paa['filepath']?>" title='<?=$value['text']?>'></div>
+<img style="border:0px;<? if($value['imgsz']>0)echo "width:".$value['imgsz']."px;"?>" src="<?=$paa['filepath']?>" title='<?=$value['text'].' '.$value['infos']?>'></div>
 <?php }
 } ?>
 <?php 
@@ -65,7 +65,7 @@ if($value['seq']<8)$value['seq']=14;
 ?>
 <div class="ui-widget-content" style="top:<?=
 $value['atop']?>px;left:<?=$value['aleft']?>px;font-size:<?=$value['seq']?>px;" >○<a href="?cp=<?php 
-echo $value['id']; ?>" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions']; 
+echo $value['id']; ?>" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions'].' '.$value['infos']; 
 ?>" ><?=$value['text']?></a>
 <?php if($value['url'] !='' ){ ?>
 <a href="<?=$value['url']?>">□</a>
@@ -81,7 +81,7 @@ if($value['seq']<8)$value['seq']=14;
 ?>
 <div class="ui-widget-content" style="top:<?=
 $value['atop']?>px;left:<?=$value['aleft']?>px;font-size:<?=$value['seq']?>px;" >○<span onclick="dotovv(<?php 
-echo $value['id']; ?>)" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions']; 
+echo $value['id']; ?>)" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions'].' '.$value['infos']; 
 ?>" ><?=$value['text']?></span>
 <?php if($value['url'] !='' ){ ?>
 <a href="<?=$value['url']?>">□</a>

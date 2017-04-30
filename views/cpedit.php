@@ -1,8 +1,8 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}
-if($pDa['backimgid'] ==0)
+if($pDa['imgsize'] !=-1)
 $backimg="/jt/imgs/bgo.jpg";
 else{
-	$sq1 = "SELECT * FROM  emlog_attachment WHERE aid=".$pDa['backimgid'];
+	$sq1 = "SELECT * FROM  emlog_attachment WHERE aid=".$pDa['imgid'];
 	$pa = $DB->once_fetch_array($sq1);
 	$backimg=$pa['filepath'];
 	}
@@ -38,7 +38,7 @@ function ax(id){
 		//alert(theid);
 	}else{
  art.dialog.open("docp.php?m=a&cp=<?=$cpidd?>&editid="+id, { 
- follow: document.getElementById('th'+id),width: 300, height: 250,
+ follow: document.getElementById('th'+id),width: 350, height: 300,
  title:"<?=$pDa['text']; ?>--"+document.getElementById('th'+id).innerText+' '+id});	
 	}
 }
@@ -82,7 +82,7 @@ function savecd(){
 </script>
 <div id="m"  style="height:<?=$maxtop?>px;width:1000px;background: url('<?=$backimg?>');overflow-x :auto;"
 onmousemove="cnvs_getCoordinates(event)"  >
-<?php if($pDa['imgid'] >0 ){
+<?php if($pDa['imgid'] >0 &&$pDa['imgsize'] !=-1 ){
 $sq1ab = "SELECT * FROM  emlog_attachment WHERE aid=".$pDa['imgid'];
 	$paab = $DB->once_fetch_array($sq1ab);
 ?>
@@ -106,17 +106,17 @@ if($pDa['blogid'] >0 ){?>
 <span onclick='ch()' id='thech' style='cursor:pointer;' title='点击切换'>【编辑内容】</span>
 <span  id='theleft'></span>&nbsp;<span id='thetop'></span>
 </div>
-<?php echo $pDaa['content']; ?>
+<?php echo $pDa['info']; ?>
 <?php 
 foreach($concepts as $k=>$value){
 ?>
-<?php if($value['imgid'] >0 ){
-$sq1a = "SELECT * FROM  emlog_attachment WHERE aid=".$value['imgid'];
+<?php if($value['img'] >0 ){
+$sq1a = "SELECT * FROM  emlog_attachment WHERE aid=".$value['img'];
 	$paa = $DB->once_fetch_array($sq1a);
  ?>
 <div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=
 $value['itop']?>px;left:<?=$value['ileft']?>px;" id='ftti<?=$value['aid'].$value['fx']?>'>
-<img onClick="axx(<?=$value['aid'].$value['fx']?>)" style="border:0px;" src="<?=$paa['filepath']?>" title='<?=$value['text']?>'></div>
+<img onClick="axx(<?=$value['aid'].$value['fx']?>)" style="border:0px;<? if($value['imgsz']>0)echo "width:".$value['imgsz']."px;"?>" src="<?=$paa['filepath']?>" title='<?=$value['text'].' '.$value['infos']?>'></div>
 <?php }
 } ?>
 <?php 
@@ -128,7 +128,7 @@ if($value['seq']<8)$value['seq']=14;
 <div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=$value['atop']
 ?>px;left:<?=$value['aleft']?>px;font-size:<?=$value['seq']?>px;" id='ftt<?=$value['aid'].$value['fx']?>'>
 <a onClick="ax(<?=$value['aid'].$value['fx']?>)">○</a><span id='th<?=$value['aid'].$value['fx']?>'><a href="/m/ainet.php?cp=<?php
- echo $value['id']; ?>" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions']; 
+ echo $value['id']; ?>" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions'].' '.$value['infos']; 
 ?>"><?php echo $value['text']; ?></a>
 <?php if($value['url'] !='' ){ ?>
 <a href="<?=$value['url']?>">□</a>
@@ -148,7 +148,7 @@ if($value['blogid'] >0 ){?>
 <?  }}?>
 <?  }?>
 <div style="text-align:left;">
-提示：点击或移动‘○’进行编辑内容或调整位置，点击文字会跳转。
+提示：点击或移动‘○’进行编辑内容或调整位置，点击文字会跳转。<a onClick="ax(<?=$pDa['id']?>3)">编辑概念</a>
 	<form id="addcp<?php echo $valid;?>" >
     添加
     <input id="sch" type="radio" value="0" name="dirs" checked />
@@ -171,8 +171,8 @@ if($value['blogid'] >0 ){?>
         <?  }	?>
 	</select> 分类<select name="sort" >
 	 <?php 
-	$sub[0]='默认';$sub[1]='概念';if(ROLE=='admin'){ $sub[2]='分类';}$sub[3]='记事';$sub[4]='人';$sub[5]='地方';$sub[6]='时间';
-foreach ($sub as $k=>$v) {	
+	
+foreach (getcptype() as $k=>$v) {	
 ?><option value="<?=$k?>" <? if($k==$pDa['sort']) echo 'selected="selected"';?> ><?=$v?></option>	
 <?php } ?></select>
 	<? if(ROLE=='admin'):?><br>名称：<textarea name="addname" style="height:90px;width:350px" class="texts"/></textarea><? else:?>

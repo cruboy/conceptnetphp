@@ -12,7 +12,7 @@ $gip=getIp();
 $uid=UID;
 $ltime=time();
 $rtime= date('Y-m-d H:i:s');
-	$DB = MySql::getInstance();
+$DB = MySql::getInstance();
 if(isset($_POST['badr']) )
 {
 $hhtitle="bad";
@@ -57,15 +57,18 @@ if(isset($_GET['ecdid'])){
 
 	$id=intval($_GET['ecdid']);
 	$_POST['imgid']=intval($_POST['imgid']);
-	$_POST['backimgid']=intval($_POST['backimgid']);
+	$_POST['imgsize']=intval($_POST['imgsize']);
 $sq1="SELECT * FROM  ".$tabf."_concept WHERE id='$id'";
 	$pDa=$DB->once_fetch_array($sq1);
-	if($pDa['imgid']!=($_POST['imgid']))
-	  $DB->query("UPDATE emlog_attachment SET cid=$sn{$_POST['imgid']} WHERE aid={$pDa['imgid']}");
-	if($pDa['backimgid']!=($_POST['backimgid']))
-	  $DB->query("UPDATE emlog_attachment SET cid=$sn{$_POST['backimgid']} WHERE aid={$pDa['backimgid']}");
-	  
 
+	if($pDa['imgid']!=($_POST['imgid'])){
+	 if($pDa['imgid']!=0) 
+	 $DB->query("UPDATE emlog_attachment SET cnum=cnum-1 WHERE aid={$pDa['imgid']}");
+	  if($_POST['imgid']!=0) 
+	 $DB->query("UPDATE emlog_attachment SET cnum=cnum+1 WHERE aid={$_POST['imgid']}"); 
+	}	  
+$DB->query("INSERT INTO vasslog (cpid,rid,method,edate,uid,content,ip,seid) VALUES (
+				$id,0,'editcp','$rtime','$uid','".serialize($pDa)."','$gip','".session_id()."')");
 	$_POST['edittime']=$ltime;
 	  $Item = array();
 		foreach ($_POST as $key => $data) {
@@ -79,9 +82,26 @@ $sq1="SELECT * FROM  ".$tabf."_concept WHERE id='$id'";
 	exit;
 }
 elseif(isset($_GET['aid'])){
-
+//print_r($_POST);
 		$id=intval($_GET['aid']);
+$sq1="SELECT * FROM  ".$tabf."_assertion WHERE id='$id'";
+	$pDa=$DB->once_fetch_array($sq1);
 
+	if($pDa['img1']!=($_POST['img1'])){
+	 if($pDa['img1']!=0) 
+	 $DB->query("UPDATE emlog_attachment SET cnum=cnum-1 WHERE aid={$pDa['img1']}");
+	  if($_POST['img1']!=0) 
+	 $DB->query("UPDATE emlog_attachment SET cnum=cnum+1 WHERE aid={$_POST['img1']}"); 
+	}
+	if($pDa['img2']!=($_POST['img2'])){
+	 if($pDa['img2']!=0) 
+	 $DB->query("UPDATE emlog_attachment SET cnum=cnum-1 WHERE aid={$pDa['img2']}");
+	  if($_POST['img2']!=0) 
+	 $DB->query("UPDATE emlog_attachment SET cnum=cnum+1 WHERE aid={$_POST['img2']}"); 
+	}
+	
+$DB->query("INSERT INTO vasslog (cpid,rid,method,edate,uid,content,ip,seid) VALUES (
+				0,$id,'editass','$rtime','$uid','".serialize($pDa)."','$gip','".session_id()."')");
 	$_POST['edittime']=$ltime;
 	  $Item = array();
 		foreach ($_POST as $key => $data) {

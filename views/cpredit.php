@@ -23,17 +23,17 @@
         </select></td>
  </tr>
  <tr> <td>图片ID<input style="width:50px;"  value="<?php echo $value['img'.$fx]; ?>"  name="<?php echo 'img'.$fx; ?>" /><a href="/admin/attachment.php" target='_blank'>查看</a></td>
-     <td>关联文章ID<input style="width:40px;" value="<?php echo $value['abid']; ?>"  name="abid" />
+     <td>图片尺寸<input style="width:60px;" value="<?php  echo $value['imgsize'.$fx]; ?>"  name="imgsize<?=$fx?>" /></td>
  </tr>
    <tr>
-  <td>位置top<input style="width:50px;"  value="<?php echo $value[$m.'top'.$fx]; ?>"  name="<?php echo $m.'top'.$fx; ?>" /></td>
-    <td>left<input style="width:50px;"  value="<?php echo $value[$m.'left'.$fx]; ?>"  name="<?php echo $m.'left'.$fx; ?>" /></td>
+  <td>位置 上<input style="width:50px;"  value="<?php echo $value[$m.'top'.$fx]; ?>"  name="<?php echo $m.'top'.$fx; ?>" /></td>
+    <td>左<input style="width:50px;"  value="<?php echo $value[$m.'left'.$fx]; ?>"  name="<?php echo $m.'left'.$fx; ?>" /><span title="可通过位置编辑调整">？</span></td>
     </tr>
-  <?
-       if(ROLE=='admin') {?>  <tr><td>字体大小<input style="width:30px;" value="<?php echo $value['seq']; ?>"  name="seq" /></td>
-    <td></td>
+  <tr><td>关联文章ID<input style="width:40px;" value="<?php echo $value['abid']; ?>"  name="abid" /></td><td> <?
+       if(ROLE=='admin') {?> 字体大小<input style="width:30px;" value="<?php echo $value['seq']; ?>"  name="seq" /> <? }?></td>
+    
     </tr>
-    <? }?>
-  <tr><td><input  type='submit' value='提交'/></td></tr>
+    <td colspan="2"><textarea name="infos"  style="width:300px;height:80px;"/><?php echo $pDa['infos']; ?></textarea></td>
+  <tr><td colspan="2"><input  type='submit' value='提交'/></td></tr>
   </table>
     </form>
