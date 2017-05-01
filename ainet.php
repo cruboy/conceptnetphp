@@ -21,6 +21,7 @@ $concepts=array();
 $atitle="";
 $gip=getIp();   
 $uid=UID;
+$seid=session_id();
 $vsid=intval($_SESSION['views']);
 // 首页
 
@@ -178,8 +179,8 @@ else
 	$atitle="查询'".$akey."'进行编辑：";$aineth=1;
 	$kword='maisearch';
 	}
-	$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,vtime,text,loginip) VALUES (
-				'$kword','$vsid','0','$uid','$usersina_id','$ltime','$akey','$gip')");	
+	$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,seid,vtime,text,loginip) VALUES (
+				'$kword','$vsid','0','$uid','$seid','$ltime','$akey','$gip')");	
 			$res = $DB->query($sql);
 		
 			while ($row = $DB->fetch_array($res)) {

@@ -19,6 +19,7 @@ $cpid = isset ($_POST['cp']) ? intval ($_POST['cp']) : '';
 $fnid = isset ($_GET['fn']) ? intval ($_GET['fn']) : '';
 $sid = isset ($_GET['sid']) ? intval ($_GET['sid']) : '';
 $akey = isset($_POST['aikey']) ? addslashes($_POST['aikey']) : '';
+$seid=session_id();
 /////首页
 if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($logid)))
 {
@@ -31,7 +32,6 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 		$uid=UID;
 		$ltime = date('Y-m-d H:i:s');
 		$DB=MySql::getInstance();
-		$usersina_id=intval($_SESSION['oauth2']['user_id']);
 		$cpid=0;
 		$pDs=1;
 		$concepts=array();
@@ -90,8 +90,8 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 		}
 		if($action=='aishow')
 		$vfdd.='2';
-		$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,vtime,text,loginip) VALUES 
-		('$vfdd','$vsid','0','$uid','$usersina_id','$ltime','$o','$gip')");
+		$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,seid,vtime,text,loginip) VALUES 
+		('$vfdd','$vsid','0','$uid','$seid','$ltime','$o','$gip')");
 		$hhtitle=$akey;
   ////内容页
  }else{
@@ -117,8 +117,8 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 			$hhtitle=$pDa['text'];
 			if($action=='aishow')
 		     $vfrom.='2';
-			$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,vtime,text,loginip) VALUES (
-				'$vfrom','$vsid','$cpidd','$uid','$usersina_id','$ltime','{$pDa['text']}','$gip')");
+			$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,seid,vtime,text,loginip) VALUES (
+				'$vfrom','$vsid','$cpidd','$uid','$seid','$ltime','{$pDa['text']}','$gip')");
 			
 			$sq2="SELECT a.concept1_id,a.concept2_id,a.id as aid,a.abid,a.seq,
 		a.relation_id,a.best_frame_id,a.atop1 as atop,a.aleft1 as aleft,a.itop1 as itop,a.ileft1 as ileft,a.good,a.bad,a.img1 as img,a.imgsize1 as imgsz,a.infos,
@@ -255,8 +255,8 @@ if ($action == 'ailist' && $_SESSION['views']>2) {
 	$concepts[]=$row;
 		}
 		$hhtitle=$akey;
-	$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,sina_uid,vtime,text,loginip) VALUES (
-				'$mnk','$vsid','0','$uid','$usersina_id','$ltime','$o','$gip')");
+	$DB->query("INSERT INTO viewlog (method,viewid,concept,uid,seid,vtime,text,loginip) VALUES (
+				'$mnk','$vsid','0','$uid','$seid','$ltime','$o','$gip')");
     include View::getView('header');
 	include View::getView('ailist');
 	include View::getView('footer');
