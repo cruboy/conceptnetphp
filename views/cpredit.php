@@ -7,7 +7,7 @@
   <form method='post' action='docp.php?cp=<?=$cpidd?>&aid=<?=$rid?>' >
  <table>
  
- <tr> <td colspan="2"><input type="hidden" value="<?php echo $value['relation_id']; ?>"  name="relation_id" />
+ <tr> <td colspan="2"> 
       <select  name="best_frame_id" >
            <?
        if(ROLE!='admin') $dadda="where n1>0";

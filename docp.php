@@ -99,7 +99,11 @@ $sq1="SELECT * FROM  ".$tabf."_assertion WHERE id='$id'";
 	  if($_POST['img2']!=0) 
 	 $DB->query("UPDATE emlog_attachment SET cnum=cnum+1 WHERE aid={$_POST['img2']}"); 
 	}
-	
+	if($pDa['best_frame_id']!=($_POST['best_frame_id'])){
+	$sqqq2="SELECT * FROM conceptnet_relation WHERE id='".$_POST['best_frame_id']."'";
+	$pDad=$DB->once_fetch_array($sqqq2);
+	$_POST['relation_id']=$pDad['relation_id'];
+}
 $DB->query("INSERT INTO vasslog (cpid,rid,method,edate,uid,content,ip,seid) VALUES (
 				0,$id,'editass','$rtime','$uid','".serialize($pDa)."','$gip','".session_id()."')");
 	$_POST['edittime']=$ltime;
