@@ -30,9 +30,10 @@ style="top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;">
 <?php } ?>
 <div class="ui-widget-content" >
 ☆<span ><?php echo $pDa['text']; ?></span>&nbsp;
-<span title="<?php echo "+".$pDa['f1']."-".$pDa['f2']."~".$pDa['num_assertions']; 
-?>">相关数</span><?php echo $pDa['f3']; ?>
- 查看<?php echo $pDa['words']; ?> 
+ <img src="/m/images/os2.gif" title="总关联数(<?=$pDa['num_assertions']?>)"><?php echo $pDa['f2']; ?>
+（<img src="/m/images/qian.gif" title="前向关联数"><?php echo $pDa['f1']; ?>
+<img src="/m/images/hou.gif" title="后向关联数"><?php echo $pDa['f2']; ?>）[<?php echo getcptype($pDa['sort']); ?>]
+ <img src="/m/images/fav.gif" title="查看次数"><?php echo $pDa['words']; ?> 
  <?php if($pDa['url'] !='' ){ ?>
 <a href="<?=$pDa['url']?>">□</a>
 <?php }

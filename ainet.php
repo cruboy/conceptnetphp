@@ -56,7 +56,7 @@ if (!empty($cpid) )
 		a.relation_id,a.best_frame_id,a.atop1 as atop,a.aleft1 as aleft,a.itop1 as itop,a.ileft1 as ileft,a.img1 as img,a.imgsize1 as imgsz,a.infos,
 		 ".$tabf."_concept.* FROM  ".$tabf."_assertion a LEFT JOIN
 		 ".$tabf."_concept ON a.concept2_id= ".$tabf."_concept.id
-		WHERE concept1_id='$cpid' order by a.relation_id,a.best_frame_id LIMIT 100";
+		WHERE concept1_id='$cpid' order by a.relation_id,a.best_frame_id LIMIT 1000";
 	$res2 = $DB->query($sq2);
 	while ($row = $DB->fetch_array($res2)) {
 			if($row['best_frame_id']>0){		
@@ -78,7 +78,7 @@ if (!empty($cpid) )
 		a.relation_id,a.best_frame_id,a.atop2 as atop,a.aleft2 as aleft,a.itop2 as itop,a.ileft2 as ileft,a.img2 as img,a.imgsize2 as imgsz,a.infos,
 		 ".$tabf."_concept.* FROM  ".$tabf."_assertion a LEFT JOIN
 		 ".$tabf."_concept ON a.concept1_id= ".$tabf."_concept.id
-		WHERE concept2_id='$cpid' order by a.seq,a.relation_id,a.best_frame_id LIMIT 4000";
+		WHERE concept2_id='$cpid' order by a.relation_id,a.best_frame_id LIMIT 1000";
 		$res3 = $DB->query($sq3);
 	while ($row2 = $DB->fetch_array($res3)) {
 			if($row2['best_frame_id']>0){		
