@@ -19,7 +19,7 @@
 <div class="comcont">
 &nbsp;&nbsp;
 <SPAN title='<?=$pDa['id']?>' <?php if($pDa['visible'] == -2 ): ?>style="TEXT-DECORATION: line-through"<?php endif;?>  onclick="dotu(<?php echo $pDa['id']; ?>)">
-<?php echo $pDa['text']; ?></SPAN>&nbsp;<img src="/m/images/os2.gif" title="总关联数"><?php echo $pDa['f2']; ?>
+<?php echo $pDa['text']; ?></SPAN>&nbsp;<img src="/m/images/os2.gif" title="总关联数"><?php echo $pDa['f3']; ?>
 （<img src="/m/images/qian.gif" title="前向关联数"><?php echo $pDa['f1']; ?>
 <img src="/m/images/hou.gif" title="后向关联数"><?php echo $pDa['f2']; ?>）[<?php echo getcptype($pDa['sort']); ?>]
  <img src="/m/images/fav.gif" title="查看次数"><?php echo $pDa['words']; ?>
