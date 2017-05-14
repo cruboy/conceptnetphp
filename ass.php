@@ -37,13 +37,36 @@ $vsid=intval($_SESSION['views']);
 			//	'$vfrom','$vsid','$cpidd','$uid','$usersina_id','$ltime','$pDa[text]','$gip')");
 	
 //print_r($cpr);
+    $sqlad='';
 	$freid = intval ($_GET['fre']);
-	if($freid)$sqlad=" and a.best_frame_id='$freid' ";
+	if($freid==0) $freid = intval ($_POST['fre']);
+	if($freid){$sqlad=" and a.best_frame_id='$freid' ";
+	}
+	if(isset($_POST['fre'])){
+		$sqlad.=" order by rand() limit 30";
+		}else{
+	$w=date('t');$y=date('Y');
+		$sql2="SELECT * FROM weekcache where year=$y and week=$w and oid=$freid and name='asss'";
+	$row2=$DB->once_fetch_array($sql2);
+	if($row2['id']){
+     $wwcps=$row2['content'];
+		}else{ $ltime = date('Y-m-d H:i:s');
+		$res = $DB->query("SELECT id FROM conceptnet_assertion  where visible>=0 order by Rand() LIMIT 30");
+   $o='';
+	while ($row = $DB->fetch_array($res)) {
+			$o.=$row['id'].','; 
+		}	
+		$wwcps=substr($o,0,-1);
+	$DB->query("INSERT INTO weekcache (year,week,name,oid,ctime,content) VALUES (
+				'$y','$w','asss','$freid','$ltime','".$wwcps."')");
+		}
+		$sqlad=" and a.id in( $wwcps )";
+		}
 	$sql2 = "SELECT a.id as aid,a.concept1_id,a.concept2_id,
 		a.score,a.relation_id,a.best_frame_id,a.good,a.bad,c.text as cp1,d.text as cp2 FROM 
 		conceptnet_assertion a LEFT JOIN conceptnet_concept c ON a.concept1_id=c.id 
 		 LEFT JOIN conceptnet_concept d ON a.concept2_id=d.id
-		WHERE 1 {$sqlad} order by rand() limit 30";
+		WHERE 1  $sqlad ";
 	$res2 = $DB->query($sql2);
    include View::getView('header');
    include View::getView('ass');
