@@ -51,7 +51,7 @@ $vsid=intval($_SESSION['views']);
 	if($row2['id']){
      $wwcps=$row2['content'];
 		}else{ $ltime = date('Y-m-d H:i:s');
-		$res = $DB->query("SELECT id FROM conceptnet_assertion  where visible>=0 order by Rand() LIMIT 30");
+		$res = $DB->query("SELECT id FROM conceptnet_assertion  a where visible>=0 $sqlad order by Rand() LIMIT 30");
    $o='';
 	while ($row = $DB->fetch_array($res)) {
 			$o.=$row['id'].','; 
