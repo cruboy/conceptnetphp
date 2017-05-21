@@ -45,7 +45,7 @@ $vsid=intval($_SESSION['views']);
 	if(isset($_POST['fre'])){
 		$sqlad.=" order by rand() limit 30";
 		}else{
-	$w=date('t');$y=date('Y');
+	$w=date('W');$y=date('Y');
 		$sql2="SELECT * FROM weekcache where year=$y and week=$w and oid=$freid and name='asss'";
 	$row2=$DB->once_fetch_array($sql2);
 	if($row2['id']){

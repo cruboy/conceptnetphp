@@ -13,7 +13,7 @@ body{background-color:#FFFFFF; font-size:14px; margin: 0; padding:0;}
   </tr>
   <? endif;?> 
    <tr>
-    <td>图片ID<input style="width:60px;" value="<?php if($pDa['imgid'])echo $pDa['imgid']; ?>"  name="imgid" /></td>
+    <td>图片ID<input style="width:60px;" value="<?php if($pDa['imgid'])echo $pDa['imgid']; ?>"  name="imgid" /><a href="/admin/attachment.php" target='_blank'>查看</a></td>
     <td>图片尺寸<input style="width:60px;" value="<?php if($pDa['imgsize'])echo $pDa['imgsize']; ?>"  name="imgsize" /></td>
     </tr>
     <tr><td>图片位置上<input style="width:30px;" id="top0" value="<?php echo $pDa['ctop']; ?>"  name="ctop" /></td>
