@@ -3,10 +3,10 @@
  * jitongr
 */
 
-require_once '../init.php';
+require_once 'init.php';
 
 
-define('TEMPLATE_PATH', EMLOG_ROOT.'/m/views/');
+define('TEMPLATE_PATH', EMLOG_ROOT.'/views/');
 
 $gip=getIp();   
 $uid=UID;
@@ -34,7 +34,7 @@ exit;
 if (ISLOGIN !== true){
 //empty($_SESSION['oauth2']["user_id"])||empty($_SESSION['u_name']))){
 echo "请先登录或授权！";
-exit;
+//exit;
 }
 
 $cpidd=intval($_GET['cp']);

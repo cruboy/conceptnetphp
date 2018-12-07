@@ -9,7 +9,7 @@ if(!defined('EMLOG_ROOT')) {
 }
 ?>
 
-<form action="/m/dict.php" method="get" name="dictManage">
+<form action="/dict.php" method="get" name="dictManage">
 	<input id="sch" type="radio" value="sch" name="opt" <?php if($opt == "sch")echo "checked";?> />
 	<label for="sch" title="词库查询">前向匹配查询</label>
 	<input id="sch1" type="radio" value="sch1" name="opt" <?php if($opt == "sch1")echo "checked";?> />
@@ -44,7 +44,7 @@ if(!defined('EMLOG_ROOT')) {
 		<option value="ACTORANDDIRECTOR" <?php if($wold=="ACTORANDDIRECTOR") echo "selected='selected'"; ?>>演员导演</option>
 	</select>
 	<input type="submit" value="确定执行" />
-	<a href='/m/dict.php?action=runs'>分词服务查看</a>
+	<a href='/dict.php?action=runs'>分词服务查看</a>
 </form>
 <div align="center">
 	<form action="dict.php?opt=updid" method="post">

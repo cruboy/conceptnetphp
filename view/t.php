@@ -14,7 +14,7 @@ body{
 </style>
 <div id="tw">
     <?php if(ROLE == 'admin' || ROLE == 'writer'): ?>
-    <form action='/m/t.php?action=postnew' method='post'>
+    <form action='/t.php?action=postnew' method='post'>
 	<textarea name='t' style='width:160px;height:60px'></textarea><br>
 
      <input type='submit'>

@@ -4,9 +4,9 @@
  * @copyright (zhangyulin
 */
 
-require_once '../init.php';
+require_once 'init.php';
 
-define('TEMPLATE_PATH', EMLOG_ROOT.'/m/view/');
+define('TEMPLATE_PATH', EMLOG_ROOT.'/view/');
 
 $DB = MySql::getInstance();
 $concepts=array();
@@ -26,8 +26,8 @@ $vsid=intval($_SESSION['views']);
 				$vfrom="aind";
 				$cpid=$cpidd;
 			}
-	
-	$cpr = $CACHE->readCache('cpr');	
+	include "lib/cache.php";
+	//$cpr = $CACHE->readCache('cpr');	
   $cpr[0]="{1}--{2}";
 	$ltime = date('Y-m-d H:i:s');
 

@@ -4,7 +4,7 @@
  * @copyright (zhangyulin
 */
 
-require_once '../init.php';
+require_once 'init.php';
 
 
 $action = isset($_GET['action']) ? addslashes($_GET['action']) : '';

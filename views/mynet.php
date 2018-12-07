@@ -4,7 +4,7 @@
 	<li>
 	<h3>图编辑</h3>
 	<ul id="logserch">
-	<form name="keycp" method="get" action="<?php echo BLOG_URL; ?>m/ainet.php">
+	<form name="keycp" method="get" action="<?php echo BLOG_URL; ?>ainet.php">
 	<input name="k"  type="text" value="<?php echo $akey; ?>" style="width:120px;"/>
 	<input type="submit" id="logserch_logserch" value="搜索" />
 	</form>
@@ -18,11 +18,11 @@ foreach($concepts as $value):
 <div class="comcont">
 &nbsp;&nbsp;
 <?php if($value['visible'] >-2 ): ?>
-<a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=<?php echo $value['id']; ?>">
+<a href="<?php echo BLOG_URL; ?>ainet.php?cp=<?php echo $value['id']; ?>">
 <?php echo $value['text']; ?></a>&nbsp;
 <?php else:?>
 
-<SPAN style="TEXT-DECORATION: line-through"><a href="<?php echo BLOG_URL; ?>m/ainet.php?cp=<?php echo $value['id']; ?>">
+<SPAN style="TEXT-DECORATION: line-through"><a href="<?php echo BLOG_URL; ?>ainet.php?cp=<?php echo $value['id']; ?>">
 <?php echo $value['text']; ?></a></SPAN>&nbsp;
 <?php endif;?>
 

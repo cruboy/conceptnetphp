@@ -5,9 +5,9 @@
  * $Id: index.php 2014 2011-08-25 16:24:12Z emloog $
 */
 
-require_once '../init.php';
+require_once 'init.php';
 
-define ('TEMPLATE_PATH', EMLOG_ROOT . '/m/view/');
+define ('TEMPLATE_PATH', EMLOG_ROOT . '/view/');
 
 $blogtitle = Option::get('twnavi') . ' - ' . Option::get('blogname');
 $description = Option::get('bloginfo');
@@ -93,7 +93,7 @@ if ($action == 'mr') {
     $Reply_Model = new Reply_Model();
     $rid = $Reply_Model->addReply($rdata);
 ?>
-<form action='/m/t.php?action=mo' method='post'>
+<form action='/t.php?action=mo' method='post'>
 	<textarea name='ct' style='width:160px;height:60px'></textarea><br>
     <input type='hidden' name='id' value='<?=$tid?>'>
      昵称：<input type="text" name='nc' style='width:60px'/>
@@ -138,7 +138,7 @@ if ($action == 'tw') {
 
     $tws = $Twitter_Model->getTwitters($page);
     $twnum = $Twitter_Model->getTwitterNum();
-    $pageurl =  pagination($twnum, Option::get('index_twnum'), $page, '/m/t.php/?page=');
+    $pageurl =  pagination($twnum, Option::get('index_twnum'), $page, '/t.php/?page=');
     $avatar = empty($user_cache[UID]['avatar']) ? '../admin/views/images/avatar.jpg' : '../' . $user_cache[UID]['avatar'];
     $rcode = Option::get('reply_code') == 'y' ? "<img src=\"".DYNAMIC_BLOGURL."?action=ckcode&mode=t\" />" : '';
 
@@ -252,5 +252,5 @@ $Twitter_Model = new Twitter_Model();
 
     $Twitter_Model->addTwitter($tdata);
     $CACHE->updateCache(array('sta','newtw'));
-	emDirect("/m/t.php");
+	emDirect("/t.php");
 }

@@ -126,7 +126,7 @@ if($value['seq']<8)$value['seq']=14;
 ?>
 <div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=$value['atop']
 ?>px;left:<?=$value['aleft']?>px;font-size:<?=$value['seq']?>px;" id='ftt<?=$value['aid'].$value['fx']?>'>
-<a onClick="ax(<?=$value['aid'].$value['fx']?>)">○</a><span id='th<?=$value['aid'].$value['fx']?>'><a href="/m/ainet.php?cp=<?php
+<a onClick="ax(<?=$value['aid'].$value['fx']?>)">○</a><span id='th<?=$value['aid'].$value['fx']?>'><a href="/ainet.php?cp=<?php
  echo $value['id']; ?>" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions']; 
 ?>"><?php echo $value['text']; ?></a>
 <?php if($value['url'] !='' ){ ?>

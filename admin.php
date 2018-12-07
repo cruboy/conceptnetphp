@@ -4,9 +4,9 @@
  * Writer:zhangyulin
  */
 
-require_once '../init.php';
+require_once 'init.php';
 
-define('TEMPLATE_PATH', EMLOG_ROOT.'/m/views/');//后台当前模板路径
+define('TEMPLATE_PATH', EMLOG_ROOT.'/views/');//后台当前模板路径
 
 $act = isset($_GET['action']) ? addslashes($_GET['action']) : "";
 
@@ -69,7 +69,7 @@ $start=($page-1)*100;
 	$sql = "SELECT * FROM vaddlog where 1 $asql2 order by $opt  LIMIT $start,100";
 	$res = $DB->query($sql);
 	//$ap = $DB->affected_rows();
-$pageurl="/m/admin.php?nall=$nall&page=";
+$pageurl="/admin.php?nall=$nall&page=";
 	
     include View::getView('admin');
 
@@ -89,7 +89,7 @@ elseif($act=='zl'){
 	$sql = "SELECT * FROM conceptnet_concept where 1 $asql2 order by id  LIMIT $start,1000";
 	$res = $DB->query($sql);
 	//$ap = $DB->affected_rows();
-$pageurl="/m/admin.php?action=zl&nall=$nall&page=";
+$pageurl="/admin.php?action=zl&nall=$nall&page=";
 	
     include View::getView('zl');
 

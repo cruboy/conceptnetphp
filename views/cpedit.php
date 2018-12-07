@@ -1,6 +1,6 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}
 if($pDa['imgsize'] !=-1)
-$backimg="/jt/imgs/bgo.jpg";
+$backimg="/images/bgo.jpg";
 else{
 	$sq1 = "SELECT * FROM  emlog_attachment WHERE aid=".$pDa['imgid'];
 	$pa = $DB->once_fetch_array($sq1);
@@ -10,11 +10,11 @@ $mtop=70;
 $fts=array("方正兰亭超细黑简体", "方正舒体", "方正姚体", "仿宋", "汉仪家书简", "汉仪楷体简", "汉仪太极体简", "汉仪娃娃篆简", "汉仪丫丫体简","汉仪丫丫体简", "仿宋", "汉仪家书简", "汉仪楷体简", "汉仪太极体简", "汉仪娃娃篆简", "汉仪丫丫体简", "黑体", "华文彩云", "华文仿宋", "华文行楷", "华文细黑", "华文新魏", "华文中宋", "经典综艺体简", "楷体", "隶书", "宋体", "微软雅黑", "新宋体", "幼圆", "华康娃娃体W5", "华康娃娃体W5", "华康娃娃体W5", "华康娃娃体W5(P)", "華康少女文字W6", "華康娃娃體(P)", "華康娃娃體", );
 //if($pDa['ctop']<50)$pDa['ctop']=50;
 ?>
-<script type="text/javascript" src="/scan/artDialog/artDialog.js?skin=green"></script>
-<script type="text/javascript" src="/scan/artDialog/jquery.artDialog.js"></script>
-<script src="/scan/artDialog/plugins/iframeTools.js"></script>
-<script type="text/javascript" src="/content/js/jquery-1.8.2.min.js"></script>
-<script src="/content/js/jquery-ui.js"></script> 
+<script type="text/javascript" src="/views/artDialog/artDialog.js?skin=green"></script>
+<script type="text/javascript" src="/views/artDialog/jquery.artDialog.js"></script>
+<script src="/views/artDialog/plugins/iframeTools.js"></script>
+<script type="text/javascript" src="/views/jss/jquery.min.js"></script>
+<script src="/views/jss/jquery-ui.js"></script> 
 <script type="text/javascript"> 
 var editt=-1;
 var theid=0;
@@ -92,10 +92,10 @@ style="cursor:pointer;position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cl
 <?php } ?>
 <div class="ui-widget-content" >
 <a onClick="ax(<?=$pDa['id']?>3)">☆</a><span id='th<?=$pDa['id']?>3'><?php echo $pDa['text']; ?></span>&nbsp;
- <img src="/m/images/os2.gif" title="总关联数(<?=$pDa['num_assertions']?>)"><?php echo $pDa['f3']; ?>
-（<img src="/m/images/qian.gif" title="前向关联数"><?php echo $pDa['f1']; ?>
-<img src="/m/images/hou.gif" title="后向关联数"><?php echo $pDa['f2']; ?>）[<?php echo getcptype($pDa['sort']); ?>]
- <img src="/m/images/fav.gif" title="查看次数"><?php echo $pDa['words']; ?> 
+ <img src="/images/os2.gif" title="总关联数(<?=$pDa['num_assertions']?>)"><?php echo $pDa['f3']; ?>
+（<img src="/images/qian.gif" title="前向关联数"><?php echo $pDa['f1']; ?>
+<img src="/images/hou.gif" title="后向关联数"><?php echo $pDa['f2']; ?>）[<?php echo getcptype($pDa['sort']); ?>]
+ <img src="/images/fav.gif" title="查看次数"><?php echo $pDa['words']; ?> 
  
  <?php if($pDa['url'] !='' ){ ?>
 <a href="<?=$pDa['url']?>">□</a>
@@ -103,8 +103,8 @@ style="cursor:pointer;position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cl
 if($pDa['blogid'] >0 ){?>
 <a href="/<?php echo $pDa['blogid']; ?>.html">■</a>
 <?php } ?>
-<a href="/m/?cp=<?=$cpidd?>">预览 </a>
-<a href="/m/?action=aishow&cp=<?=$cpidd?>">列表</a>
+<a href="/?cp=<?=$cpidd?>">预览 </a>
+<a href="/?action=aishow&cp=<?=$cpidd?>">列表</a>
 <span onclick='ch()' id='thech' style='cursor:pointer;' title='点击切换'>【编辑内容】</span>
 <span  id='theleft'></span>&nbsp;<span id='thetop'></span>
 </div>
@@ -129,7 +129,7 @@ if($value['seq']<8)$value['seq']=14;
 ?>
 <div class="ui-widget-content" style="cursor:pointer;position:absolute;top:<?=$value['atop']
 ?>px;left:<?=$value['aleft']?>px;font-size:<?=$value['seq']?>px;" id='ftt<?=$value['aid'].$value['fx']?>'>
-<a onClick="ax(<?=$value['aid'].$value['fx']?>)">○</a><span id='th<?=$value['aid'].$value['fx']?>'><a href="/m/ainet.php?cp=<?php
+<a onClick="ax(<?=$value['aid'].$value['fx']?>)">○</a><span id='th<?=$value['aid'].$value['fx']?>'><a href="/ainet.php?cp=<?php
  echo $value['id']; ?>" title="<?=$value['frame']?><?php echo '+'.$value['f1'].'-'.$value['f2'].'~'.$value['num_assertions'].' '.$value['infos']; 
 ?>"><?php echo $value['text']; ?></a>
 <?php if($value['url'] !='' ){ ?>
@@ -191,7 +191,7 @@ foreach (getcptype() as $k=>$v) {
 				success: function(data){
                      alert(data);
 					}
-		});" title="添加"><img src="/m/images/tijiao.gif"></a></div>
+		});" title="添加"><img src="/images/tijiao.gif"></a></div>
 	</form>
 </div>
 <script> 

@@ -4,8 +4,8 @@
  *
  * @copyright Hisense All Rights Reserved
  */
-require_once '../init.php';
-define('TEMPLATE_PATH', EMLOG_ROOT.'/m/view/');//后台当前模板路径
+require_once 'init.php';
+define('TEMPLATE_PATH', EMLOG_ROOT.'/view/');//后台当前模板路径
 
 $blogtitle = 'Hinet Analysis-' . Option :: get('blogname');
 if (ISLOGIN !== true ) {
@@ -74,9 +74,9 @@ if(isset($_GET['action'])){
 			echo $awwb."<br>";
 			$addinfo.=$awwb."<br>";
 		}
-		echo "<a href='/m/dict.php?action=stop&kill='>停止</a><br>";
-		echo "<a href='/m/dict.php?action=start'>启动</a><br>";
-		echo "<a href='/m/dict.php?action=restart'>重启</a><br>";
+		echo "<a href='/dict.php?action=stop&kill='>停止</a><br>";
+		echo "<a href='/dict.php?action=start'>启动</a><br>";
+		echo "<a href='/dict.php?action=restart'>重启</a><br>";
 		echo "<a href='".BLOG_URL."/'>返回</a><br>";
 
 		$ltime = time();

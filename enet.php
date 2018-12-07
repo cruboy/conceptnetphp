@@ -5,9 +5,9 @@
  * Writer:zhangyulin
  */
 
-require_once '../init.php';
+require_once 'init.php';
 
-define('TEMPLATE_PATH', EMLOG_ROOT.'/m/view/');//后台当前模板路径
+define('TEMPLATE_PATH', EMLOG_ROOT.'/view/');//后台当前模板路径
 
 $blogtitle = 'Hinet Manage-' . Option :: get('blogname');
 $action = isset($_GET['action']) ? addslashes($_GET['action']) : "hinets";

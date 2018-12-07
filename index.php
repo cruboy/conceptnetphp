@@ -1,14 +1,11 @@
 <?php
 /**
- * mobile 版本
- *
- * @copyright (c) Emlog All Rights Reserved
- * $Id: index.php 2017 2011-08-29 15:42:55Z qiyuuu@gmail.com $
+cruboy
  */
 
-require_once '../init.php';
+require_once 'init.php';
 
-define ('TEMPLATE_PATH', EMLOG_ROOT . '/m/view/');
+define ('TEMPLATE_PATH', EMLOG_ROOT . '/view/');
 
 $isgzipenable = 'n'; //手机浏览关闭gzip压缩
 $index_lognum = 8;
@@ -23,11 +20,7 @@ $seid=session_id();
 /////首页
 if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($logid)))
 {
-		$CACHE=Cache::getInstance();
-		$options_cache=$CACHE->readCache('options');
-		extract($options_cache);
-		$blogtitle=$blogname;
-		$description=$bloginfo;
+
 		$gip=getIp();
 		$uid=UID;
 		$ltime = date('Y-m-d H:i:s');
@@ -35,12 +28,12 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 		$cpid=0;
 		$pDs=1;
 		$concepts=array();
-	
+	include "lib/cache.php";
 	$vsid=intval($_SESSION['views']);
   
 	
 	$cpidd=intval($_REQUEST['cp']);
-	$cpp = $CACHE->readCache('cppublic');
+	//$cpp = 
   if(empty($cpidd))
     {  
     $valid=rand(1000,100000);
@@ -52,14 +45,14 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 			$valid=rand(1000,100000);
 	$_SESSION['valid']=$valid;
 		}else{
-	header('HTTP/1.1 401 Unauthorized'); 
-	header('status: 401 Unauthorized');echo '请登录后查看！'; exit;
+//	header('HTTP/1.1 401 Unauthorized'); 
+//	header('status: 401 Unauthorized');echo '请登录后查看！'; exit;
 		}
   }else{
 	$valid=rand(1000,100000);
 	$_SESSION['valid']=$valid;
 	}
-	$cpr = $CACHE->readCache('cpr');
+//	$cpr = $CACHE->readCache('cpr');
 	if(ROLE == 'admin' ){
 		}else{
 			$cc=' and c.visible>=0';
@@ -71,10 +64,10 @@ if(($action=='aishow')||($action==''&& empty ($fnid)&& empty ($sid)&& empty ($lo
 		$atitle="查询'".$akey."'的结果：";
    if(empty($akey)){
 		$vfdd='mhome';
-		foreach($cpp['home'] as $p)
-		{
-			$concepts[]=$p;
-		}
+		//foreach($cpp['home'] as $p)
+		//{
+		//	$concepts[]=$p;
+		//}
 	$sql = "SELECT * FROM conceptnet_concept  where 1 $ccx  order by Rand() LIMIT 30";
 	}else{
 		$vfdd='msearch';
@@ -194,7 +187,7 @@ if ($action == 'ailist' && $_SESSION['views']>2) {
 	$valid=rand(1000,100000);
 	$_SESSION['valid']=$valid;
 	}
-   $cpr = $CACHE->readCache('cpr');	
+  include "lib/cache.php";
 		if(ROLE == 'admin' ){
 		}else{
 			$cc=' and c.visible>-1';
@@ -264,14 +257,22 @@ if ($action == 'ailist' && $_SESSION['views']>2) {
 }
 // 
 if ($action == 'blog') {
-	$Log_Model = new Log_Model();
-	$page = isset($_GET['page']) ? abs(intval ($_GET['page'])) : 1;
-	$sqlSegment = "ORDER BY top DESC ,edittime DESC";
-	$sta_cache = $CACHE->readCache('sta');
-	$lognum = $sta_cache['lognum'];
-	$pageurl = '?action=blog&page=';
-	$logs = $Log_Model->getLogsForHome ($sqlSegment, $page, $index_lognum);
-	$page_url = pagination($lognum, $index_lognum, $page, $pageurl);
+    $sqladd="content!='' ";
+    if(isset($_GET['s'])){
+		$sqladd="and sort=$s ";
+		$tjts=$s;
+	} 
+  
+	$sql2="SELECT count(1) as a  FROM conceptnet_concept where  $sqladd ";
+	$row2=$DB->once_fetch_array($sql2);
+	
+	$index_lognum=20;
+	$page=isset($_GET['page'])?abs(intval($_GET['page'])):1;
+	$start=($page-1)*$index_lognum;
+	
+	$sql22="SELECT * FROM conceptnet_concept where  $sqladd   limit   $start,$index_lognum";
+	$query=$DB->query($sql22);
+	$page_url=pagination($row2['a'],$index_lognum,$page,"?action=li&s={$tjts}&page=");
 	include View::getView('header');
 	include View::getView('log');
 	include View::getView('footer');
@@ -343,13 +344,13 @@ $action="blog";
 }
 if (ISLOGIN === true && $action == 'write') {
 	$logid = isset($_GET['id']) ? intval($_GET['id']) : '';
-	$Sort_Model = new Sort_Model();
-	$sorts = $Sort_Model->getSorts();
+	//$Sort_Model = new Sort_Model();
+//	$sorts = $Sort_Model->getSorts();
 	if ($logid) {
 		$Log_Model = new Log_Model();
 		$Tag_Model = new Tag_Model();
 
-		$blogData = $Log_Model->getOneLogForAdmin($logid);
+	//	$blogData = $Log_Model->getOneLogForAdmin($logid);
 		extract($blogData);
 		$tags = array();
 		foreach ($Tag_Model->getTag($logid) as $val) {
@@ -529,10 +530,7 @@ if (ISLOGIN === true && $action == 'reply') {
 }
 
 if ($action == 'login' ||$action == 'reg' ) {
-	Option::get('login_code') == 'y' ? $ckcode = "<span>验证码</span>
-    <div class=\"val\"><img src=\"../include/lib/checkcode.php\" /><br />
-	<input name=\"imgcode\" id=\"imgcode\" type=\"text\" />
-    </div>" : $ckcode = '';
+
 	include View::getView('header');
 	include View::getView('login');
 	include View::getView('footer');
@@ -551,7 +549,7 @@ if ($action == 'auth') {
 				'login','$username','$vsid','$ddid','$uid','$ltime','$o','$gip')");
 	session_start();
 	
-	$img_code = (Option::get('login_code') == 'y' && isset ($_POST['imgcode'])) ? addslashes (trim (strtoupper ($_POST['imgcode']))) : '';
+
 	$ispersis = true;
 	if (checkUser($username, $password, $img_code) === true) {
 		setAuthCookie($username, $ispersis);

@@ -4,9 +4,9 @@
  * Writer:zhangyulin
  */
 
-require_once '../init.php';
+require_once 'init.php';
 
-define('TEMPLATE_PATH', EMLOG_ROOT.'/m/view/');//后台当前模板路径
+define('TEMPLATE_PATH', EMLOG_ROOT.'/view/');//后台当前模板路径
 
 $action = isset($_GET['action']) ? addslashes($_GET['action']) : "";
 
@@ -52,7 +52,7 @@ $start=($page-1)*200;
 	$sql = "SELECT * FROM cruboy_lv where 1 $asql2 order by $opt ";
 	$res = $DB->query($sql);
 	//$ap = $DB->affected_rows();
-$pageurl="/m/cash.php?bank=$word&name=$rule&used=$used&opt=";
+$pageurl="/cash.php?bank=$word&name=$rule&used=$used&opt=";
 	
     include View::getView('lilvview');
 

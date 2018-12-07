@@ -4,7 +4,7 @@
 
 
 <div align="center">
-	<form action="/m/cash.php" method="get" name="hinetslist">
+	<form action="/cash.php" method="get" name="hinetslist">
 	查询：<select	 name="bank" >
      <option value="" <?php if($v[bank]=='') echo "selected='selected'"; ?>>---</option>
 				<option value="威商" <?php if($v[bank]=='威商') echo "selected='selected'"; ?>>威商</option>

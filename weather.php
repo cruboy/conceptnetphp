@@ -176,6 +176,6 @@ if(count($code)>0){
 		$voice=$voice.$J->weatherinfo->weather1."，最高气温".$max."℃"."，最低气温".$min."℃";
 	}
 	
-	include './m/view/weather.php';
+	include './view/weather.php';
 }
 ?>

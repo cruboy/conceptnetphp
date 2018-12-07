@@ -4,18 +4,17 @@
  * @copyright (zhangyulin
 */
 
-require_once '../init.php';
+require_once 'init.php';
 
-define('TEMPLATE_PATH', EMLOG_ROOT.'/m/views/');
+define('TEMPLATE_PATH', EMLOG_ROOT.'/views/');
 
 if (ISLOGIN !== true){
 //echo "请登录";
 $msg='登录后，可以添加、编辑导图，位图笔记。';
-emDirect("/m/?action=login");
+emDirect("/?action=login");
 exit;
 }
-$blogtitle = Option::get('twnavi') . ' - ' . Option::get('blogname');
-$description = Option::get('bloginfo');
+
 $DB = MySql::getInstance();
 $concepts=array();
 $atitle="";
@@ -38,7 +37,8 @@ $vsid=intval($_SESSION['views']);
 			}
 	if(isset($_GET['jt']))
        $tabf="cruboy";		
-	$cpr = $CACHE->readCache('cpr');	
+	//$cpr = $CACHE->readCache('cpr');	
+	include "lib/cache.php";
 if (!empty($cpid) )
 {
 	$ltime = date('Y-m-d H:i:s');
@@ -130,9 +130,6 @@ elseif(isset ($_GET['list']))
    $action='list';
 	$sql = "SELECT uid,count(1) as a FROM  ".$tabf."_concept WHERE uid>0 group by uid order by a desc";
 			$res = $DB->query($sql);
-		
-			global $CACHE;
-	$user_cache = $CACHE->readCache('user');
 	
   include './view/header.php';
  echo ' <table width="400" border="1">
@@ -144,7 +141,7 @@ elseif(isset ($_GET['list']))
 	while ($row = $DB->fetch_array($res)) {
 			//print_r($row);
 			echo '<tr>
-    <td>'.$user_cache[$row['uid']]['name'].'</td>
+    <td>'.$row['uid'].'</td>
     <td>'.$row['a'].'</td>
     <td><a href="?u='.$row['uid'].'">查看</a></td>
   </tr>';
@@ -163,8 +160,7 @@ else
 	
 	if(isset($_GET['u'])){
 		$uid=intval($_GET['u']);
-	global $CACHE;
-	$user_cache = $CACHE->readCache('user');
+
 	$author = $user_cache[$uid]['name'];
 	$sql = "SELECT * FROM ".$tabf."_concept where uid={$uid} order by edittime desc limit 1000";
 	$atitle=$author.'添加的图';$action='list';

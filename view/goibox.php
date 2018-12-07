@@ -6,7 +6,7 @@
     <div align="center">
          <form name="keycp" method="get" action="toddler.php">
      <?php   if(0){?>   
-     <span><img src="/m/boy.jpg" border="0"></span><br>
+     <span><img src="/boy.jpg" border="0"></span><br>
 <?php } ?>
     <br>
             <input id="searchValue" name="k" type="text" value="<?php echo $akey; ?>" 

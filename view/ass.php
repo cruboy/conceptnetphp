@@ -31,9 +31,9 @@
 
 <?php 
 	if(0){?>
-    <a href="/m/?action=aishow&cp=<?=$cpidd?>">刷新</a>
-    <a href="/m/?cp=<?=$cpidd?>">导图 </a>
-    <a href="/m/ainet.php?cp=<?=$cpidd?>">导图编辑</a>
+    <a href="/?action=aishow&cp=<?=$cpidd?>">刷新</a>
+    <a href="/?cp=<?=$cpidd?>">导图 </a>
+    <a href="/ainet.php?cp=<?=$cpidd?>">导图编辑</a>
     <?php } ?>
 </div>   
 ===========================<br>
@@ -44,18 +44,18 @@ while ($value = $DB->fetch_array($res2)) {
 <div class="comcont" >
 &nbsp;
 <?php  
-$a1="<a href='/m/?action=aishow&cp=".$value['concept1_id']."'>".$value['cp1']."</a>";
-$a2="<a href='/m/?action=aishow&cp=".$value['concept2_id']."'>".$value['cp2']."</a>";
+$a1="<a href='/?action=aishow&cp=".$value['concept1_id']."'>".$value['cp1']."</a>";
+$a2="<a href='/?action=aishow&cp=".$value['concept2_id']."'>".$value['cp2']."</a>";
 $ss=str_replace("{1}",'{'.$a1.'}',$cpr[$value['best_frame_id']]);
 			   $ss=str_replace("{2}",'{'.$a2.'}',$ss);
 		echo $ss; ?> 
   <span title="<?php echo $value['aid'].':'.$value['relation_id'].'.'.$value['best_frame_id']; ?>">(<?=$cpr[$value['relation_id']]?>)</span>
 &nbsp;&nbsp;
 <span onclick="mark(this,<?=$value['aid']?>,'goodr')">
-<img src="/m/images/thread_rate.gif"><?php echo $value['good']; ?></span>
+<img src="/images/thread_rate.gif"><?php echo $value['good']; ?></span>
     <span onclick="mark(this,<?=$value['aid']?>,'badr')">
-    <img src="/m/images/disagree.gif"><?php echo $value['bad']; ?></span>
-<span onclick="ed(this,<?=$value['concept1_id']?>,<?=$value['aid']?>,'<?=$value['cp1'].'--'.$value['cp2']?>')"><img src='/m/images/edt.gif'></span>
+    <img src="/images/disagree.gif"><?php echo $value['bad']; ?></span>
+<span onclick="ed(this,<?=$value['concept1_id']?>,<?=$value['aid']?>,'<?=$value['cp1'].'--'.$value['cp2']?>')"><img src='/images/edt.gif'></span>
 <?php }else {
 	while ($value = $DB->fetch_array($res2)) {
 ?>
@@ -69,9 +69,9 @@ $ss=str_replace("{1}",'{'.$a1.'}',$cpr[$value['best_frame_id']]);
         <span title="<?php echo $value['aid'].':'.$value['relation_id'].'.'.$value['best_frame_id']; ?>">(<?=$cpr[$value['relation_id']]?>)</span>
 &nbsp;&nbsp;
 <span onclick="mark(this,<?=$value['aid']?>,'goodr')">
-<img src="/m/images/thread_rate.gif"><?php echo $value['good']; ?></span>
+<img src="/images/thread_rate.gif"><?php echo $value['good']; ?></span>
     <span onclick="mark(this,<?=$value['aid']?>,'badr')">
-    <img src="/m/images/disagree.gif"><?php echo $value['bad']; ?></span>
+    <img src="/images/disagree.gif"><?php echo $value['bad']; ?></span>
 
 </div>
 <?php }}?>
@@ -82,7 +82,7 @@ $ss=str_replace("{1}",'{'.$a1.'}',$cpr[$value['best_frame_id']]);
 <SCRIPT type=text/javascript>
  function dotu(id){
 	  var temp = document.createElement("form");         
-   temp.action = '/m/index.php?action=aishow';         
+   temp.action = '/index.php?action=aishow';         
    temp.method = "post";         
    temp.style.display = "none"; 
    var opt = document.createElement("input");         
@@ -101,7 +101,7 @@ $ss=str_replace("{1}",'{'.$a1.'}',$cpr[$value['best_frame_id']]);
 	function mark(t,id,opt){
     var ord = {}; ord[opt] =id;
 	$.ajax({
-				url:'/m/docp.php',
+				url:'/docp.php',
 				type:'POST',
 				data:ord,
 				success: function(data){ 

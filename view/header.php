@@ -5,7 +5,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title><?php echo $pDa['text']; ?> <?php echo Option::get('blogname'); ?></title>
+<title><?php echo $pDa['text']; ?> <?=$blogname?></title>
 <style type="text/css" id="internalStyle">
 body{background-color:#FFFFFF; font-size:14px; margin: 0; padding:0;}
 a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
@@ -26,36 +26,35 @@ a:link,a:visited,a:hover,a:active {text-decoration: none;color:#333;}
 </head>
 <body>
 <div id="top">
-<div id="blogname"><?php echo Option::get('blogname'); ?></div>
+<div id="blogname"><?=$blogname?></div>
 </div>
 <div id="navi">
 <?php if(UID) echo $userData['username']; else echo "游客"; ?>，您好！
-<a href="/" >首页</a> 
-<a href="/m" <?php if($action=='' and empty($aineth))echo 'id="active"'; ?>>导图</a> 
-<a href="/m/?action=ailist&cplist" <?php if($action=='ailist'||$action=='aishow')echo 'id="active"'; ?>>概念</a>
-<a href="/m/ass.php" <?php if(isset($freid))echo 'id="active"'; ?>>思维</a>
-<a href="/m/ainet.php" <?php if($aineth)echo 'id="active"'; ?>>图编辑</a>
-<a href="<?php echo BLOG_URL; ?>m/ainet.php?list" <?php if($action=='list')echo 'id="active"'; ?>>各家图</a>
+<a href="/" <?php if($action=='' and empty($aineth))echo 'id="active"'; ?>>导图</a> 
+<a href="/?action=ailist&cplist" <?php if($action=='ailist'||$action=='aishow')echo 'id="active"'; ?>>概念</a>
+<a href="/ass.php" <?php if(isset($freid))echo 'id="active"'; ?>>思维</a>
+<a href="/ainet.php" <?php if($aineth)echo 'id="active"'; ?>>图编辑</a>
+<a href="<?php echo BLOG_URL; ?>ainet.php?list" <?php if($action=='list')echo 'id="active"'; ?>>各家图</a>
 <?php if(ROLE == 'admin' ): ?>
-    <a href="<?php echo BLOG_URL; ?>m/admin.php" <?php if($action=='admin')echo 'id="active"'; ?>>图管理</a>
+    <a href="<?php echo BLOG_URL; ?>admin.php" <?php if($action=='admin')echo 'id="active"'; ?>>图管理</a>
 <? endif;?>
-<a href="/m/?action=blog" <?php if($action=='blog')echo 'id="active"'; ?>>文章列表</a>
-<a href="/m/?action=film" <?php if($action=='film')echo 'id="active"'; ?>>影视</a> 
-<a href="/m/?action=story" <?php if($action=='story')echo 'id="active"'; ?>>童话故事</a> 
-<a href="/jt/?m" <?php if($action=='zz')echo 'id="active"'; ?>>节点图</a> 
+<a href="/?action=blog" <?php if($action=='blog')echo 'id="active"'; ?>>文章列表</a>
+<a href="/?action=film" <?php if($action=='film')echo 'id="active"'; ?>>影视</a> 
+<a href="/?action=story" <?php if($action=='story')echo 'id="active"'; ?>>童话故事</a> 
+<a href="/?m" <?php if($action=='zz')echo 'id="active"'; ?>>节点图</a> 
 
-<a href="/m/?action=com" <?php if($action=='com')echo 'id="active"'; ?>>评论</a> 
+<a href="/?action=com" <?php if($action=='com')echo 'id="active"'; ?>>评论</a> 
 	<?php if(ROLE == 'admin' ): ?>
-    <a href="<?php echo BLOG_URL; ?>m/cash.php">支票</a>
-<a href="<?php echo BLOG_URL; ?>m/enet.php">enet</a>
-<a href="<?php echo BLOG_URL; ?>m/dict.php">词典</a>
- <a href="<?php echo BLOG_URL; ?>m/lilv.php">利率</a>
-<a href="/m/?action=write" <?php if($action=='write')echo 'id="active"'; ?>>写日志</a> 
+    <a href="/cash.php">支票</a>
+<a href="/enet.php">enet</a>
+<a href="/dict.php">词典</a>
+ <a href="/lilv.php">利率</a>
+<a href="/?action=write" <?php if($action=='write')echo 'id="active"'; ?>>写日志</a> 
 <?php endif;?>
 <?php if(ISLOGIN === true): ?>
-<a href="/m/?action=logout">退出</a>
+<a href="/?action=logout">退出</a>
 <?php else:?>
-<a href="<?php echo BLOG_URL; ?>m/?action=login" <?php if($action=='login')echo 'id="active"'; ?>>登录</a>
-<a href="<?php echo BLOG_URL; ?>m/?action=reg" <?php if($action=='reg')echo 'id="active"'; ?>>注册</a>
+<a href="/?action=login" <?php if($action=='login')echo 'id="active"'; ?>>登录</a>
+<a href="/?action=reg" <?php if($action=='reg')echo 'id="active"'; ?>>注册</a>
 <?php endif;?>
 </div>

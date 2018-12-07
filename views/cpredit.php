@@ -1,9 +1,9 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}?>
 
- <img src="/m/images/fav.gif" title="<?php echo $value['concept1_id'].'与'.$value['concept2_id']; ?>"><?=$value['score']?>
-<?=$value['relation_id'].".".$value['best_frame_id']?><img src="/m/images/thread_rate.gif"><?php echo $value['good']; ?><img src="/m/images/disagree.gif"><?php echo $value['bad']; ?>
-<img src="/m/images/moderator.gif"><span title="<?=$value['creator']?>@<?=date('Y-m-d H:i:s',$value['edittime'])?>"><?=getUser($value['uid'])?>
-  <img src="/m/images/info.gif" title="a1 <?=$value['atop1']?>,<?=$value['aleft1']?> a2 <?=$value['atop2']?>,<?=$value['aleft2']?> i1 <?=$value['itop1']?>,<?=$value['ileft1']?> i2 <?=$value['itop2']?>,<?=$value['ileft2']?>" />
+ <img src="/images/fav.gif" title="<?php echo $value['concept1_id'].'与'.$value['concept2_id']; ?>"><?=$value['score']?>
+<?=$value['relation_id'].".".$value['best_frame_id']?><img src="/images/thread_rate.gif"><?php echo $value['good']; ?><img src="/images/disagree.gif"><?php echo $value['bad']; ?>
+<img src="/images/moderator.gif"><span title="<?=$value['creator']?>@<?=date('Y-m-d H:i:s',$value['edittime'])?>"><?=getUser($value['uid'])?>
+  <img src="/images/info.gif" title="a1 <?=$value['atop1']?>,<?=$value['aleft1']?> a2 <?=$value['atop2']?>,<?=$value['aleft2']?> i1 <?=$value['itop1']?>,<?=$value['ileft1']?> i2 <?=$value['itop2']?>,<?=$value['ileft2']?>" />
   <form method='post' action='docp.php?cp=<?=$cpidd?>&aid=<?=$rid?>' >
  <table>
  

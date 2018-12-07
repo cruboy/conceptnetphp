@@ -1,6 +1,6 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}
 if($pDa['imgsize'] !=-1)
-$backimg="/jt/imgs/bgo.jpg";
+$backimg="/images/bgo.jpg";
 else{
 	$sq1 = "SELECT * FROM  emlog_attachment WHERE aid=".$pDa['imgid'];
 	$pa = $DB->once_fetch_array($sq1);
@@ -14,8 +14,8 @@ $mtop=60;
 //"华康娃娃体W5", "华康娃娃体W5", "华康娃娃体W5(P)", "華康少女文字W6", "華康娃娃體(P)", "華康娃娃體", );
 //style="font-family:=$fts[rand(0,36)];"
 ?>
-<script type="text/javascript" src="/content/js/jquery-1.8.2.min.js"></script>
-<script src="/content/js/jquery-ui.js"></script> 
+<script type="text/javascript" src="/views/jss/jquery.min.js"></script>
+<script src="/views/jss/jquery-ui.js"></script> 
 <style>
 .ui-widget-content{cursor:pointer;position:absolute;}
 </style>
@@ -30,10 +30,10 @@ style="top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;">
 <?php } ?>
 <div class="ui-widget-content" >
 ☆<span ><?php echo $pDa['text']; ?></span>&nbsp;
- <img src="/m/images/os2.gif" title="总关联数(<?=$pDa['num_assertions']?>)"><?php echo $pDa['f3']; ?>
-（<img src="/m/images/qian.gif" title="前向关联数"><?php echo $pDa['f1']; ?>
-<img src="/m/images/hou.gif" title="后向关联数"><?php echo $pDa['f2']; ?>）[<?php echo getcptype($pDa['sort']); ?>]
- <img src="/m/images/fav.gif" title="查看次数"><?php echo $pDa['words']; ?> 
+ <img src="/images/os2.gif" title="总关联数(<?=$pDa['num_assertions']?>)"><?php echo $pDa['f3']; ?>
+（<img src="/images/qian.gif" title="前向关联数"><?php echo $pDa['f1']; ?>
+<img src="/images/hou.gif" title="后向关联数"><?php echo $pDa['f2']; ?>）[<?php echo getcptype($pDa['sort']); ?>]
+ <img src="/images/fav.gif" title="查看次数"><?php echo $pDa['words']; ?> 
  <?php if($pDa['url'] !='' ){ ?>
 <a href="<?=$pDa['url']?>">□</a>
 <?php }
@@ -41,8 +41,8 @@ if($pDa['blogid'] >0 ){?>
 <a href="/<?php echo $pDa['blogid']; ?>.html">■</a>
 <?php } ?>
  <?php if(ISLOGIN === true):?>
- <a href="/m/?action=aishow&cp=<?=$cpidd?>">列表</a>
- <a href="/m/ainet.php?cp=<?=$pDa['id']?>">编辑</a><? endif;?>
+ <a href="/?action=aishow&cp=<?=$cpidd?>">列表</a>
+ <a href="/ainet.php?cp=<?=$pDa['id']?>">编辑</a><? endif;?>
 </div> 
 <br><?php echo $pDa['info']; ?>
 <?php 
@@ -95,7 +95,7 @@ if($value['blogid'] >0 ){?>
 <script>
   function dotovv(id){
 	  var temp = document.createElement("form");         
-   temp.action = '/m/index.php';         
+   temp.action = '/index.php';         
    temp.method = "post";         
    temp.style.display = "none"; 
    var opt = document.createElement("input");         

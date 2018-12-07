@@ -13,7 +13,7 @@ style="position:absolute;top:<?=$pDa['ctop']?>px;left:<?=$pDa['cleft']?>px;" <?p
 ☆<span ><?php echo $pDa['text']; ?></span>&nbsp;
 <span title="<?php echo "+".$pDa['f1']." -".$pDa['f2']." ".$pDa['num_assertions']; 
 ?>">关链数</span><?php echo $pDa['f3']; ?>
- 查看<?php echo $pDa['words']; ?> <?php if(ISLOGIN === true):?><a href="/m/ainet.php?cp=<?=$pDa['id']?>">编辑</a><? endif;?>
+ 查看<?php echo $pDa['words']; ?> <?php if(ISLOGIN === true):?><a href="/ainet.php?cp=<?=$pDa['id']?>">编辑</a><? endif;?>
 </div> 
 <?php echo $pDaa['content']; ?>
 <?php 
@@ -37,7 +37,7 @@ echo "top:".$value['atop']."px;"
 <script>
   function dotovv(id){
 	  var temp = document.createElement("form");         
-   temp.action = '/m/index.php';         
+   temp.action = '/index.php';         
    temp.method = "post";         
    temp.style.display = "none"; 
    var opt = document.createElement("input");         

@@ -1,14 +1,14 @@
 <?php if(!defined('EMLOG_ROOT')) {exit('error!');}?>
- <script type="text/javascript" src="/scan/artDialog/artDialog.js?skin=green"></script>
-<script type="text/javascript" src="/scan/artDialog/jquery.artDialog.js"></script>
-<script src="/scan/artDialog/plugins/iframeTools.js"></script>
-<script type="text/javascript" src="/content/js/jquery-1.8.2.min.js"></script>
+ <script type="text/javascript" src="/views/artDialog/artDialog.js?skin=green"></script>
+<script type="text/javascript" src="/views/artDialog/jquery.artDialog.js"></script>
+<script src="/views/artDialog/plugins/iframeTools.js"></script>
+<script type="text/javascript" src="/views/jss/jquery.min.js"></script>
 
 <div id="m">
    	<li>
 	<h3><span>概念查看</span></h3>
 	<ul id="logserch">
-	<form name="keycp" method="post" action="<?php echo BLOG_URL; ?>m/index.php?action=ailist">
+	<form name="keycp" method="post" action="<?php echo BLOG_URL; ?>index.php?action=ailist">
 	<input name="aikey"  type="text" value="<?php echo $akey; ?>" style="width:120px;"/>
     <input name="valid"  type="hidden" value="<?=$valid?>" />
 	<input type="submit" id="logserch_logserch" value="搜索" />
@@ -19,15 +19,15 @@
 <div class="comcont">
 &nbsp;&nbsp;
 <SPAN title='<?=$pDa['id']?>' <?php if($pDa['visible'] == -2 ): ?>style="TEXT-DECORATION: line-through"<?php endif;?>  onclick="dotu(<?php echo $pDa['id']; ?>)">
-<?php echo $pDa['text']; ?></SPAN>&nbsp;<img src="/m/images/os2.gif" title="总关联数"><?php echo $pDa['f3']; ?>
-（<img src="/m/images/qian.gif" title="前向关联数"><?php echo $pDa['f1']; ?>
-<img src="/m/images/hou.gif" title="后向关联数"><?php echo $pDa['f2']; ?>）[<?php echo getcptype($pDa['sort']); ?>]
- <img src="/m/images/fav.gif" title="查看次数"><?php echo $pDa['words']; ?>
+<?php echo $pDa['text']; ?></SPAN>&nbsp;<img src="/images/os2.gif" title="总关联数"><?php echo $pDa['f3']; ?>
+（<img src="/images/qian.gif" title="前向关联数"><?php echo $pDa['f1']; ?>
+<img src="/images/hou.gif" title="后向关联数"><?php echo $pDa['f2']; ?>）[<?php echo getcptype($pDa['sort']); ?>]
+ <img src="/images/fav.gif" title="查看次数"><?php echo $pDa['words']; ?>
 <?php 
 	if(ISLOGIN === true){?>
-    <a href="/m/?action=aishow&cp=<?=$cpidd?>">刷新</a>
-    <a href="/m/?cp=<?=$cpidd?>">导图 </a>
-    <a href="/m/ainet.php?cp=<?=$cpidd?>">导图编辑</a>
+    <a href="/?action=aishow&cp=<?=$cpidd?>">刷新</a>
+    <a href="/?cp=<?=$cpidd?>">导图 </a>
+    <a href="/ainet.php?cp=<?=$cpidd?>">导图编辑</a>
     <?php } ?>
 </div>   
 ===========================<br>
@@ -44,20 +44,20 @@ foreach($concepts as $value):
 </SPAN>
 
 <span onclick="mark(this,<?=$value['aid']?>,'goodr')">
-<img src="/m/images/thread_rate.gif"><?php echo $value['good']; ?></span>
+<img src="/images/thread_rate.gif"><?php echo $value['good']; ?></span>
     <span onclick="mark(this,<?=$value['aid']?>,'badr')">
-    <img src="/m/images/disagree.gif"><?php echo $value['bad']; ?></span>
-<span onclick="ed(this,<?=$value['aid'].$value['fx']?>)"><img src='/m/images/edt.gif'></span>
+    <img src="/images/disagree.gif"><?php echo $value['bad']; ?></span>
+<span onclick="ed(this,<?=$value['aid'].$value['fx']?>)"><img src='/images/edt.gif'></span>
 <?php endforeach; else foreach($concepts as $value):
 ?>
 <div class="comcont" ><?php if($value['fx']==2)echo '-'; ?>
 &nbsp;&nbsp;<SPAN style="cursor:pointer;<?php if($value['visible'] == -2 ): ?>TEXT-DECORATION: line-through<?php endif;?>"  onclick="dotu(<?php echo $value['id'];?>);" id="th<?=$value['aid'].$value['fx']?>">
 <?php echo $value['text']; ?></SPAN>
 <span onclick="mark(this,<?=$value['aid']?>,'goodr')">
-<img src="/m/images/thread_rate.gif"><?php echo $value['good']; ?></span>
+<img src="/images/thread_rate.gif"><?php echo $value['good']; ?></span>
     <span onclick="mark(this,<?=$value['aid']?>,'badr')">
-    <img src="/m/images/disagree.gif"><?php echo $value['bad']; ?></span>
-<span onclick="ed(this,<?=$value['aid'].$value['fx']?>)"><img src='/m/images/edt.gif'></span>
+    <img src="/images/disagree.gif"><?php echo $value['bad']; ?></span>
+<span onclick="ed(this,<?=$value['aid'].$value['fx']?>)"><img src='/images/edt.gif'></span>
 <?php endforeach; ?>
 </div>
 ==========================<br>
@@ -103,13 +103,13 @@ foreach($concepts as $value):
 				success: function(data){
                      alert(data);
 					}
-		});" title="添加"><img src="/m/images/tijiao.gif"></a>
+		});" title="添加"><img src="/images/tijiao.gif"></a>
 	</form>
 </div>
 <SCRIPT type=text/javascript>
  function dotu(id){
 	  var temp = document.createElement("form");         
-   temp.action = '/m/index.php?action=aishow';         
+   temp.action = '/index.php?action=aishow';         
    temp.method = "post";         
    temp.style.display = "none"; 
    var opt = document.createElement("input");         
@@ -128,7 +128,7 @@ foreach($concepts as $value):
 	function mark(t,id,opt){
     var ord = {}; ord[opt] =id;
 	$.ajax({
-				url:'/m/docp.php',
+				url:'/docp.php',
 				type:'POST',
 				data:ord,
 				success: function(data){ 
